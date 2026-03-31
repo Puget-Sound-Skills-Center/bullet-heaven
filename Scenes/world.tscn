@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://b8jqmls10uh24"]
+[gd_scene format=3 uid="uid://8px25w1t0nsr"]
 
-[ext_resource type="Texture2D" uid="uid://dfgfvyhyj7fnf" path="res://Grass.png" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://bw0n1spcc6e4k" path="res://Hills.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://dfgfvyhyj7fnf" path="res://Grass.png" id="1_go701"]
+[ext_resource type="Texture2D" uid="uid://bw0n1spcc6e4k" path="res://Hills.png" id="2_5a7ea"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hqtel"]
-texture = ExtResource("1_onrkg")
+texture = ExtResource("1_go701")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -78,7 +78,7 @@ texture = ExtResource("1_onrkg")
 8:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sweqy"]
-texture = ExtResource("2_i3pqv")
+texture = ExtResource("2_5a7ea")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0

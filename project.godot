@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="Bullet Heaven"
+run/main_scene="uid://8px25w1t0nsr"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=818
+window/size/viewport_height=758
 
 [physics]
 
