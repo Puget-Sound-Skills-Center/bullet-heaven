@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dijwtr4qb0c32"]
+
+[ext_resource type="Script" uid="uid://cjdc1m1i8ol7n" path="res://Scenes/player.gd" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://dpu4mru3igtq2" path="res://Player/Small-8-Direction-Characters_by_AxulArt.png" id="1_rpqav"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyqiw"]
+atlas = ExtResource("1_rpqav")
+region = Rect2(32, 0, 16, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gntrk"]
+atlas = ExtResource("1_rpqav")
+region = Rect2(32, 25, 16, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
+atlas = ExtResource("1_rpqav")
+region = Rect2(32, 50, 16, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ixxa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gntrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dewec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gntrk")
+}],
+"loop": true,
+"name": &"Walk0",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nn08x"]
+size = Vector2(47, 83)
+
+[node name="Player" type="CharacterBody2D" unique_id=1601385257]
+script = ExtResource("1_kyqiw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1178612505]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_5ixxa")
+animation = &"Walk0"
+frame = 3
+frame_progress = 0.56237185
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
+position = Vector2(-2.5, 6.5)
+shape = SubResource("RectangleShape2D_nn08x")

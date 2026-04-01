@@ -17,8 +17,16 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=818
+window/size/viewport_width=816
 window/size/viewport_height=858
+
+[layer_names]
+
+2d_physics/layer_1="Bushes"
+2d_physics/layer_2="Players"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Bullets"
+2d_physics/layer_5="Items"
 
 [physics]
 
@@ -26,4 +34,5 @@ window/size/viewport_height=858
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
