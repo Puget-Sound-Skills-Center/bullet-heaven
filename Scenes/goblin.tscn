@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://b5i4t07wd5snd"]
+
+[ext_resource type="Script" uid="uid://ckc5qytsv0pr0" path="res://Scenes/goblin.gd" id="1_xcvi8"]
+[ext_resource type="Texture2D" uid="uid://dj808tcfqi86a" path="res://Enemies/doc.png" id="1_xm08b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcvi8"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7w5cp"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n10i"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbw3e"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkbyy"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(80, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gt0r"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(96, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6mmh"]
+atlas = ExtResource("1_xm08b")
+region = Rect2(112, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ep384"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcvi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7w5cp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6n10i")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbw3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkbyy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gt0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6mmh")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ajbjq"]
+size = Vector2(10.75, 15.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvi8"]
+size = Vector2(10.75, 15.75)
+
+[node name="Goblin" type="CharacterBody2D" unique_id=2083084092]
+scale = Vector2(4, 4)
+collision_layer = 4
+script = ExtResource("1_xcvi8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834223425]
+sprite_frames = SubResource("SpriteFrames_ep384")
+animation = &"Run"
+autoplay = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
+position = Vector2(-0.875, 7.625)
+shape = SubResource("RectangleShape2D_ajbjq")
+
+[node name="EntranceTimer" type="Timer" parent="." unique_id=376870444]
+wait_time = 1.25
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1420128378]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
+position = Vector2(-0.875, 7.625)
+shape = SubResource("RectangleShape2D_xcvi8")
+
+[connection signal="hit_player" from="." to="." method="_on_hit_player"]
+[connection signal="timeout" from="EntranceTimer" to="." method="_on_entrance_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

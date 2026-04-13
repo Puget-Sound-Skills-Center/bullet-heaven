@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://d2ly4652880e0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i2yjh"]
+bg_color = Color(0.3471735, 0.6595446, 0.67110485, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojehl"]
+bg_color = Color(0.41618386, 0.6794476, 0.33479726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fo1c"]
+bg_color = Color(0.20489338, 0.5198433, 0.4514016, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek8ke"]
+bg_color = Color(0.15819114, 0.47526962, 0.12773958, 1)
+
+[node name="GameOver" type="CanvasLayer" unique_id=657096932]
+
+[node name="Panel" type="Panel" parent="." unique_id=1568309422]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i2yjh")
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=2072886421]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -74.0
+offset_right = 90.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "GAME OVER!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveSurvivedLabel" type="Label" parent="." unique_id=755049522]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_top = -7.0
+offset_right = 142.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "WAVES SURVIVED: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=832059966]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = 36.0
+offset_right = 125.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_ojehl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8fo1c")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ek8ke")
+text = "PLAY AGAIN"

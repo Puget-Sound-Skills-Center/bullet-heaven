@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cypaprdga767t"]
+
+[ext_resource type="Script" uid="uid://qwthml24jhcm" path="res://Scenes/explosion.gd" id="1_aayv4"]
+
+[sub_resource type="Curve" id="Curve_a801j"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Explosion" type="CPUParticles2D" unique_id=2047689744]
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 110.0
+scale_amount_min = 14.0
+scale_amount_max = 16.0
+scale_amount_curve = SubResource("Curve_a801j")
+color = Color(0.9411765, 0.03529412, 0.1254902, 1)
+script = ExtResource("1_aayv4")

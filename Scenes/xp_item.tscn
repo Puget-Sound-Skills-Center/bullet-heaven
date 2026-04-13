@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://4k3e7sh5e6m2"]
+
+[ext_resource type="Script" uid="uid://dv0nc164eijs" path="res://Scenes/xp_item.gd" id="1_qrk3n"]
+[ext_resource type="Texture2D" uid="uid://dnjlif1s8tn31" path="res://Player/120px-Sprite-Experience_Gem-DarkBlue.png" id="1_rd7pr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qrk3n"]
+radius = 7.0
+height = 18.0
+
+[node name="XpItem" type="Area2D" unique_id=1630608710]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_qrk3n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556655760]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_rd7pr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1896398522]
+shape = SubResource("CapsuleShape2D_qrk3n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

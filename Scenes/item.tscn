@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://s3162ef66bdc"]
+
+[ext_resource type="Texture2D" uid="uid://cigoo585q35ly" path="res://Player/health_box.png" id="1_ys0gr"]
+
+[sub_resource type="GDScript" id="GDScript_ys0gr"]
+script/source = "extends Area2D
+
+@onready var main = get_node(\"/root/Main\");
+
+# Called when the node enters the scene tree for the first time.
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76mu4"]
+size = Vector2(36, 36)
+
+[node name="Item" type="Area2D" unique_id=137271893]
+collision_layer = 16
+collision_mask = 2
+script = SubResource("GDScript_ys0gr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=421834475]
+texture = ExtResource("1_ys0gr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1940446108]
+shape = SubResource("RectangleShape2D_76mu4")

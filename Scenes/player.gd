@@ -1,25 +1,89 @@
 extends CharacterBody2D
 
+const NORMAL_SHOT : float = 0.5;
+const FAST_SHOT : float = 0.1;
+const START_SPEED : int = 200;
+const BOOST_SPEED : int = 300;
+var speed : int;
+var screen_size : Vector2;
+var can_shoot : bool;
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+signal shoot;
 
+func _ready():
+	screen_size = get_viewport_rect().size
+	reset();
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+func reset():
+	can_shoot = true;
+	position = screen_size/2;
+	speed = START_SPEED;
+	$ShotTimer.wait_time = NORMAL_SHOT;
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+func get_input():
+	#Keyboard Input
+	var input_dir = Input.get_vector("Left", "Right", "Up", "Down");
+	velocity = input_dir.normalized() * speed
+	
+	#Aiming with right stick
+	var aim = Vector2(Input.get_action_strength("Aim_Right") - Input.get_action_strength("Aim_Left"), Input.get_action_strength("Aim_Down") - Input.get_action_strength("Aim_Up"));
+	var using_stick = aim.length() > 0.2
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
+	#Mouse clicks/Contoller
+	var shoot_pressed = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_action_just_pressed("Shoot");
+	if shoot_pressed and can_shoot:
+		var dir 
+		if using_stick:
+			dir = aim.normalized();
+		else:
+			dir = (get_global_mouse_position() - position).normalized();
+		shoot.emit(position, dir);
+		can_shoot = false;
+		$ShotTimer.start();
+
+func update_rotation():
+	var aim = Vector2(Input.get_action_strength("Aim_Right") - Input.get_action_strength("Aim_Left"), Input.get_action_strength("Aim_Down") - Input.get_action_strength("Aim_Up"))
+	var using_stick = aim.length() > 0.2;
+	var angle_dir = Vector2.ZERO;
+	if using_stick:
+		angle_dir = aim;
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		angle_dir = get_local_mouse_position();
+	var angle = snappedf(angle_dir.angle(), PI / 4) / (PI / 4)
+	angle = wrapi(int(angle), 0, 8);
+	$AnimatedSprite2D.animation = "Walk" + str(angle);
 
-	move_and_slide()
+func _physics_process(_delta):
+	#Player Movement
+	get_input();
+	move_and_slide();
+	
+	#limit movement to window size
+	position = position.clamp(Vector2.ZERO, screen_size);
+	update_rotation();
+	
+	#Player Animation
+	if velocity.length() != 0:
+		$AnimatedSprite2D.play();
+	else:
+		$AnimatedSprite2D.stop()
+		$AnimatedSprite2D.frame = 1;
+
+func boost():
+	$BoostTimer.start()
+	speed = BOOST_SPEED;
+
+func quick_fire():
+	$FastFireTimer.start();
+	$ShotTimer.wait_time = FAST_SHOT;
+
+func _on_shot_timer_timeout():
+	can_shoot = true;
+
+
+func _on_boost_timer_timeout():
+	speed = START_SPEED;
+
+
+func _on_fast_fire_timer_timeout():
+	$ShotTimer.wait_time = NORMAL_SHOT;

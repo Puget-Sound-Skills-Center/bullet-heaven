@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://cpln6psnyuyr7"]
+
+[ext_resource type="Texture2D" uid="uid://bc5dx78jmsw8p" path="res://Player/gun_box.png" id="1_qrad4"]
+[ext_resource type="Texture2D" uid="uid://bfb13ol8xlbli" path="res://Player/coffee_box.png" id="2_rhv7d"]
+[ext_resource type="Texture2D" uid="uid://cigoo585q35ly" path="res://Player/health_box.png" id="3_6c1mq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_doen8"]
+bg_color = Color(0.32941177, 0.6, 0.6, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="LevelUpPanel" type="Node2D" unique_id=228750137]
+
+[node name="BackgroundPanel" type="Panel" parent="." unique_id=1953261075]
+offset_left = 153.0
+offset_top = 95.0
+offset_right = 649.0
+offset_bottom = 666.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_doen8")
+
+[node name="LevelLabel" type="Label" parent="." unique_id=972049969]
+offset_left = 255.0
+offset_top = 161.0
+offset_right = 507.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 35
+text = "YOU LEVELED UP!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Option1" type="Button" parent="." unique_id=1391653709]
+offset_left = 255.0
+offset_top = 261.0
+offset_right = 555.0
+offset_bottom = 349.0
+text = "Quick Fire: "
+icon = ExtResource("1_qrad4")
+
+[node name="Icon" type="TextureRect" parent="Option1" unique_id=329263379]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 20.0
+offset_right = 48.0
+offset_bottom = 65.0
+
+[node name="DescLabel" type="Label" parent="Option1" unique_id=1307059037]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 55.0
+offset_right = 266.0
+offset_bottom = 78.0
+text = "Faster fire rate for 6 secs"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Option2" type="Button" parent="." unique_id=852584720]
+offset_left = 255.0
+offset_top = 398.0
+offset_right = 555.0
+offset_bottom = 486.0
+text = "Coffee: 
+"
+icon = ExtResource("2_rhv7d")
+
+[node name="Icon" type="TextureRect" parent="Option2" unique_id=1948047077]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 20.0
+offset_right = 48.0
+offset_bottom = 65.0
+
+[node name="DescLabel" type="Label" parent="Option2" unique_id=2068119358]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 55.0
+offset_right = 266.0
+offset_bottom = 78.0
+text = "1.2X Speed for 6 seconds"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Option3" type="Button" parent="." unique_id=626933054]
+offset_left = 255.0
+offset_top = 521.0
+offset_right = 555.0
+offset_bottom = 609.0
+text = "One-up: "
+icon = ExtResource("3_6c1mq")
+
+[node name="Icon" type="TextureRect" parent="Option3" unique_id=815024022]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 20.0
+offset_right = 48.0
+offset_bottom = 65.0
+
+[node name="DescLabel" type="Label" parent="Option3" unique_id=1275699910]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 55.0
+offset_right = 266.0
+offset_bottom = 78.0
+text = "+1 HP"
+horizontal_alignment = 1
+vertical_alignment = 1

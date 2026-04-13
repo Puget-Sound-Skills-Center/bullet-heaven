@@ -1,11 +1,66 @@
 [gd_scene format=3 uid="uid://cbldttxhvydcf"]
 
+[ext_resource type="Script" uid="uid://b1fqh2x4o6lfp" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8px25w1t0nsr" path="res://Scenes/world.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dijwtr4qb0c32" path="res://Scenes/Player.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://dg6bqnk3ghyxj" path="res://Scenes/enemy_spawner.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dwsk4v7uxdh3a" path="res://bullet_manager.gd" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dkrcdu5nwfd1f" path="res://Scenes/bullet.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://mjdph3s86747" path="res://Scenes/hud.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://d2ly4652880e0" path="res://Scenes/game_over.tscn" id="8_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cpln6psnyuyr7" path="res://Scenes/level_up_panel.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://dv7ytom70n838" path="res://Scenes/xp_bar.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://vdbtjfswwb2q" path="res://Scenes/upgrade_manager.tscn" id="11_efxa6"]
 
 [node name="Main" type="Node" unique_id=43636004]
+script = ExtResource("1_1bvp3")
 
 [node name="World" parent="." unique_id=102653639 instance=ExtResource("1_ig7tw")]
-position = Vector2(-1, 0)
+position = Vector2(-1, 37)
 
 [node name="Player" parent="." unique_id=1601385257 instance=ExtResource("2_0xm2m")]
+
+[node name="BulletManager" type="Node2D" parent="." unique_id=78546546]
+script = ExtResource("4_lquwl")
+bullet_scene = ExtResource("5_7mycd")
+
+[node name="EnemySpawner" parent="." unique_id=2111184176 instance=ExtResource("3_h2yge")]
+
+[node name="WaveOverTimer" type="Timer" parent="." unique_id=1845112237]
+process_mode = 2
+one_shot = true
+
+[node name="RestartTimer" type="Timer" parent="." unique_id=2035798637]
+process_mode = 2
+one_shot = true
+
+[node name="HUD" parent="." unique_id=2021681451 instance=ExtResource("7_272bh")]
+offset = Vector2(0, 851)
+transform = Transform2D(1, 0, 0, 1, 0, 851)
+
+[node name="GameOver" parent="." unique_id=657096932 instance=ExtResource("8_5vw27")]
+process_mode = 2
+
+[node name="XPBar" parent="." unique_id=530511011 instance=ExtResource("10_4c57u")]
+
+[node name="BackgroundPanelBackgroundPanelBackgroundPanelBackgroundPanel" parent="XPBar" index="0" unique_id=579551341]
+offset_right = 815.0
+offset_bottom = 38.0
+
+[node name="LevelUpPanel" parent="." unique_id=228750137 instance=ExtResource("8_kek77")]
+process_mode = 3
+visible = false
+z_index = 2
+
+[node name="UpgradeManager" parent="." unique_id=1357751294 instance=ExtResource("11_efxa6")]
+
+[connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
+[connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
+[connection signal="timeout" from="WaveOverTimer" to="." method="_on_wave_over_timer_timeout"]
+[connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="pressed" from="LevelUpPanel/Option1" to="." method="_on_option_1_pressed"]
+[connection signal="pressed" from="LevelUpPanel/Option2" to="." method="_on_option_2_pressed"]
+[connection signal="pressed" from="LevelUpPanel/Option3" to="." method="_on_option_3_pressed"]
+
+[editable path="XPBar"]
+[editable path="LevelUpPanel"]

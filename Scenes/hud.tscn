@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://mjdph3s86747"]
+
+[ext_resource type="Texture2D" uid="uid://bod688edf2435" path="res://Enemies/heart.png" id="1_fccik"]
+[ext_resource type="Texture2D" uid="uid://cduc0000peo61" path="res://Enemies/docHUD.png" id="2_bjfho"]
+[ext_resource type="Texture2D" uid="uid://ktxqb21ckqgr" path="res://Player/—Pngtree—pixel art golden coin icon_22570587.png" id="3_bjfho"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gfia"]
+bg_color = Color(0.33333334, 0.6, 0.6, 1)
+border_width_top = 2
+border_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=2021681451]
+
+[node name="Panel" type="Panel" parent="." unique_id=60942308]
+offset_right = 816.0
+offset_bottom = 48.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3gfia")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
+position = Vector2(37, 24)
+scale = Vector2(3, 3)
+texture = ExtResource("1_fccik")
+
+[node name="LivesLabel" type="Label" parent="." unique_id=1401133550]
+offset_left = 66.0
+offset_top = -44.0
+offset_right = 110.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 30
+text = "
+X 3
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveLabel" type="Label" parent="." unique_id=955715487]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.5
+offset_top = 1.0
+offset_right = 58.5
+offset_bottom = 43.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "WAVE: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1507078372]
+position = Vector2(647, 25)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_bjfho")
+
+[node name="EnemyLabel" type="Label" parent="." unique_id=403492256]
+offset_left = 680.0
+offset_top = -86.0
+offset_right = 795.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 30
+text = "
+X 10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="coins" type="Sprite2D" parent="." unique_id=379946201]
+position = Vector2(158, 24.999998)
+scale = Vector2(0.012679386, 0.012919366)
+texture = ExtResource("3_bjfho")
+
+[node name="CoinsLabel" type="Label" parent="." unique_id=1485098509]
+offset_left = 159.0
+offset_top = -42.0
+offset_right = 324.0
+offset_bottom = 89.0
+theme_override_font_sizes/font_size = 30
+text = "Coins: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
