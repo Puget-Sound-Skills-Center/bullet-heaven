@@ -12,8 +12,16 @@ border_color = Color(0, 0, 0, 1)
 [node name="HUD" type="CanvasLayer" unique_id=2021681451]
 
 [node name="Panel" type="Panel" parent="." unique_id=60942308]
-offset_right = 816.0
-offset_bottom = 48.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -1631.0
+offset_top = -66.0
+offset_right = 1632.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3gfia")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
