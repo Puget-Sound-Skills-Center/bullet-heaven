@@ -15,7 +15,7 @@ var coins: int = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	new_game();
-	$GameOver/Button.pressed.connect(reset_run);
+	$CanvasLayer/GameOver/Button.pressed.connect(reset_run);
 
 func new_game():
 	wave = 1;
@@ -36,10 +36,10 @@ func reset():
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
 	get_tree().call_group("items", "queue_free");
-	$HUD/LivesLabel.text = "X " + str(lives);
-	$HUD/WaveLabel.text = "WAVE: " + str(wave);
-	$HUD/EnemyLabel.text = "X " + str(max_enemies);
-	$GameOver.hide();
+	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
+	$CanvasLayer/HUD/WaveLabel.text = "WAVE: " + str(wave);
+	$CanvasLayer/HUD/EnemyLabel.text = "X " + str(max_enemies);
+	$CanvasLayer/GameOver.hide();
 	get_tree().paused = true;
 	$RestartTimer.start();
 
@@ -80,8 +80,8 @@ func reset_wave():
 func update_xp_bar():
 	var ratio = float(xp) / float(xp_to_level);
 	ratio = clamp(ratio, 0.0, 1.0);
-	var full_width = $XPBar/BackgroundPanelBackgroundPanelBackgroundPanelBackgroundPanel.size.x;
-	$XPBar/FillPanel.size.x = full_width * ratio;
+	var full_width = $CanvasLayer/XPBar/BackgroundPanelBackgroundPanelBackgroundPanelBackgroundPanel.size.x;
+	$CanvasLayer/XPBar/FillPanel.size.x = full_width * ratio;
 
 func add_xp(amount: int):
 	xp += amount;
@@ -95,7 +95,7 @@ func add_xp(amount: int):
 		show_level_up_choices();
 
 func update_level_text():
-	$XPBar/LevelLabel.text = "Lv " + str(level);
+	$CanvasLayer/XPBar/LevelLabel.text = "Lv " + str(level);
 
 func show_level_up_choices():
 	get_tree().paused = true;

@@ -6,40 +6,40 @@
 script = ExtResource("1_4l55s")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1507897939]
-position = Vector2(368, 17)
+position = Vector2(1306, 72)
 
 [node name="Marker2D2" type="Marker2D" parent="." unique_id=634360517]
-position = Vector2(410, 17)
+position = Vector2(1417, 68)
 
 [node name="Marker2D3" type="Marker2D" parent="." unique_id=1436127174]
-position = Vector2(449, 17)
+position = Vector2(1986, 73)
 
 [node name="Marker2D4" type="Marker2D" parent="." unique_id=2012321505]
-position = Vector2(799, 399)
+position = Vector2(3347, 776)
 
 [node name="Marker2D5" type="Marker2D" parent="." unique_id=1605497212]
-position = Vector2(798, 441)
+position = Vector2(3349, 1036)
 
 [node name="Marker2D6" type="Marker2D" parent="." unique_id=779149452]
-position = Vector2(798, 481)
+position = Vector2(3329, 1377)
 
 [node name="Marker2D7" type="Marker2D" parent="." unique_id=548341754]
-position = Vector2(360, 800)
+position = Vector2(1439, 2141)
 
 [node name="Marker2D8" type="Marker2D" parent="." unique_id=2039218634]
-position = Vector2(405, 800)
+position = Vector2(1836, 2146)
 
 [node name="Marker2D9" type="Marker2D" parent="." unique_id=1904034407]
-position = Vector2(450, 800)
+position = Vector2(1989, 2147)
 
 [node name="Marker2D10" type="Marker2D" parent="." unique_id=811711555]
-position = Vector2(26, 390)
+position = Vector2(-94, 899)
 
 [node name="Marker2D11" type="Marker2D" parent="." unique_id=1817029984]
-position = Vector2(26, 433)
+position = Vector2(-93, 971)
 
 [node name="Marker2D12" type="Marker2D" parent="." unique_id=690579748]
-position = Vector2(27, 478)
+position = Vector2(-98, 1783)
 
 [node name="Timer" type="Timer" parent="." unique_id=1569393839]
 autostart = true

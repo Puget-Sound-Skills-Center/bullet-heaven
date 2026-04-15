@@ -9,7 +9,7 @@ bg_color = Color(0.26590022, 0.6649919, 0.7175882, 1)
 [node name="XPBar" type="Node2D" unique_id=530511011]
 
 [node name="BackgroundPanelBackgroundPanelBackgroundPanelBackgroundPanel" type="Panel" parent="." unique_id=579551341]
-offset_right = 816.0
+offset_right = 3264.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lotsq")
 
@@ -18,9 +18,10 @@ offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_00qyj")
 
 [node name="LevelLabel" type="Label" parent="." unique_id=150088515]
-offset_left = 747.0
-offset_right = 816.0
-offset_bottom = 40.0
+offset_left = 3193.0
+offset_top = 1.0
+offset_right = 3262.0
+offset_bottom = 52.0
 theme_override_font_sizes/font_size = 28
 text = "Lvl: 1"
 horizontal_alignment = 1
