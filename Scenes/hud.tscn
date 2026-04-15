@@ -17,24 +17,23 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -1632.0
-offset_top = -647.0
-offset_right = 1631.0
-offset_bottom = -581.0
+offset_left = -640.0
+offset_top = -66.0
+offset_right = 640.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3gfia")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
-position = Vector2(40, 1641)
+position = Vector2(40, 685)
 scale = Vector2(4, 4)
 texture = ExtResource("1_fccik")
 
 [node name="LivesLabel" type="Label" parent="." unique_id=1401133550]
-offset_left = 74.0
-offset_top = 1552.0
-offset_right = 132.0
-offset_bottom = 1723.0
+offset_left = 81.0
+offset_top = 599.0
+offset_right = 139.0
+offset_bottom = 770.0
 theme_override_font_sizes/font_size = 40
 text = "
 X 3
@@ -46,10 +45,10 @@ vertical_alignment = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -211.0
-offset_top = 1614.0
-offset_right = -56.0
-offset_bottom = 1669.0
+offset_left = -64.0
+offset_top = 660.0
+offset_right = 91.0
+offset_bottom = 715.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 40
 text = "WAVE: 1"
@@ -57,15 +56,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1507078372]
-position = Vector2(647, 1640)
+position = Vector2(984.25, 686)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("2_bjfho")
 
 [node name="EnemyLabel" type="Label" parent="." unique_id=403492256]
-offset_left = 653.0
-offset_top = 1532.0
-offset_right = 768.0
-offset_bottom = 1751.0
+offset_left = 983.25
+offset_top = 580.0
+offset_right = 1098.25
+offset_bottom = 799.0
 theme_override_font_sizes/font_size = 30
 text = "
 X 10
@@ -74,15 +73,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="coins" type="Sprite2D" parent="." unique_id=379946201]
-position = Vector2(311, 1640)
+position = Vector2(258.4175, 685)
 scale = Vector2(0.012679386, 0.012919366)
 texture = ExtResource("3_bjfho")
 
 [node name="CoinsLabel" type="Label" parent="." unique_id=1485098509]
-offset_left = 312.0
-offset_top = 1575.0
-offset_right = 477.0
-offset_bottom = 1706.0
+offset_left = 258.4175
+offset_top = 620.0
+offset_right = 423.4175
+offset_bottom = 751.0
 theme_override_font_sizes/font_size = 30
 text = "Coins: 0"
 horizontal_alignment = 1

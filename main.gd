@@ -71,8 +71,8 @@ func reset_wave():
 	difficulty *= DIFF_MULTIPLIER;
 	max_enemies = int(difficulty);
 	enemies_spawned = 0;
-	$HUD/WaveLabel.text = "WAVE: " + str(wave);
-	$HUD/EnemyLabel.text = "X " + str(max_enemies);
+	$CanvasLayer/HUD/WaveLabel.text = "WAVE: " + str(wave);
+	$CanvasLayer/HUD/EnemyLabel.text = "X " + str(max_enemies);
 	get_tree().call_group("enemies", "queue_tree");
 	get_tree().call_group("xp_item", "queue_tree");
 	get_tree().paused = false;
@@ -99,23 +99,23 @@ func update_level_text():
 
 func show_level_up_choices():
 	get_tree().paused = true;
-	$LevelUpPanel.show();
+	$CanvasLayer/LevelUpPanel.show();
 	var choices = $UpgradeManager.get_random_upgrades();
 	
-	$LevelUpPanel/Option1.text = choices[0].name;
-	$LevelUpPanel/Option2.text = choices[1].name;
-	$LevelUpPanel/Option3.text = choices[2].name;
+	$CanvasLayer/LevelUpPanel/Option1.text = choices[0].name;
+	$CanvasLayer/LevelUpPanel/Option2.text = choices[1].name;
+	$CanvasLayer/LevelUpPanel/Option3.text = choices[2].name;
 	
-	$LevelUpPanel/Option1/Icon.texture = choices[0].icon;
-	$LevelUpPanel/Option2/Icon.texture = choices[1].icon;
-	$LevelUpPanel/Option3/Icon.texture = choices[2].icon;
+	$CanvasLayer/LevelUpPanel/Option1/Icon.texture = choices[0].icon;
+	$CanvasLayer/LevelUpPanel/Option2/Icon.texture = choices[1].icon;
+	$CanvasLayer/LevelUpPanel/Option3/Icon.texture = choices[2].icon;
 	
-	$LevelUpPanel/Option1/DescLabel.text = choices[0].description;
-	$LevelUpPanel/Option2/DescLabel.text = choices[1].description;
-	$LevelUpPanel/Option3/DescLabel.text = choices[2].description;
+	$CanvasLayer/LevelUpPanel/Option1/DescLabel.text = choices[0].description;
+	$CanvasLayer/LevelUpPanel/Option2/DescLabel.text = choices[1].description;
+	$CanvasLayer/LevelUpPanel/Option3/DescLabel.text = choices[2].description;
 
 func close_level_up_panel():
-	$LevelUpPanel.hide();
+	$CanvasLayer/LevelUpPanel.hide();
 	get_tree().paused = false;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -131,14 +131,14 @@ func _process(_delta: float) -> void:
 
 func _on_enemy_spawner_hit_p():
 	lives -= 1;
-	$HUD/LivesLabel.text = "X " + str(lives);
+	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 	if lives <= 0:
 		get_tree().paused = true;
 		$GameOver/WaveSurvivedLabel.text = "WAVE SURVIVED: " + str(wave - 1);
 		$GameOver.show()
 
 func update_coins():
-	$HUD/CoinsLabel.text = "Coins: " + str(coins);
+	$CanvasLayer/HUD/CoinsLabel.text = "Coins: " + str(coins);
 
 func _on_wave_over_timer_timeout() -> void:
 	reset_wave();
@@ -162,7 +162,7 @@ func _upgrade_boost():
 
 func _upgrade_extra_life():
 	lives += 1;
-	$HUD/LivesLabel.text = "X " + str(lives);
+	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);

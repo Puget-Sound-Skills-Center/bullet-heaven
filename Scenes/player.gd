@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 const NORMAL_SHOT : float = 0.5;
 const FAST_SHOT : float = 0.1;
-const START_SPEED : int = 200;
-const BOOST_SPEED : int = 300;
+const START_SPEED : int = 250;
+const BOOST_SPEED : int = 350;
 var speed : int;
 var screen_size : Vector2;
 var can_shoot : bool;
@@ -59,7 +59,7 @@ func _physics_process(_delta):
 	move_and_slide();
 	
 	#limit movement to window size
-	position = position.clamp(Vector2.ZERO, screen_size);
+	#position = position.clamp(Vector2.ZERO, screen_size);
 	update_rotation();
 	
 	#Player Animation
