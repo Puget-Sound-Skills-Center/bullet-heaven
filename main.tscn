@@ -61,7 +61,6 @@ offset_bottom = 47.0
 
 [node name="LevelUpPanel" parent="CanvasLayer" unique_id=228750137 instance=ExtResource("8_kek77")]
 process_mode = 3
-visible = false
 z_index = 2
 
 [node name="BackgroundPanel" parent="CanvasLayer/LevelUpPanel" index="0" unique_id=1953261075]
