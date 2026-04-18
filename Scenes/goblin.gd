@@ -41,12 +41,18 @@ func _physics_process(_delta):
 			direction = (player.position - position)
 		direction = direction.normalized();
 		velocity = direction * speed;
+		var enemies = get_tree().get_nodes_in_group("enemies");
+		var sep = apply_separation(enemies);
+		var _wander = Vector2(randf() - 0.5, randf() - 0.5) * 50
+		velocity = (player.global_position - global_position + _wander).normalized() * speed;
+		velocity += sep * 1.0  # tweak multiplier
 		move_and_slide();
 		
 		if velocity.x != 0:
 			$AnimatedSprite2D.flip_h = velocity.x < 0;
 		else:
 			pass;
+
 
 func take_damage(amount: int):
 	if not alive:
@@ -81,6 +87,17 @@ func drop_coin():
 	coin.position = position;
 	main.call_deferred("add_child", coin);
 	coin.add_to_group("items");
+
+func apply_separation(enemies):
+	var separation_force = Vector2.ZERO;
+	var separation_radius = 40;
+	for e in enemies:
+		if e == self:
+			continue;
+		var dist = global_position.distance_to(e.global_position);
+		if dist < separation_radius:
+			separation_force += (global_position - e.global_position).normalized() * (separation_radius - dist);
+	return separation_force;
 
 func _on_entrance_timer_timeout() -> void:
 	entered = true;

@@ -16,7 +16,7 @@ func _ready():
 
 func reset():
 	can_shoot = true;
-	position = screen_size/2;
+	position = Vector2(1632, 1128);
 	speed = START_SPEED;
 	$ShotTimer.wait_time = NORMAL_SHOT;
 

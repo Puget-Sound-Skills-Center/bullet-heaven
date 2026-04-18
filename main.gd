@@ -25,6 +25,9 @@ func new_game():
 	reset();
 
 func reset():
+	var map_size = Vector2(3264, 2255);
+	var center = map_size / 2
+	$Player.global_position = center;
 	xp = 0;
 	level = 1;
 	update_level_text();
@@ -46,7 +49,7 @@ func reset():
 func reset_run():
 	# Full reset because the player died
 	wave = 1
-	difficulty = 10.0
+	difficulty = 30.0
 	max_enemies = int(difficulty)
 	enemies_spawned = 0
 	xp = 0
