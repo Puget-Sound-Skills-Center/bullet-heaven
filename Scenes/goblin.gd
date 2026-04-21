@@ -53,7 +53,6 @@ func _physics_process(_delta):
 		else:
 			pass;
 
-
 func take_damage(amount: int):
 	if not alive:
 		return;
@@ -101,7 +100,6 @@ func apply_separation(enemies):
 
 func _on_entrance_timer_timeout() -> void:
 	entered = true;
-
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	hit_player.emit();

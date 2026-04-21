@@ -167,6 +167,13 @@ func _upgrade_extra_life():
 	lives += 1;
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 
+func _upgrade_damage_up():
+	$Player.damage += 2;
+
+func _upgrade_orbit_blade():
+	var orbit = preload("res://Scenes/orbital_weapon.tscn").instantiate();
+	$Player.add_child(orbit);
+
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
 	close_level_up_panel();

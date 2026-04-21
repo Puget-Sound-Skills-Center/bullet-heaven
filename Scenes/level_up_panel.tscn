@@ -1,9 +1,5 @@
 [gd_scene format=3 uid="uid://cpln6psnyuyr7"]
 
-[ext_resource type="Texture2D" uid="uid://bc5dx78jmsw8p" path="res://Player/gun_box.png" id="1_qrad4"]
-[ext_resource type="Texture2D" uid="uid://bfb13ol8xlbli" path="res://Player/coffee_box.png" id="2_rhv7d"]
-[ext_resource type="Texture2D" uid="uid://cigoo585q35ly" path="res://Player/health_box.png" id="3_6c1mq"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_doen8"]
 bg_color = Color(0.32941177, 0.6, 0.6, 1)
 border_width_left = 7
@@ -40,7 +36,6 @@ offset_top = 324.0
 offset_right = 578.0
 offset_bottom = 412.0
 text = "Quick Fire: "
-icon = ExtResource("1_qrad4")
 
 [node name="Icon" type="TextureRect" parent="Option1" unique_id=329263379]
 layout_mode = 0
@@ -51,9 +46,9 @@ offset_bottom = 65.0
 
 [node name="DescLabel" type="Label" parent="Option1" unique_id=1307059037]
 layout_mode = 0
-offset_left = 74.0
+offset_left = 54.0
 offset_top = 55.0
-offset_right = 266.0
+offset_right = 246.0
 offset_bottom = 78.0
 text = "Faster fire rate for 6 secs"
 horizontal_alignment = 1
@@ -66,7 +61,6 @@ offset_right = 578.0
 offset_bottom = 549.0
 text = "Coffee: 
 "
-icon = ExtResource("2_rhv7d")
 
 [node name="Icon" type="TextureRect" parent="Option2" unique_id=1948047077]
 layout_mode = 0
@@ -77,9 +71,9 @@ offset_bottom = 65.0
 
 [node name="DescLabel" type="Label" parent="Option2" unique_id=2068119358]
 layout_mode = 0
-offset_left = 74.0
+offset_left = 54.0
 offset_top = 55.0
-offset_right = 266.0
+offset_right = 246.0
 offset_bottom = 78.0
 text = "1.2X Speed for 6 seconds"
 horizontal_alignment = 1
@@ -90,8 +84,7 @@ offset_left = 278.0
 offset_top = 584.0
 offset_right = 578.0
 offset_bottom = 672.0
-text = "One-up: "
-icon = ExtResource("3_6c1mq")
+text = "One-up:"
 
 [node name="Icon" type="TextureRect" parent="Option3" unique_id=815024022]
 layout_mode = 0
@@ -102,9 +95,9 @@ offset_bottom = 65.0
 
 [node name="DescLabel" type="Label" parent="Option3" unique_id=1275699910]
 layout_mode = 0
-offset_left = 74.0
+offset_left = 53.0
 offset_top = 55.0
-offset_right = 266.0
+offset_right = 245.0
 offset_bottom = 78.0
 text = "+1 HP"
 horizontal_alignment = 1

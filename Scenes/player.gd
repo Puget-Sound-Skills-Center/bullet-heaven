@@ -7,6 +7,7 @@ const BOOST_SPEED : int = 350;
 var speed : int;
 var screen_size : Vector2;
 var can_shoot : bool;
+var damage = 1;
 
 signal shoot;
 
@@ -80,10 +81,8 @@ func quick_fire():
 func _on_shot_timer_timeout():
 	can_shoot = true;
 
-
 func _on_boost_timer_timeout():
 	speed = START_SPEED;
-
 
 func _on_fast_fire_timer_timeout():
 	$ShotTimer.wait_time = NORMAL_SHOT;

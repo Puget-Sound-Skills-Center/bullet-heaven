@@ -44,4 +44,9 @@ position = Vector2(437, 1783)
 [node name="Timer" type="Timer" parent="." unique_id=1569393839]
 autostart = true
 
+[node name="AmbushTimer" type="Timer" parent="." unique_id=191640607]
+wait_time = 3.0
+autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="AmbushTimer" to="." method="_on_ambush_timer_timeout"]
