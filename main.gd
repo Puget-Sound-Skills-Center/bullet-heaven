@@ -1,6 +1,7 @@
 extends Node
 
 
+var run_time := 0.0;
 var wave : int;
 var difficulty : float;
 const DIFF_MULTIPLIER : float = 1.2;
@@ -123,14 +124,22 @@ func close_level_up_panel():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if is_wave_completed():
-		wave += 0;
-		#Adjust difficulty
-		difficulty *= DIFF_MULTIPLIER;
-		if $EnemySpawner/Timer.wait_time > 0.25:
-			$EnemySpawner/Timer.wait_time -= 0.05;
-		get_tree().paused = true;
-		$WaveOverTimer.start();
+	if !get_tree().paused:
+		run_time += _delta;
+		update_timer_display();
+
+func update_timer_display():
+	var minutes = int(run_time) / 60;
+	var seconds = int(run_time) % 60;
+	$CanvasLayer/HUD/TimerLabel.text = "%02d:%02d" % [minutes, seconds];
+
+func get_spawn_cap():
+	# Start with 10 enemies
+	var base = 10;
+	# Increase by 1 enemy by 2 seconds
+	var scaling = int(run_time / 2);
+	# Cap can grow to hundreds
+	return base + scaling;
 
 func _on_enemy_spawner_hit_p():
 	lives -= 1;

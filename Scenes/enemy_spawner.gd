@@ -7,37 +7,43 @@ signal hit_p;
 var goblin_scene := preload("res://Scenes/goblin.tscn")
 
 # How far from the player enemies should spawn
-var spawn_distance := 650
+var spawn_distance := 50
 
 # How many enemies per tick
 var enemies_per_tick := 6
 
 func _on_timer_timeout():
-	if main.enemies_spawned >= main.max_enemies:
+	if main.enemies_spawned >= main.get_spawn_cap():
 		return;
-	var player_pos = Player.global_position;
-	for i in enemies_per_tick:
-		if main.enemies_spawned >= main.max_enemies:
-			break
-		var angle = randf() * TAU
-		var _offset = Vector2(cos(angle), sin(angle)) * spawn_distance;
-		var spawn_pos = player_pos + _offset;
-		spawn_enemy(spawn_pos);
-
-func get_front_spawn_position(player_pos, player_vel):
-	if player_vel.length() < 1:
-		# Player is standing still → spawn randomly around
-		var angle = randf() * TAU;
-		return player_pos + Vector2(cos(angle), sin (angle)) * spawn_distance;
-	# Player is moving → spawn in front
-	var forward = player_vel.normalized();
-	var angle_offset = randf_range(-1.0, 1.0) #35 degree randomness
-	var dir = forward.rotated(angle_offset);
-	if Player.velocity.length() > 200:
-		enemies_per_tick = 8;
+	var t = main.run_time;
+	# Start slow, get faster
+	if t < 30:
+		enemies_per_tick = 1;
+	elif t < 60:
+		enemies_per_tick = 2;
+	elif t < 120:
+		enemies_per_tick = 4;
+	elif t < 180:
+		enemies_per_tick = 6;
 	else:
 		enemies_per_tick = 10;
-	return player_pos + dir * spawn_distance;
+
+func get_spawn_position():
+	var player_pos = Player.global_position;
+	# Spawn distance from player
+	var dist = 500;
+	# 50% random ring spawn
+	if randf() < 0.5:
+		var angle = randf() * TAU;
+		return player_pos + Vector2(cos(angle), sin(angle)) * dist;
+	# 50% spawn in front of player
+	var vel = Player.velocity;
+	if vel.length() < 1:
+		vel = Vector2.RIGHT.rotated(randf() * TAU);
+	
+	var forward = vel.normalized();
+	var offset = forward.rotated(randf_range(-0.5, 0.5)) * dist;
+	return player_pos + offset;
 
 func spawn_enemy(spawn_pos: Vector2) -> void:
 	if main.enemies_spawned >= main.max_enemies:
