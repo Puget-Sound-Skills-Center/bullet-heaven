@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c45ceuj2mqvmf"]
+
+[ext_resource type="Script" uid="uid://dg56aauegjfpo" path="res://OrbitGun.gd" id="1_em1wb"]
+[ext_resource type="Texture2D" uid="uid://bxyco1mpf5dxl" path="res://Weapons/GunPack/Pack 1/1px/24.png" id="1_yqujy"]
+
+[node name="OrbitGun" type="Node2D" unique_id=1907473867]
+script = ExtResource("1_em1wb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=601007893]
+scale = Vector2(3, 3)
+texture = ExtResource("1_yqujy")
+
+[node name="Timer" type="Timer" parent="." unique_id=295885017]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

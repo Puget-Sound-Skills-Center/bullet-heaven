@@ -11,6 +11,8 @@ var angle := 0.0;
 func _process(delta):
 	angle += orbit_speed * delta;
 	global_position = Player.global_position + Vector2(cos(angle), sin(angle)) * orbit_radius;
+	var dir = (global_position - global_position).normalized();
+	rotation = dir.angle();
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("enemies"):

@@ -7,7 +7,7 @@ signal hit_p;
 var goblin_scene := preload("res://Scenes/goblin.tscn")
 
 # How far from the player enemies should spawn
-var spawn_distance := 650
+var spawn_distance := 950
 
 # How many enemies per tick
 var enemies_per_tick := 10

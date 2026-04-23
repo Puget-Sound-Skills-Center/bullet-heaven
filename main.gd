@@ -129,7 +129,7 @@ func _process(_delta: float) -> void:
 		update_timer_display();
 
 func update_timer_display():
-	var minutes = int(run_time) / 60;
+	var minutes = int(run_time) / 60.0;
 	var seconds = int(run_time) % 60;
 	$CanvasLayer/HUD/TimerLabel.text = "%02d:%02d" % [minutes, seconds];
 
@@ -180,6 +180,10 @@ func _upgrade_damage_up():
 func _upgrade_orbit_blade():
 	var orbit = preload("res://Scenes/orbital_weapon.tscn").instantiate();
 	$Player.add_child(orbit);
+
+func _upgrade_orbit_gun():
+	var gun = preload("res://OrbitGun.tscn").instantiate();
+	$Player.add_child(gun);
 
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
