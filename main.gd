@@ -136,10 +136,8 @@ func update_timer_display():
 func get_spawn_cap():
 	# Start with 10 enemies
 	var base = 10;
-	# Increase by 1 enemy by 2 seconds
-	var scaling = int(run_time / 2);
-	# Cap can grow to hundreds
-	return base + scaling;
+	var growth = pow(run_time, 1.15)
+	return base + int(growth);
 
 func _on_enemy_spawner_hit_p():
 	lives -= 1;

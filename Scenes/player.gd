@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const NORMAL_SHOT : float = 0.5;
 const FAST_SHOT : float = 0.1;
-const START_SPEED : int = 250;
+const START_SPEED : int = 200;
 const BOOST_SPEED : int = 350;
 var speed : int;
 var screen_size : Vector2;
