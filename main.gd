@@ -12,6 +12,24 @@ var xp : int = 0
 var xp_to_level : int = 10   # adjust as you like
 var level : int = 1
 var coins: int = 0;
+const OrbitGun = preload("res://OrbitGun.gd");
+
+var orbit_gun_sprites = [
+	preload("res://Weapons/GunPack/Pack 1/1px/25.png"),
+	preload("res://Weapons/GunPack/Pack 1/1px/26.png"),
+	preload("res://Weapons/GunPack/Pack 1/1px/28.png"),
+	preload("res://Weapons/GunPack/Pack 1/1px/31.png")
+]
+
+var weapon_offsets = [
+	Vector2(40, -55),  # right shoulder
+	Vector2(-40, -45), # left shoulder
+	Vector2(0, -35),   # above head
+	Vector2(0, 20),    # above head
+	Vector2(30, 0),    # right side
+	Vector2(-30, 0)    # left side
+]
+var weapon_count := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -165,25 +183,66 @@ func is_wave_completed():
 	return false;
 
 func _upgrade_quick_fire():
-	$Player.quick_fire();
+	$Player.stats.fire_rate *= 0.85;
+	$Player.apply_stats();
 
 func _upgrade_boost():
-	$Player.boost();
+	$Player.stats.move_speed += 20;
+	$Player.apply_stats();
 
 func _upgrade_extra_life():
-	lives += 1;
+	$Player.stats.max_health += 1;
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 
+func _upgrade_orbit_speed_blade():
+	for blade in $Player.get_children():
+		if blade.has_method("upgrade_speed"):
+			blade.upgrade_speed();
+
 func _upgrade_damage_up():
-	$Player.damage += 2;
+	$Player.stats.damage += 2;
 
 func _upgrade_orbit_blade():
 	var orbit = preload("res://Scenes/orbital_weapon.tscn").instantiate();
 	$Player.add_child(orbit);
 
 func _upgrade_orbit_gun():
-	var gun = preload("res://OrbitGun.tscn").instantiate();
+	for gun in $Player.get_children():
+		if gun.has_method("apply_stats"):
+			gun.apply_stats();
+	var gun_scene = preload("res://OrbitGun.tscn");
+	var gun = gun_scene.instantiate();
+	 # Assign offset based on weapon_count
+	if weapon_count < weapon_offsets.size():
+		gun.offset = weapon_offsets[weapon_count]
+	else:
+		# If more weapons than offsets, place randomly around player
+		gun.offset = Vector2(randf_range(-20, 20), randf_range(-20, 20));
+	gun.stats = preload("res://Data/orbit_gun_stats.tres");
+	# Assign sprite index (LIMITED)
+	if weapon_count < orbit_gun_sprites.size():
+		gun.sprite_index = weapon_count;
+	else:
+		# Option A: reuse last sprite
+		#gun.sprite_index = orbit_gun_sprites.size() - 1;
+		# Option B: random sprite
+		gun.sprite_index = randi() % orbit_gun_sprites.size();
+		# Option C: stop spawning guns
+		#return;
 	$Player.add_child(gun);
+	weapon_count += 1;
+
+func _upgrade_orbit_gun_damage():
+	for gun in $Player.get_children():
+		if gun is OrbitGun:
+			gun.stats.damage += 1;
+			gun.apply_stats();
+
+func _upgrade_orbit_gun_fire_rate():
+	for gun in $Player.get_children():
+		if gun is OrbitGun:
+			gun.stats.fire_rate *= 0.85;
+			gun.apply_stats();
 
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@export var stats: PlayerStats;
 
 const NORMAL_SHOT : float = 0.5;
 const FAST_SHOT : float = 0.1;
@@ -7,9 +8,10 @@ const BOOST_SPEED : int = 350;
 var speed : int;
 var screen_size : Vector2;
 var can_shoot : bool;
-var damage = 1;
+#var damage = 1;
+var weapon_count := 0;
 
-signal shoot;
+signal shoot(pos, dir, damage);
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -18,8 +20,8 @@ func _ready():
 func reset():
 	can_shoot = true;
 	position = Vector2(1632, 1128);
-	speed = START_SPEED;
-	$ShotTimer.wait_time = NORMAL_SHOT;
+	speed = stats.move_speed;
+	$ShotTimer.wait_time = stats.fire_rate;
 
 func get_input():
 	#Keyboard Input
@@ -38,7 +40,7 @@ func get_input():
 			dir = aim.normalized();
 		else:
 			dir = (get_global_mouse_position() - position).normalized();
-		shoot.emit(position, dir);
+		shoot.emit(position, dir, stats.damage);
 		can_shoot = false;
 		$ShotTimer.start();
 
@@ -70,13 +72,16 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.stop()
 		$AnimatedSprite2D.frame = 1;
 
+func apply_stats():
+	speed = stats.move_speed;
+	$ShotTimer.wait_time = stats.fire_rate;
+
 func boost():
 	$BoostTimer.start()
 	speed = BOOST_SPEED;
 
-func quick_fire():
-	$FastFireTimer.start();
-	$ShotTimer.wait_time = FAST_SHOT;
+func update_fire_rate():
+	$ShotTimer.wait_time = stats.fire_rate;
 
 func _on_shot_timer_timeout():
 	can_shoot = true;

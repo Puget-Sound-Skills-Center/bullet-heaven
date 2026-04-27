@@ -4,10 +4,10 @@ extends Node2D
 @onready var player = get_parent().get_node("Player")
 
 
-func _on_player_shoot(pos, dir):
+func _on_player_shoot(pos, dir, dmg):
 	var bullet = bullet_scene.instantiate();
 	add_child(bullet);
 	bullet.position = pos;
-	bullet.direction = dir.normalized();
-	bullet.damage = player.damage;
+	bullet.direction = dir;
+	bullet.damage = dmg;
 	bullet.add_to_group("bullets");

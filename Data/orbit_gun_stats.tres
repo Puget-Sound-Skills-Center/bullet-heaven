@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="OrbitGunStats" format=3 uid="uid://wpyy7x34317u"]
+
+[ext_resource type="Script" uid="uid://c3q85kh1tj0n" path="res://Data/orbit_gun_stats.gd" id="1_a2ogn"]
+
+[resource]
+script = ExtResource("1_a2ogn")
+metadata/_custom_type_script = "uid://c3q85kh1tj0n"

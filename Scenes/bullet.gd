@@ -8,7 +8,6 @@ var damage : int = 1;
 func _process(delta):
 	position += speed * direction * delta;
 
-
 func _on_timer_timeout():
 	queue_free();
 

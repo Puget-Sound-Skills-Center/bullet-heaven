@@ -10,6 +10,9 @@ script = ExtResource("1_em1wb")
 scale = Vector2(3, 3)
 texture = ExtResource("1_yqujy")
 
+[node name="Muzzle" type="Marker2D" parent="." unique_id=1710188959]
+position = Vector2(17.5, 0)
+
 [node name="Timer" type="Timer" parent="." unique_id=295885017]
 autostart = true
 
