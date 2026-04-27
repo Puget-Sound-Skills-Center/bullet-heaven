@@ -6,11 +6,19 @@ signal hit_p;
 @onready var Player = main.get_node("Player");
 var goblin_scene := preload("res://Scenes/goblin.tscn")
 
+var time_elapsed := 0.0
+var spawn_rate := 1.0
+var min_spawn_rate := 0.15
+var spawn_acceleration := 0.01
+
 # How far from the player enemies should spawn
 var spawn_distance := 950
 
 # How many enemies per tick
 var enemies_per_tick := 10
+
+func _process(delta: float) -> void:
+	time_elapsed += delta
 
 func _on_timer_timeout():
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
