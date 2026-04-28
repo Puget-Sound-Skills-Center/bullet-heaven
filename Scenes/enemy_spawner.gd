@@ -10,6 +10,7 @@ var time_elapsed := 0.0
 var spawn_rate := 1.0
 var min_spawn_rate := 0.15
 var spawn_acceleration := 0.01
+var max_enemies_per_tick := 40;
 
 # How far from the player enemies should spawn
 var spawn_distance := 1200
@@ -23,12 +24,17 @@ func _process(delta: float) -> void:
 	if spawn_rate > min_spawn_rate:
 		spawn_rate -= spawn_acceleration * delta;
 		$Timer.wait_time = spawn_rate;
-	# Increase enemies per tick over time
-	enemies_per_tick = 5 + int(time_elapsed / 30.0) # +1 every 30 seconds
+	# Curved scaling for enemies per tick
+	var growth = pow(time_elapsed / 60.0, 1.3)  # curved growth
+	enemies_per_tick = int(5 + growth);
+	# Hard cap
+	enemies_per_tick = clamp(enemies_per_tick, 5, max_enemies_per_tick);
+
 
 func _on_timer_timeout():
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
-	var _min_density = 10; # always keep at least 10 enemies alive
+	var _min_density = 10 + int(time_elapsed / 20.0); # always keep at least 10 enemies alive
+	_min_density = clamp(_min_density, 10, 60);
 	if _alive < _min_density:
 			var needed = _min_density - _alive;
 			for i in needed:
@@ -64,7 +70,7 @@ func get_valid_spawn() -> Vector2:
 	return pos;
 
 func is_inside_wall(pos: Vector2) -> bool:
-	var tilemap = main.get_node("TileMap") # adjust if needed
+	var tilemap = main.get_node("World") # adjust if needed
 	var cell = tilemap.local_to_map(pos)
 	return tilemap.get_cell_source_id(0, cell) != -1  # true if tile exists
 
@@ -125,7 +131,7 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	main.enemies_spawned += 1;
 
 func hit():
-	hit_p.emit()
+	hit_p.emit();
 
 func _on_ambush_timer_timeout() -> void:
 	var player_pos = Player.global_position;
@@ -135,5 +141,5 @@ func _on_ambush_timer_timeout() -> void:
 	var forward = vel.normalized();
 	for i in 5:
 		var dir = forward.rotated(randf_range(-0.4, 04));
-		var spawn_pos = player_pos + dir * spawn_distance;
-		spawn_enemy(spawn_pos);
+		var _spawn_pos = player_pos + dir * spawn_distance;
+		spawn_enemy(get_valid_spawn());

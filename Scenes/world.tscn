@@ -173,7 +173,7 @@ sources/0 = SubResource("TileSetAtlasSource_hqtel")
 sources/1 = SubResource("TileSetAtlasSource_sweqy")
 
 [node name="World" type="TileMap" unique_id=102653639]
-scale = Vector2(10, 10)
+scale = Vector2(12, 12)
 tile_set = SubResource("TileSet_2hs0m")
 format = 2
 layer_0/name = "Grass"
