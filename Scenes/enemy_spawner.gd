@@ -4,7 +4,7 @@ signal hit_p;
 
 @onready var main = get_node("/root/Main");
 @onready var Player = main.get_node("Player");
-var goblin_scene := preload("res://Scenes/goblin.tscn")
+var goblin_scene := preload("res://Scenes/goblin.tscn");
 
 var time_elapsed := 0.0
 var spawn_rate := 1.0
@@ -12,13 +12,19 @@ var min_spawn_rate := 0.15
 var spawn_acceleration := 0.01
 
 # How far from the player enemies should spawn
-var spawn_distance := 950
+var spawn_distance := 1200
 
 # How many enemies per tick
 var enemies_per_tick := 10
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
+	# Increase spawn rate over time
+	if spawn_rate > min_spawn_rate:
+		spawn_rate -= spawn_acceleration * delta;
+		$Timer.wait_time = spawn_rate;
+	# Increase enemies per tick over time
+	enemies_per_tick = 5 + int(time_elapsed / 30.0) # +1 every 30 seconds
 
 func _on_timer_timeout():
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
@@ -31,15 +37,16 @@ func _on_timer_timeout():
 	for i in enemies_per_tick:
 		if main.enemies_spawned >= main.get_spawn_cap():
 			break;
+		spawn_enemy(get_valid_spawn());
 	var roll = randf();
 	if roll < 0.25:
-		spawn_enemy(get_spawn_position()); # Random ring
+		spawn_enemy(get_valid_spawn()); # Random ring
 	elif roll < 0.50:
-		spawn_enemy(get_front_spawn());
+		spawn_enemy(get_valid_spawn());
 	elif roll < 0.75:
-		spawn_enemy(get_side_spawn());
+		spawn_enemy(get_valid_spawn());
 	else:
-		spawn_enemy(get_back_spawn());
+		spawn_enemy(get_valid_spawn());
 	# Occasionally spawn enemies far away so the world feels full
 	if randf() < 0.15:
 		var _far_pos = Player.global_position + Vector2(
@@ -47,6 +54,20 @@ func _on_timer_timeout():
 			randf_range(-2000, 2000)
 	)
 		spawn_enemy(_far_pos);
+
+func get_valid_spawn() -> Vector2:
+	var pos = get_spawn_position();
+	var tries = 0;
+	while is_inside_wall(pos) and tries < 10:
+		pos = get_spawn_position();
+		tries += 1;
+	return pos;
+
+func is_inside_wall(pos: Vector2) -> bool:
+	var tilemap = main.get_node("TileMap") # adjust if needed
+	var cell = tilemap.local_to_map(pos)
+	return tilemap.get_cell_source_id(0, cell) != -1  # true if tile exists
+
 
 func get_spawn_position():
 	var player_pos = Player.global_position;
@@ -100,6 +121,7 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);
 	goblin.add_to_group("enemies");
+	goblin.speed += time_elapsed * 0.2;
 	main.enemies_spawned += 1;
 
 func hit():

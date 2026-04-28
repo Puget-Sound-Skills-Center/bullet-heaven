@@ -74,6 +74,7 @@ size = Vector2(10.75, 15.75)
 [node name="Goblin" type="CharacterBody2D" unique_id=2083084092]
 scale = Vector2(4, 4)
 collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_xcvi8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834223425]
