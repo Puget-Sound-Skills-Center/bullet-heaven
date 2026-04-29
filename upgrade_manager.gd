@@ -37,12 +37,25 @@ func _ready() -> void:
 		Upgrade.new("Blade Speed", "Increase blade rotation speed", "_upgrade_orbit_speed_blade", icon_orbit_speed)
 ]
 
-
-func get_random_upgrades() -> Array:
-	var pool = upgrades.duplicate();
+func get_random_upgrades(main: Node) -> Array:
+	var pool: Array = [];
+	for u in upgrades:
+		if is_upgrade_allowed(u, main):
+			pool.append(u);
 	pool.shuffle();
 	current_choices = pool.slice(0, 3);
 	return current_choices;
+
+func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
+	match upgrade.apply_func:
+		"_upgrade_orbit_gun_damage", "_upgrade_orbit_gun_fire_rate":
+			return main.has_orbit_gun;
+		"_upgrade_orbit_speed_blade":
+			return main.has_orbit_blade;
+		"_upgrade_orbit_blade":
+			# Only allow gun unlock if player doesn't already have one
+			return !main.has_orbit_gun;
+	return true;
 
 func apply_upgrade(index: int, main: Node):
 	var upgrade = current_choices[index];

@@ -38,8 +38,7 @@ func _on_timer_timeout():
 	if _alive < _min_density:
 			var needed = _min_density - _alive;
 			for i in needed:
-				var pos = get_spawn_position();
-				spawn_enemy(pos);
+				spawn_enemy(get_valid_spawn());
 	for i in enemies_per_tick:
 		if main.enemies_spawned >= main.get_spawn_cap():
 			break;
@@ -92,7 +91,6 @@ func get_spawn_position():
 	var offset = forward.rotated(randf_range(-0.5, 0.5)) * dist;
 	return player_pos + offset;
 
-
 func get_front_spawn():
 	var _pos = Player.global_position;
 	var vel = Player.velocity;
@@ -134,12 +132,10 @@ func hit():
 	hit_p.emit();
 
 func _on_ambush_timer_timeout() -> void:
-	var player_pos = Player.global_position;
+	var _player_pos = Player.global_position;
 	var vel = Player.velocity;
 	if vel.length() < 1:
 		return;
-	var forward = vel.normalized();
+	var _forward = vel.normalized();
 	for i in 5:
-		var dir = forward.rotated(randf_range(-0.4, 04));
-		var _spawn_pos = player_pos + dir * spawn_distance;
 		spawn_enemy(get_valid_spawn());

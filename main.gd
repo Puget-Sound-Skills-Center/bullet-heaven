@@ -14,6 +14,9 @@ var level : int = 1
 var coins: int = 0;
 const OrbitGun = preload("res://OrbitGun.gd");
 
+var has_orbit_blade := false
+var has_orbit_gun := false
+
 var orbit_gun_sprites = [
 	preload("res://Weapons/GunPack/Pack 1/1px/25.png"),
 	preload("res://Weapons/GunPack/Pack 1/1px/26.png"),
@@ -122,7 +125,7 @@ func update_level_text():
 func show_level_up_choices():
 	get_tree().paused = true;
 	$CanvasLayer/LevelUpPanel.show();
-	var choices = $UpgradeManager.get_random_upgrades();
+	var choices = $UpgradeManager.get_random_upgrades(self);
 	
 	$CanvasLayer/LevelUpPanel/Option1.text = choices[0].name;
 	$CanvasLayer/LevelUpPanel/Option2.text = choices[1].name;
@@ -203,10 +206,12 @@ func _upgrade_damage_up():
 	$Player.stats.damage += 2;
 
 func _upgrade_orbit_blade():
+	has_orbit_blade = true;
 	var orbit = preload("res://Scenes/orbital_weapon.tscn").instantiate();
 	$Player.add_child(orbit);
 
 func _upgrade_orbit_gun():
+	has_orbit_gun = true;
 	for gun in $Player.get_children():
 		if gun.has_method("apply_stats"):
 			gun.apply_stats();
