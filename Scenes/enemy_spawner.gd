@@ -122,6 +122,19 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 		return;
 	var goblin = goblin_scene.instantiate();
 	goblin.global_position = spawn_pos;
+	# Enemy scaling
+	var hp_scale = 1.0 + (time_elapsed / 60.0) * 0.5 # +50% HP per minute
+	var speed_scale = 1.0 + (time_elapsed / 60.0) * 0.3  # +30% speed per minute
+	goblin.max_health = int(goblin.max_health * hp_scale);
+	goblin.health = goblin.max_health;
+	goblin.speed = int(goblin.speed * speed_scale);
+	goblin.speed = clamp(goblin.speed, 40, 250);
+	goblin.max_health = clamp(goblin.max_health, 2, 200);
+	if randf() < 0.05: # 5% chance
+		goblin.max_health *= 3;
+		goblin.health = goblin.max_health;
+		goblin.speed *= 1.5;
+		goblin.scale = Vector2(1.3, 1.3);
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);
 	goblin.add_to_group("enemies");

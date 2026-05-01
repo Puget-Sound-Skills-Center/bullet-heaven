@@ -11,6 +11,20 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnakl"]
+bg_color = Color(0.13362002, 0.30005637, 0.5318396, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8l8o"]
+bg_color = Color(0.6752363, 0.54340214, 0.9836902, 1)
+
 [node name="LevelUpPanel" type="Node2D" unique_id=228750137]
 
 [node name="BackgroundPanel" type="Panel" parent="." unique_id=1953261075]
@@ -30,6 +44,17 @@ text = "YOU LEVELED UP!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RerollButton" type="Button" parent="." unique_id=2006133771]
+anchors_preset = -1
+offset_left = 666.0
+offset_top = 187.0
+offset_right = 901.0
+offset_bottom = 232.0
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_hnakl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_v8l8o")
+text = "Reroll (-10 Coins)"
+
 [node name="Option1" type="Button" parent="." unique_id=1391653709]
 offset_left = 278.0
 offset_top = 324.0
@@ -47,9 +72,9 @@ offset_bottom = 65.0
 [node name="DescLabel" type="Label" parent="Option1" unique_id=1307059037]
 layout_mode = 0
 offset_left = 54.0
-offset_top = 55.0
+offset_top = 44.0
 offset_right = 246.0
-offset_bottom = 78.0
+offset_bottom = 73.0
 text = "Faster fire rate for 6 secs"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -61,6 +86,7 @@ offset_right = 578.0
 offset_bottom = 549.0
 text = "Coffee: 
 "
+icon_alignment = 1
 
 [node name="Icon" type="TextureRect" parent="Option2" unique_id=1948047077]
 layout_mode = 0
@@ -72,9 +98,9 @@ offset_bottom = 65.0
 [node name="DescLabel" type="Label" parent="Option2" unique_id=2068119358]
 layout_mode = 0
 offset_left = 54.0
-offset_top = 55.0
+offset_top = 46.0
 offset_right = 246.0
-offset_bottom = 78.0
+offset_bottom = 72.0
 text = "1.2X Speed for 6 seconds"
 horizontal_alignment = 1
 vertical_alignment = 1

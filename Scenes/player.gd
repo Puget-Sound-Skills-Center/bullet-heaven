@@ -1,5 +1,6 @@
 extends CharacterBody2D
 @export var stats: PlayerStats;
+@onready var main = get_node("/root/Main");
 
 const NORMAL_SHOT : float = 0.5;
 const FAST_SHOT : float = 0.1;
@@ -8,6 +9,7 @@ const BOOST_SPEED : int = 350;
 var speed : int;
 var screen_size : Vector2;
 var can_shoot : bool;
+var pickup_radius := 60.0;
 #var damage = 1;
 var weapon_count := 0;
 
@@ -75,6 +77,8 @@ func _physics_process(_delta):
 func apply_stats():
 	speed = stats.move_speed;
 	$ShotTimer.wait_time = stats.fire_rate;
+	pickup_radius = stats.pickup_radius;
+	$PickupArea/CollisionShape2D.shape.radius = pickup_radius;
 
 func boost():
 	$BoostTimer.start()
@@ -91,3 +95,8 @@ func _on_boost_timer_timeout():
 
 func _on_fast_fire_timer_timeout():
 	$ShotTimer.wait_time = NORMAL_SHOT;
+
+func _on_pickup_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("xp_item"):
+		main.add_xp(body.value)
+		body.queue_free();

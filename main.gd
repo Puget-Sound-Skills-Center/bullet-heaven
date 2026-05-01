@@ -1,5 +1,5 @@
 extends Node
-
+@onready var player = get_node("/root/Main/Player");
 
 var run_time := 0.0;
 var wave : int;
@@ -12,6 +12,7 @@ var xp : int = 0
 var xp_to_level : int = 10   # adjust as you like
 var level : int = 1
 var coins: int = 0;
+var reroll_cost := 10;
 const OrbitGun = preload("res://OrbitGun.gd");
 
 var has_orbit_blade := false
@@ -52,6 +53,7 @@ func reset():
 	$Player.global_position = center;
 	xp = 0;
 	level = 1;
+	reroll_cost = 10;
 	update_level_text();
 	xp_to_level = 10;
 	update_xp_bar();
@@ -76,6 +78,7 @@ func reset_run():
 	enemies_spawned = 0
 	xp = 0
 	level = 1
+	reroll_cost = 10;
 	xp_to_level = 10
 	update_xp_bar()
 	update_level_text()
@@ -125,6 +128,9 @@ func update_level_text():
 func show_level_up_choices():
 	get_tree().paused = true;
 	$CanvasLayer/LevelUpPanel.show();
+	$CanvasLayer/LevelUpPanel/RerollButton.disabled = coins < 10;
+	$CanvasLayer/LevelUpPanel/RerollButton.text = "Reroll (-" + str(reroll_cost) + " Coins)";
+	$CanvasLayer/LevelUpPanel/RerollButton.disabled = coins < reroll_cost;
 	var choices = $UpgradeManager.get_random_upgrades(self);
 	
 	$CanvasLayer/LevelUpPanel/Option1.text = choices[0].name;
@@ -165,8 +171,8 @@ func _on_enemy_spawner_hit_p():
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 	if lives <= 0:
 		get_tree().paused = true;
-		$GameOver/WaveSurvivedLabel.text = "WAVE SURVIVED: " + str(wave - 1);
-		$GameOver.show()
+		$CanvasLayer/HUD/GameOver/WaveSurvivedLabel.text = "WAVE SURVIVED: " + str(wave - 1);
+		$CanvasLayer/GameOver.show();
 
 func update_coins():
 	$CanvasLayer/HUD/CoinsLabel.text = "Coins: " + str(coins);
@@ -249,6 +255,10 @@ func _upgrade_orbit_gun_fire_rate():
 			gun.stats.fire_rate *= 0.85;
 			gun.apply_stats();
 
+func _upgrade_pickup_range():
+	$Player.stats.pickup_radius += 20;
+	$Player.apply_stats();
+
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
 	close_level_up_panel();
@@ -260,3 +270,31 @@ func _on_option_2_pressed() -> void:
 func _on_option_3_pressed() -> void:
 	$UpgradeManager.apply_upgrade(2, self);
 	close_level_up_panel();
+
+
+func _on_reroll_button_pressed() -> void:
+	if coins < 1:
+		print("Insuffient coins");
+		return;
+	# Deduct coins
+	coins -= reroll_cost
+	update_coins();
+	# Increase reroll cost (Scaling)
+	reroll_cost = int(reroll_cost * 1.25) + 5 # Example scaling curve
+	# Get new upgrades choices
+	var choices = $UpgradeManager.get_random_upgrades(self);
+	#Update UI
+	$CanvasLayer/LevelUpPanel/Option1.text = choices[0].name;
+	$CanvasLayer/LevelUpPanel/Option2.text = choices[1].name;
+	$CanvasLayer/LevelUpPanel/Option3.text = choices[2].name;
+	
+	$CanvasLayer/LevelUpPanel/Option1/Icon.texture = choices [0].icon;
+	$CanvasLayer/LevelUpPanel/Option2/Icon.texture = choices [1].icon;
+	$CanvasLayer/LevelUpPanel/Option3/Icon.texture = choices [2].icon;
+	
+	$CanvasLayer/LevelUpPanel/Option1/DescLabel.text = choices[0].description;
+	$CanvasLayer/LevelUpPanel/Option2/DescLabel.text = choices[1].description;
+	$CanvasLayer/LevelUpPanel/Option3/DescLabel.text = choices[2].description;
+	
+	$CanvasLayer/LevelUpPanel/RerollButton.text = "Reroll (-" + str(reroll_cost) + " Coins)";
+	$CanvasLayer/LevelUpPanel/RerollButton.disabled = coins < reroll_cost;

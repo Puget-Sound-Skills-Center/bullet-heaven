@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dnjlif1s8tn31" path="res://Player/120px-Sprite-Experience_Gem-DarkBlue.png" id="1_rd7pr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qrk3n"]
-radius = 7.0
-height = 18.0
+radius = 8.0
+height = 20.0
 
 [node name="XpItem" type="Area2D" unique_id=1630608710]
 collision_layer = 16

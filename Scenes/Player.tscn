@@ -246,7 +246,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn08x"]
 size = Vector2(22.75, 42.5)
 
-[node name="Player" type="CharacterBody2D" unique_id=1601385257]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
+radius = 34.234486
+
+[node name="Player" type="CharacterBody2D" unique_id=1601385257 groups=["Player"]]
 z_index = 1
 collision_layer = 2
 collision_mask = 17
@@ -257,8 +260,6 @@ stats = SubResource("Resource_dewec")
 scale = Vector2(3.75, 3.75)
 sprite_frames = SubResource("SpriteFrames_5ixxa")
 animation = &"Walk0"
-frame = 3
-frame_progress = 0.1823283
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
 position = Vector2(-1.625, 4.75)
@@ -280,6 +281,16 @@ limit_top = 0
 limit_right = 3264
 limit_bottom = 2255
 
+[node name="PickupArea" type="Area2D" parent="." unique_id=631602867]
+position = Vector2(761.844, 183.96423)
+collision_layer = 2
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=881940099]
+position = Vector2(-2, 4)
+shape = SubResource("CircleShape2D_gntrk")
+
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
 [connection signal="timeout" from="FastFireTimer" to="." method="_on_fast_fire_timer_timeout"]
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
