@@ -36,7 +36,7 @@ func _ready() -> void:
 		Upgrade.new("Orbit Gun Damage", "Increase orbit gun damage by +1", "_upgrade_orbit_gun_damage", icon_orbit_gun),
 		Upgrade.new("Orbit Gun Fire Rate", "Increase orbit gun fire rate by 15%", "_upgrade_orbit_gun_fire_rate", icon_orbit_gun),
 		Upgrade.new("Blade Speed", "Increase blade rotation speed", "_upgrade_orbit_speed_blade", icon_orbit_speed),
-		Upgrade.new("Pickup Range", "Pick up range increased by 20%", "upgrade_pickup_range", icon_pickup)
+		Upgrade.new("Pickup Range", "Pick up range increased by 20%", "_upgrade_pickup_range", icon_pickup)
 ]
 
 func get_random_upgrades(main: Node) -> Array:

@@ -11,7 +11,7 @@ var spawn_rate := 1.0
 var min_spawn_rate := 0.15
 var spawn_acceleration := 0.01
 var max_enemies_per_tick := 40;
-
+var max_alive_enemies := 120;  # tune this based on performance
 # How far from the player enemies should spawn
 var spawn_distance := 1200
 
@@ -30,30 +30,34 @@ func _process(delta: float) -> void:
 	# Hard cap
 	enemies_per_tick = clamp(enemies_per_tick, 5, max_enemies_per_tick);
 
+func can_spawn() -> bool:
+	return get_tree().get_nodes_in_group("enemies").size() < max_alive_enemies;
 
 func _on_timer_timeout():
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
 	var _min_density = 10 + int(time_elapsed / 20.0); # always keep at least 10 enemies alive
 	_min_density = clamp(_min_density, 10, 60);
 	if _alive < _min_density:
-			var needed = _min_density - _alive;
+			var needed = min(_min_density - _alive, max_alive_enemies - _alive);
 			for i in needed:
-				spawn_enemy(get_valid_spawn());
+				if can_spawn():
+					spawn_enemy(get_valid_spawn());
 	for i in enemies_per_tick:
-		if main.enemies_spawned >= main.get_spawn_cap():
+		if not can_spawn():
 			break;
 		spawn_enemy(get_valid_spawn());
 	var roll = randf();
 	if roll < 0.25:
-		spawn_enemy(get_valid_spawn()); # Random ring
-	elif roll < 0.50:
-		spawn_enemy(get_valid_spawn());
-	elif roll < 0.75:
-		spawn_enemy(get_valid_spawn());
-	else:
-		spawn_enemy(get_valid_spawn());
+		if can_spawn():
+			spawn_enemy(get_valid_spawn()); # Random ring
+		elif roll < 0.50:
+			spawn_enemy(get_valid_spawn());
+		elif roll < 0.75:
+			spawn_enemy(get_valid_spawn());
+		else:
+			spawn_enemy(get_valid_spawn());
 	# Occasionally spawn enemies far away so the world feels full
-	if randf() < 0.15:
+	if randf() < 0.15 and can_spawn():
 		var _far_pos = Player.global_position + Vector2(
 			randf_range(-2000, 2000),
 			randf_range(-2000, 2000)
@@ -72,7 +76,6 @@ func is_inside_wall(pos: Vector2) -> bool:
 	var tilemap = main.get_node("World") # adjust if needed
 	var cell = tilemap.local_to_map(pos)
 	return tilemap.get_cell_source_id(0, cell) != -1  # true if tile exists
-
 
 func get_spawn_position():
 	var player_pos = Player.global_position;
@@ -118,7 +121,7 @@ func get_back_spawn():
 	return _pos + _back.rotated(randf_range(-0.4, 0.4)) * spawn_distance;
 
 func spawn_enemy(spawn_pos: Vector2) -> void:
-	if main.enemies_spawned >= main.get_spawn_cap():
+	if not can_spawn():
 		return;
 	var goblin = goblin_scene.instantiate();
 	goblin.global_position = spawn_pos;
@@ -151,4 +154,5 @@ func _on_ambush_timer_timeout() -> void:
 		return;
 	var _forward = vel.normalized();
 	for i in 5:
-		spawn_enemy(get_valid_spawn());
+		if can_spawn():
+			spawn_enemy(get_valid_spawn());
