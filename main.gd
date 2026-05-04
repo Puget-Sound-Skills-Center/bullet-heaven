@@ -1,5 +1,5 @@
 extends Node
-@onready var player = get_node("World/Player");
+@onready var player = get_node("Player");
 
 var run_time := 0.0;
 var wave : int;
@@ -65,7 +65,7 @@ func reset():
 	update_xp_bar();
 	max_enemies = int(difficulty);
 	enemies_spawned = 0;
-	lives = 3;
+	lives = 300;
 	run_time = 0.0;
 	enemies_killed = 0;
 	coins = 0;

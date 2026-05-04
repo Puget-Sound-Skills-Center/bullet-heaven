@@ -8,8 +8,8 @@ var goblin_scene := preload("res://Scenes/goblin.tscn");
 
 var time_elapsed := 0.0
 var spawn_rate := 1.0
-var min_spawn_rate := 0.15
-var spawn_acceleration := 0.01
+var min_spawn_rate := 0.10
+var spawn_acceleration := 0.001;
 var max_enemies_per_tick := 40;
 var max_alive_enemies := 120;  # tune this based on performance
 # How far from the player enemies should spawn
@@ -137,18 +137,30 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	var goblin = goblin_scene.instantiate();
 	goblin.global_position = spawn_pos;
 	var minutes = time_elapsed / 60.0;
-	# Enemy scaling: 10 min → +5x HP, +3x speed-ish
-	var hp_scale = 1.0 + minutes * 0.4;
-	var speed_scale = 1.0 + minutes * 0.25;
-	goblin.max_health = int(goblin.max_health * hp_scale);
+	var level = main.level;
+	var player_damage = main.player.stats.damage;
+	var player_speed = main.player.stats.move_speed;
+	# --- HP SCALING ---
+	# Base 1 HP, +1 HP every 3 levels, +soft time scaling
+	var base_hp := 1
+	var level_hp := int(max(level - 1, 0) / 3) # +1 HP per 3 levels
+	var time_hp := int(minutes * 0.4) # +1 HP every ~2.5 min
+	var scaled_hp := base_hp + level_hp + time_hp
+	goblin.max_health = clamp(scaled_hp, 1, 200);
 	goblin.health = goblin.max_health;
-	goblin.speed = int(goblin.speed * speed_scale);
-	goblin.speed = clamp(goblin.speed, 40, 250);
-	goblin.max_health = clamp(goblin.max_health, 2, 200);
+	# --- SPEED SCALING ---
+	# Base 40, grows slowly with level and time, lightly tied to player speed
+	var base_speed = 40;
+	var level_speed = int(max(level - 1, 0) * 1.5); # 1.5 per level
+	var time_speed = int(minutes * 3.0) # 3 per minute
+	var player_speed_factor = int((player_speed - 200) * 0.1)
+	var scaled_speed = base_speed + level_speed + time_speed + player_speed_factor;
+	goblin.speed = clamp(scaled_speed, 40, 250);
+	# --- ELITES CHANCE ---
 	if randf() < 0.05: # 5% chance
 		goblin.max_health *= 3;
 		goblin.health = goblin.max_health;
-		goblin.speed *= 1.5;
+		goblin.speed *= int(goblin.speed * 1.5);
 		goblin.scale = Vector2(1.3, 1.3);
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);

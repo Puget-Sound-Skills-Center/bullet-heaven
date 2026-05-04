@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var bullet_scene : PackedScene;
-@onready var player = get_parent().get_node("Player")
+@onready var player = get_parent().get_node("Player");
 
 
 func _on_player_shoot(pos, dir, dmg):

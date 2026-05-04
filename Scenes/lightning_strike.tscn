@@ -189,17 +189,22 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d81s5")
 }],
-"loop": true,
-"name": &"default",
-"speed": 13.0
+"loop": false,
+"name": &"strike",
+"speed": 16.0
 }]
 
-[node name="Node2D" type="Node2D" unique_id=1672222094]
+[node name="lightning_strike" type="Node2D" unique_id=1672222094]
+scale = Vector2(2, 2)
 script = ExtResource("1_tqvll")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=960233794]
+position = Vector2(340.5, -131)
 sprite_frames = SubResource("SpriteFrames_2ofid")
-frame_progress = 0.88785684
+animation = &"strike"
+frame = 25
+frame_progress = 1.0
+offset = Vector2(-340.5, 131)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1559567899]
 stream = ExtResource("3_ffpch")

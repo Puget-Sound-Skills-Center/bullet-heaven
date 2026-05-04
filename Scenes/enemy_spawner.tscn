@@ -42,6 +42,7 @@ position = Vector2(851, 996)
 position = Vector2(825, 1737)
 
 [node name="Timer" type="Timer" parent="." unique_id=1569393839]
+wait_time = 3.0
 autostart = true
 
 [node name="AmbushTimer" type="Timer" parent="." unique_id=191640607]
