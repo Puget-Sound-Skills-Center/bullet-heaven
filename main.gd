@@ -1,10 +1,11 @@
 extends Node
-@onready var player = get_node("/root/Main/Player");
+@onready var player = get_node("World/Player");
 
 var run_time := 0.0;
 var wave : int;
 var difficulty : float;
 const DIFF_MULTIPLIER : float = 1.2;
+var enemies_killed := 0;
 var max_enemies : int
 var lives : int;
 var enemies_spawned : int;
@@ -14,9 +15,14 @@ var level : int = 1
 var coins: int = 0;
 var reroll_cost := 10;
 const OrbitGun = preload("res://OrbitGun.gd");
+var lightning_damage := 20;
+var lightning_chance := 0.15;   # 15% chance per shot
+var lightning_chain := 0;       # 0 = no chain
 
-var has_orbit_blade := false
-var has_orbit_gun := false
+var has_orbit_blade := false;
+var has_orbit_gun := false;
+var has_aoe_aura := false;
+var has_lightning := false;
 
 var orbit_gun_sprites = [
 	preload("res://Weapons/GunPack/Pack 1/1px/25.png"),
@@ -42,7 +48,7 @@ func _ready() -> void:
 
 func new_game():
 	wave = 1;
-	lives = 300;
+	lives = 3;
 	difficulty = 10.0;
 	$EnemySpawner/Timer.wait_time = 1.0;
 	reset();
@@ -59,7 +65,22 @@ func reset():
 	update_xp_bar();
 	max_enemies = int(difficulty);
 	enemies_spawned = 0;
+	lives = 3;
+	run_time = 0.0;
+	enemies_killed = 0;
+	coins = 0;
 	$Player.reset();
+	$Player.reset_stats();
+	$Player.clear_weapon();
+	weapon_count = 0;
+	has_orbit_blade = false;
+	has_orbit_gun = false;
+	has_aoe_aura = false;
+	has_lightning = false;
+	lightning_damage = 20;
+	lightning_chance = 0.15;
+	lightning_chain = 0;
+	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
 	get_tree().call_group("items", "queue_free");
@@ -72,26 +93,41 @@ func reset():
 
 func reset_run():
 	# Full reset because the player died
-	wave = 1
-	difficulty = 30.0
-	max_enemies = int(difficulty)
-	enemies_spawned = 0
-	xp = 0
-	level = 1
+	wave = 1;
+	difficulty = 30.0;
+	max_enemies = int(difficulty);
+	enemies_spawned = 0;
+	xp = 0;
+	level = 1;
 	reroll_cost = 10;
-	xp_to_level = 10
-	update_xp_bar()
-	update_level_text()
+	xp_to_level = 10;
+	update_xp_bar();
+	update_level_text();
 	lives = 300
-	$HUD/LivesLabel.text = "X " + str(lives)
+	run_time = 0.0;
+	enemies_killed = 0;
+	coins = 0;
+	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives)
 	$Player.reset();
+	$Player.reset_stats();
+	$Player.clear_weapon();
+	weapon_count = 0;
+	has_orbit_blade = false;
+	has_orbit_gun = false;
+	has_aoe_aura = false;
+	has_lightning = false;
+	lightning_damage = 20;
+	lightning_chance = 0.15;
+	lightning_chain = 0;
+	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
 	get_tree().call_group("coins", "queue_free");
 	get_tree().call_group("xp_item", "queue_free");
-	$HUD/WaveLabel.text = "WAVE: " + str(wave);
-	$HUD/EnemyLabel.text = "X " + str(max_enemies);
-	$GameOver.hide();
+	$EnemySpawner.reset_spawner();
+	$CanvasLayer/HUD/WaveLabel.text = "WAVE: " + str(wave);
+	$CanvasLayer/HUD/EnemyLabel.text = "X " + str(max_enemies);
+	$CanvasLayer/GameOver.hide();
 	get_tree().paused = false;
 
 func reset_wave():
@@ -171,7 +207,12 @@ func _on_enemy_spawner_hit_p():
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 	if lives <= 0:
 		get_tree().paused = true;
-		$CanvasLayer/HUD/GameOver/WaveSurvivedLabel.text = "WAVE SURVIVED: " + str(wave - 1);
+		var minutes = int(run_time / 60);
+		var seconds = int(run_time) % 60;
+		var time_string = "%2d:%2d" % [minutes, seconds];
+		$CanvasLayer/GameOver/TimeSurvived.text = "Time:" + time_string;
+		$CanvasLayer/GameOver/EnemiesKilled.text = "Enemies killed: " + str(enemies_killed);
+		$CanvasLayer/GameOver/CoinsCollected.text = "Coins: " + str(coins);
 		$CanvasLayer/GameOver.show();
 
 func update_coins():
@@ -255,6 +296,48 @@ func _upgrade_orbit_gun_fire_rate():
 			gun.stats.fire_rate *= 0.85;
 			gun.apply_stats();
 
+func _upgrade_aoe_aura():
+	if has_aoe_aura:
+		return;
+	var aura = preload("res://Scenes/aoe_aura.tscn").instantiate();
+	$Player.add_child(aura);
+	has_aoe_aura = true;
+
+func _upgrade_aoe_aura_damage():
+	for child in $Player.get_children():
+		if child.name == "AOE_AURA":
+			child.damage += 1;
+
+func _upgrade_aoe_aura_radius():
+	for child in $Player.get_children():
+		if child.name == "AOE_AURA":
+			child.radius += 20;
+			var col = child.get_node("CollisionShape2D");
+			col.shape.radius = child.radius;
+
+func trigger_lightning():
+	var enemies = get_tree().get_nodes_in_group("enemies");
+	if enemies.size() == 0:
+		return;
+	var target = enemies.pick_random();
+	var bolt = preload("res://Scenes/lightning_strike.tscn").instantiate();
+	bolt.damage = lightning_damage;
+	bolt.chain_count = lightning_chain;
+	add_child(bolt);
+	bolt.strike(target);
+
+func _upgrade_lightning():
+	has_lightning = true;
+
+func _upgrade_lightning_damage():
+	lightning_damage += 10;
+
+func _upgrade_lightning_chance():
+	lightning_chance += 0.05;
+
+func _upgrade_lightning_chain():
+	lightning_chain += 1;
+
 func _upgrade_pickup_range():
 	$Player.stats.pickup_radius += 20;
 	$Player.apply_stats();
@@ -270,7 +353,6 @@ func _on_option_2_pressed() -> void:
 func _on_option_3_pressed() -> void:
 	$UpgradeManager.apply_upgrade(2, self);
 	close_level_up_panel();
-
 
 func _on_reroll_button_pressed() -> void:
 	if coins < 1:

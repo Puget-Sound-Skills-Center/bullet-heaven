@@ -6,7 +6,7 @@ const NORMAL_SHOT : float = 0.5;
 const FAST_SHOT : float = 0.1;
 const START_SPEED : int = 200;
 const BOOST_SPEED : int = 350;
-var speed : int;
+var speed : float;
 var screen_size : Vector2;
 var can_shoot : bool;
 var pickup_radius := 60.0;
@@ -16,6 +16,7 @@ var weapon_count := 0;
 signal shoot(pos, dir, damage);
 
 func _ready():
+	add_to_group("player");
 	screen_size = get_viewport_rect().size
 	reset();
 
@@ -24,6 +25,21 @@ func reset():
 	position = Vector2(1632, 1128);
 	speed = stats.move_speed;
 	$ShotTimer.wait_time = stats.fire_rate;
+
+func clear_weapon():
+	for child in get_children():
+		if child.name.begins_with("apply_stats") or child.has_method("upgrade_speed"):
+			child.queue_free();
+		if child.name == "AOE_AURA":
+			child.queue_free();
+
+func reset_stats():
+	stats.damage = 1;
+	stats.fire_rate = 1.0;
+	stats.move_speed = 200;
+	stats.max_health = 5;
+	stats.pickup_radius = 60;
+	apply_stats();
 
 func get_input():
 	#Keyboard Input
@@ -43,6 +59,9 @@ func get_input():
 		else:
 			dir = (get_global_mouse_position() - position).normalized();
 		shoot.emit(position, dir, stats.damage);
+		if main.has_lightning:
+			if randf() < main.lightning_chance:
+				main.trigger_lightning();
 		can_shoot = false;
 		$ShotTimer.start();
 

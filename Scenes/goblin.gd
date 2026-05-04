@@ -13,7 +13,7 @@ signal hit_player;
 var health: int;
 var alive : bool;
 var entered : bool;
-var speed : int = 40;
+var speed : int = 15;
 var direction : Vector2;
 const DROP_CHANCE : float = 0.1;
 
@@ -62,12 +62,13 @@ func take_damage(amount: int):
 		die();
 
 func flash_hit():
-	$AnimatedSprite2D.modulate = Color(18.892, 18.892, 18.892, 1.0)
-	await get_tree().create_timer(0.1).timeout
-	$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	$AnimatedSprite2D.self_modulate = Color(18.892, 18.892, 18.892, 1.0);
+	await get_tree().create_timer(0.1).timeout;
+	$AnimatedSprite2D.self_modulate = Color(1.0, 1.0, 1.0, 1.0);
 
 func die():
 	alive = false;
+	main.enemies_killed += 1;
 	$AnimatedSprite2D.stop();
 	$Area2D/CollisionShape2D.set_deferred("disabled", true);
 	var xp = xp_scene.instantiate();

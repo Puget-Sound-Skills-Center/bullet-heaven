@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dt3la5ipxefpq"]
+
+[ext_resource type="Script" uid="uid://dcnds06bk4kdl" path="res://Scenes/aoe_aura.gd" id="1_jfk1n"]
+[ext_resource type="Texture2D" uid="uid://rg2g8eyygdkf" path="res://Scenes/SpritesOther/魔法陣.png" id="1_sfrhs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfk1n"]
+radius = 146.6697
+
+[node name="AOE_AURA" type="Area2D" unique_id=202670541]
+z_index = -1
+scale = Vector2(0.4, 0.4)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_jfk1n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2097353491]
+position = Vector2(-4, 4)
+shape = SubResource("CircleShape2D_jfk1n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1119719199]
+texture = ExtResource("1_sfrhs")

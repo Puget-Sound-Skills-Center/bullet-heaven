@@ -20,44 +20,56 @@ var enemies_per_tick := 10
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
-	# Increase spawn rate over time
-	if spawn_rate > min_spawn_rate:
-		spawn_rate -= spawn_acceleration * delta;
-		$Timer.wait_time = spawn_rate;
-	# Curved scaling for enemies per tick
-	var growth = pow(time_elapsed / 60.0, 1.3)  # curved growth
-	enemies_per_tick = int(5 + growth);
-	# Hard cap
-	enemies_per_tick = clamp(enemies_per_tick, 5, max_enemies_per_tick);
+	# Time in minutes for nicer curves
+	var minutes = time_elapsed / 60.0;
+	# Spawn rate: starts slow, only gets fast after many minutes
+	# 0 min → ~1.4s, 5 min → ~0.9s, 10 min → ~0.6s
+	var target_rate = 1.4 - clamp(minutes * 0.08, 0.0, 0.8);
+	spawn_rate = lerp(spawn_rate, target_rate, 0.05);
+	$Timer.wait_time = spawn_rate;
+	# Enemies per tick: grows VERY slowly
+	# 0 min → 1, 2 min → 2, 5 min → 3–4, 10 min → 5–6
+	var base = 1;
+	var growth = pow(max(minutes - 1.0, 0.0), 1.15) * 0.6;
+	enemies_per_tick = int(base + growth);
+	enemies_per_tick = clamp(enemies_per_tick, 1, max_enemies_per_tick);
 
 func can_spawn() -> bool:
 	return get_tree().get_nodes_in_group("enemies").size() < max_alive_enemies;
 
 func _on_timer_timeout():
+	# Full grace period
+	if time_elapsed < 3.0:
+		return;
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
-	var _min_density = 10 + int(time_elapsed / 20.0); # always keep at least 10 enemies alive
-	_min_density = clamp(_min_density, 10, 60);
+	var minutes = time_elapsed / 60.0;
+	# Minimum density: almost nothing early, ramps over many minutes
+	# 0 min → 0, 2 min → 3, 5 min → 8, 10 min → ~15
+	var _min_density = int(pow(minutes, 1.2) * 5.0); # always keep at least 10 enemies alive
+	_min_density = clamp(_min_density, 0, 60);
 	if _alive < _min_density:
 			var needed = min(_min_density - _alive, max_alive_enemies - _alive);
 			for i in needed:
 				if can_spawn():
 					spawn_enemy(get_valid_spawn());
+	# Main spawn loop
 	for i in enemies_per_tick:
 		if not can_spawn():
 			break;
 		spawn_enemy(get_valid_spawn());
-	var roll = randf();
-	if roll < 0.25:
-		if can_spawn():
-			spawn_enemy(get_valid_spawn()); # Random ring
-		elif roll < 0.50:
-			spawn_enemy(get_valid_spawn());
-		elif roll < 0.75:
-			spawn_enemy(get_valid_spawn());
-		else:
-			spawn_enemy(get_valid_spawn());
-	# Occasionally spawn enemies far away so the world feels full
-	if randf() < 0.15 and can_spawn():
+	# Random ring spawns (disabled early)
+	if minutes > 4.0:
+		var roll = randf()
+		if roll < 0.25 and can_spawn():
+			spawn_enemy(get_valid_spawn())
+		elif roll < 0.50 and can_spawn():
+			spawn_enemy(get_valid_spawn())
+		elif roll < 0.75 and can_spawn():
+			spawn_enemy(get_valid_spawn())
+		elif can_spawn():
+			spawn_enemy(get_valid_spawn())
+	 # Far spawns (Only after 7 minutes)
+	if minutes > 7.0 and randf() < 0.15 and can_spawn():
 		var _far_pos = Player.global_position + Vector2(
 			randf_range(-2000, 2000),
 			randf_range(-2000, 2000)
@@ -89,7 +101,6 @@ func get_spawn_position():
 	var vel = Player.velocity;
 	if vel.length() < 1:
 		vel = Vector2.RIGHT.rotated(randf() * TAU);
-	
 	var forward = vel.normalized();
 	var offset = forward.rotated(randf_range(-0.5, 0.5)) * dist;
 	return player_pos + offset;
@@ -125,9 +136,10 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 		return;
 	var goblin = goblin_scene.instantiate();
 	goblin.global_position = spawn_pos;
-	# Enemy scaling
-	var hp_scale = 1.0 + (time_elapsed / 60.0) * 0.5 # +50% HP per minute
-	var speed_scale = 1.0 + (time_elapsed / 60.0) * 0.3  # +30% speed per minute
+	var minutes = time_elapsed / 60.0;
+	# Enemy scaling: 10 min → +5x HP, +3x speed-ish
+	var hp_scale = 1.0 + minutes * 0.4;
+	var speed_scale = 1.0 + minutes * 0.25;
 	goblin.max_health = int(goblin.max_health * hp_scale);
 	goblin.health = goblin.max_health;
 	goblin.speed = int(goblin.speed * speed_scale);
@@ -156,3 +168,10 @@ func _on_ambush_timer_timeout() -> void:
 	for i in 5:
 		if can_spawn():
 			spawn_enemy(get_valid_spawn());
+
+func reset_spawner():
+	time_elapsed = 0.0;
+	spawn_rate = 1.0;
+	enemies_per_tick = 1;
+	$Timer.wait_time = spawn_rate;
+	max_alive_enemies = 120;

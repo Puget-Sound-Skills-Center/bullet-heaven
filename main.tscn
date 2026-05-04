@@ -20,7 +20,9 @@ position = Vector2(-1, 37)
 scale = Vector2(3, 3)
 layer_0/name = "Grass2"
 
-[node name="Player" parent="." unique_id=1601385257 instance=ExtResource("2_0xm2m")]
+[node name="Player" parent="World" unique_id=1601385257 instance=ExtResource("2_0xm2m")]
+position = Vector2(0.33333334, -12.333334)
+scale = Vector2(0.33333334, 0.33333334)
 
 [node name="BulletManager" type="Node2D" parent="." unique_id=78546546]
 script = ExtResource("4_lquwl")
@@ -105,7 +107,7 @@ offset_bottom = 613.0
 [node name="GameOver" parent="CanvasLayer" unique_id=657096932 instance=ExtResource("8_5vw27")]
 process_mode = 2
 
-[connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
+[connection signal="shoot" from="World/Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
 [connection signal="timeout" from="WaveOverTimer" to="." method="_on_wave_over_timer_timeout"]
 [connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
