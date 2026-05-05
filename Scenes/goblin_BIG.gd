@@ -13,7 +13,7 @@ signal hit_player;
 var health: int;
 var alive : bool;
 var entered : bool;
-var speed : int = 50;
+var speed : int = 15;
 var direction : Vector2;
 const DROP_CHANCE : float = 0.1;
 
@@ -22,6 +22,7 @@ func _ready():
 	health = max_health;
 	alive = true;
 	entered = false;
+	scale = Vector2(1.4, 1.4);
 	#Pick a direction for the entrance
 	var dist = screen_rect.get_center() - position
 	#check if need to move horizontally or vertically

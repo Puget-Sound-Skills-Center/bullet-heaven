@@ -2,6 +2,12 @@ extends Node2D
 
 signal hit_p;
 
+# Enemy Types
+var goblin_small := preload("res://Scenes/goblin_Small.tscn");
+var goblin_normal := preload("res://Scenes/goblin.tscn");
+var goblin_big := preload("res://Scenes/goblin_Big.tscn");
+
+
 @onready var main = get_node("/root/Main");
 @onready var Player = main.get_node("Player");
 var goblin_scene := preload("res://Scenes/goblin.tscn");
@@ -37,9 +43,25 @@ func _process(delta: float) -> void:
 func can_spawn() -> bool:
 	return get_tree().get_nodes_in_group("enemies").size() < max_alive_enemies;
 
+func pick_enemy(minutes: float) -> PackedScene:
+	if minutes < 3.0:
+		return goblin_small;
+	if minutes < 7.0:
+		var roll = randf();
+		if roll < 0.6:
+			return goblin_small;
+		else:
+			return goblin_normal;
+		# Late game
+	var roll = randf()
+	if roll < 0.5:
+		return goblin_normal;
+	else:
+		return goblin_big;
+
 func _on_timer_timeout():
 	# Full grace period
-	if time_elapsed < 3.0:
+	if time_elapsed < 1.0:
 		return;
 	var _alive = get_tree().get_nodes_in_group("enemies").size();
 	var minutes = time_elapsed / 60.0;
@@ -58,7 +80,7 @@ func _on_timer_timeout():
 			break;
 		spawn_enemy(get_valid_spawn());
 	# Random ring spawns (disabled early)
-	if minutes > 4.0:
+	if minutes > 1.0:
 		var roll = randf()
 		if roll < 0.25 and can_spawn():
 			spawn_enemy(get_valid_spawn())
@@ -79,7 +101,7 @@ func _on_timer_timeout():
 func get_valid_spawn() -> Vector2:
 	var pos = get_spawn_position();
 	var tries = 0;
-	while is_inside_wall(pos) and tries < 10:
+	while (is_inside_wall(pos) or is_too_close_to_other_enemies(pos, 250.0)) and tries < 10:
 		pos = get_spawn_position();
 		tries += 1;
 	return pos;
@@ -139,7 +161,7 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	var minutes = time_elapsed / 60.0;
 	var level = main.level;
 	var _player_damage = main.player.stats.damage;
-	var player_speed = main.player.stats.move_speed;
+	var _player_speed = main.player.stats.move_speed;
 	# --- HP SCALING ---
 	# Base 1 HP, +1 HP every 3 levels, +soft time scaling
 	var base_hp := 1
@@ -148,20 +170,17 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	var scaled_hp := base_hp + level_hp + time_hp
 	goblin.max_health = clamp(scaled_hp, 1, 200);
 	goblin.health = goblin.max_health;
-	# --- SPEED SCALING ---
-	# Base 40, grows slowly with level and time, lightly tied to player speed
-	var base_speed = 40;
-	var level_speed = int(max(level - 1, 0) * 1.5); # 1.5 per level
-	var time_speed = int(minutes * 3.0) # 3 per minute
-	var player_speed_factor = int((player_speed - 200) * 0.1)
-	var scaled_speed = base_speed + level_speed + time_speed + player_speed_factor;
-	goblin.speed = clamp(scaled_speed, 40, 250);
 	# --- ELITES CHANCE ---
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);
 	goblin.add_to_group("enemies");
-	goblin.speed += time_elapsed * 0.2;
 	main.enemies_spawned += 1;
+
+func is_too_close_to_other_enemies(pos: Vector2, min_dist := 200.0) -> bool:
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if e.global_position.distance_to(pos) < min_dist:
+			return true;
+	return false;
 
 func hit():
 	hit_p.emit();

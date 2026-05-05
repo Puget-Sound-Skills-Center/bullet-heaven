@@ -40,7 +40,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_somhs"]
-radius = 16.03122
+radius = 18.0
 
 [node name="Coin" type="Area2D" unique_id=1738616040]
 collision_layer = 16

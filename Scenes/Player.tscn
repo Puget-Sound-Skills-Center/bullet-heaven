@@ -244,7 +244,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn08x"]
-size = Vector2(22.75, 42.5)
+size = Vector2(22.75, 48)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
 radius = 34.234486
@@ -262,7 +262,7 @@ sprite_frames = SubResource("SpriteFrames_5ixxa")
 animation = &"Walk0"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
-position = Vector2(-1.625, 4.75)
+position = Vector2(-2, 11)
 shape = SubResource("RectangleShape2D_nn08x")
 
 [node name="ShotTimer" type="Timer" parent="." unique_id=2080585374]

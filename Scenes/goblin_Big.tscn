@@ -1,34 +1,34 @@
-[gd_scene format=3 uid="uid://b5i4t07wd5snd"]
+[gd_scene format=3 uid="uid://d2e70ki27r6xg"]
 
-[ext_resource type="Script" uid="uid://ckc5qytsv0pr0" path="res://Scenes/goblin.gd" id="1_xcvi8"]
-[ext_resource type="Texture2D" uid="uid://dj808tcfqi86a" path="res://Enemies/doc.png" id="1_xm08b"]
+[ext_resource type="Script" uid="uid://ckc5qytsv0pr0" path="res://Scenes/goblin.gd" id="1_2y62y"]
+[ext_resource type="Texture2D" uid="uid://dj808tcfqi86a" path="res://Enemies/doc.png" id="2_qkrff"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcvi8"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7w5cp"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(32, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6n10i"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(48, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gbw3e"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(64, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fkbyy"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(80, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gt0r"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(96, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o6mmh"]
-atlas = ExtResource("1_xm08b")
+atlas = ExtResource("2_qkrff")
 region = Rect2(112, 0, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ep384"]
@@ -75,7 +75,7 @@ size = Vector2(8.75, 13)
 scale = Vector2(4, 4)
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_xcvi8")
+script = ExtResource("1_2y62y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834223425]
 sprite_frames = SubResource("SpriteFrames_ep384")

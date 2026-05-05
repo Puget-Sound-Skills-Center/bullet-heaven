@@ -22,6 +22,7 @@ func _ready():
 	health = max_health;
 	alive = true;
 	entered = false;
+	scale = Vector2(0.8, 0.8);
 	#Pick a direction for the entrance
 	var dist = screen_rect.get_center() - position
 	#check if need to move horizontally or vertically
