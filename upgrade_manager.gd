@@ -46,7 +46,6 @@ func _ready() -> void:
 		Upgrade.new("Lightning Damage", "Lightning deals +10 damage.", "_upgrade_lightning_damage", icon_lightning),
 		Upgrade.new("Lightning Chance", "Lightning chance +5%.", "_upgrade_lightning_chance", icon_lightning),
 		Upgrade.new("Lightning Chain", "Lightning chains to +1 extra enemy.", "_upgrade_lightning_chain", icon_lightning)
-
 ]
 
 func get_random_upgrades(main: Node) -> Array:

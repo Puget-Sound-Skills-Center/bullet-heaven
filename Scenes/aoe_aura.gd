@@ -5,14 +5,16 @@ extends Area2D
 @export var radius := 80; # Starting radius
 
 var tick_timer := 0.0;
+var base_scale := Vector2.ONE   # ← NEW
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CollisionShape2D.shape.radius = radius;
+	base_scale = $Sprite2D.scale;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	$Sprite2D.scale = Vector2.ONE * (1.0 + sin(Time.get_ticks_msec() * 0.005) * 0.05);
+	$Sprite2D.scale = base_scale * (1.0 + sin(Time.get_ticks_msec() * 0.005) * 0.05);
 	tick_timer -= delta;
 	if tick_timer <= 0:
 		tick_timer = tick_rate;

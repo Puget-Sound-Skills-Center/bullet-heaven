@@ -311,9 +311,10 @@ func _upgrade_aoe_aura_damage():
 func _upgrade_aoe_aura_radius():
 	for child in $Player.get_children():
 		if child.name == "AOE_AURA":
-			child.radius += 20;
+			child.radius += 55;
 			var col = child.get_node("CollisionShape2D");
 			col.shape.radius = child.radius;
+			child.base_scale = Vector2.ONE * (child.radius / 80.0);
 
 func trigger_lightning():
 	var enemies = get_tree().get_nodes_in_group("enemies");

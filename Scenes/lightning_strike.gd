@@ -3,6 +3,11 @@ extends Node2D
 @export var damage := 20
 @export var chain_count := 0
 @export var chain_radius := 120
+@export var fork_count := 2;
+@export var fork_spread := 60.0;
+@export var fork_scale := 0.6;
+@export var fork_damage_factor := 0.5;
+
 
 var target = null;
 
@@ -22,11 +27,15 @@ func strike(t):
 		$AudioStreamPlayer2D.play();
 	# Chain lightning AFTER animation finishes
 	await $AnimatedSprite2D.animation_finished;
+	await get_tree().create_timer(0.01).timeout;
 	if chain_count > 0:
 		chain_to_next();
 	queue_free();
 
 func chain_to_next():
+	# If the original target died, stop chaining
+	if not is_instance_valid(target):
+		return;
 	var enemies = get_tree().get_nodes_in_group("enemies");
 	var candinates = [];
 	for e in enemies:

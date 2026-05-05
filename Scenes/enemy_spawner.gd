@@ -6,17 +6,17 @@ signal hit_p;
 @onready var Player = main.get_node("Player");
 var goblin_scene := preload("res://Scenes/goblin.tscn");
 
-var time_elapsed := 0.0
-var spawn_rate := 1.0
-var min_spawn_rate := 0.10
+var time_elapsed := 0.0;
+var spawn_rate := 1.0;
+var min_spawn_rate := 0.10;
 var spawn_acceleration := 0.001;
-var max_enemies_per_tick := 40;
+var max_enemies_per_tick := 20;
 var max_alive_enemies := 120;  # tune this based on performance
 # How far from the player enemies should spawn
-var spawn_distance := 1200
+var spawn_distance := 12000;
 
 # How many enemies per tick
-var enemies_per_tick := 10
+var enemies_per_tick := 10;
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
@@ -24,13 +24,13 @@ func _process(delta: float) -> void:
 	var minutes = time_elapsed / 60.0;
 	# Spawn rate: starts slow, only gets fast after many minutes
 	# 0 min → ~1.4s, 5 min → ~0.9s, 10 min → ~0.6s
-	var target_rate = 1.4 - clamp(minutes * 0.08, 0.0, 0.8);
-	spawn_rate = lerp(spawn_rate, target_rate, 0.05);
+	var target_rate = 1.74 - clamp(minutes * 0.01, 0.0, 0.6);
+	spawn_rate = lerp(spawn_rate, target_rate, 0.02);
 	$Timer.wait_time = spawn_rate;
 	# Enemies per tick: grows VERY slowly
 	# 0 min → 1, 2 min → 2, 5 min → 3–4, 10 min → 5–6
 	var base = 1;
-	var growth = pow(max(minutes - 1.0, 0.0), 1.15) * 0.6;
+	var growth = pow(max(minutes - 3.0, 0.0), 2.0) * 0.55;
 	enemies_per_tick = int(base + growth);
 	enemies_per_tick = clamp(enemies_per_tick, 1, max_enemies_per_tick);
 
@@ -45,7 +45,7 @@ func _on_timer_timeout():
 	var minutes = time_elapsed / 60.0;
 	# Minimum density: almost nothing early, ramps over many minutes
 	# 0 min → 0, 2 min → 3, 5 min → 8, 10 min → ~15
-	var _min_density = int(pow(minutes, 1.2) * 5.0); # always keep at least 10 enemies alive
+	var _min_density = int(pow(max(minutes - 5.0, 0.0), 1.2) * 5.0); # always keep at least 10 enemies alive
 	_min_density = clamp(_min_density, 0, 60);
 	if _alive < _min_density:
 			var needed = min(_min_density - _alive, max_alive_enemies - _alive);
@@ -138,7 +138,7 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	goblin.global_position = spawn_pos;
 	var minutes = time_elapsed / 60.0;
 	var level = main.level;
-	var player_damage = main.player.stats.damage;
+	var _player_damage = main.player.stats.damage;
 	var player_speed = main.player.stats.move_speed;
 	# --- HP SCALING ---
 	# Base 1 HP, +1 HP every 3 levels, +soft time scaling
@@ -157,11 +157,6 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	var scaled_speed = base_speed + level_speed + time_speed + player_speed_factor;
 	goblin.speed = clamp(scaled_speed, 40, 250);
 	# --- ELITES CHANCE ---
-	if randf() < 0.05: # 5% chance
-		goblin.max_health *= 3;
-		goblin.health = goblin.max_health;
-		goblin.speed *= int(goblin.speed * 1.5);
-		goblin.scale = Vector2(1.3, 1.3);
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);
 	goblin.add_to_group("enemies");
