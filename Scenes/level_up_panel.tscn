@@ -26,7 +26,7 @@ corner_radius_bottom_left = 7
 bg_color = Color(0.6752363, 0.54340214, 0.9836902, 1)
 
 [node name="LevelUpPanel" type="Node2D" unique_id=228750137]
-position = Vector2(403, 122)
+position = Vector2(42, -31)
 
 [node name="BackgroundPanel" type="Panel" parent="." unique_id=1953261075]
 offset_left = 176.0
@@ -34,6 +34,7 @@ offset_top = 158.0
 offset_right = 672.0
 offset_bottom = 729.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_doen8")
+metadata/_edit_use_anchors_ = true
 
 [node name="LevelLabel" type="Label" parent="." unique_id=972049969]
 offset_left = 278.0
@@ -44,6 +45,7 @@ theme_override_font_sizes/font_size = 35
 text = "YOU LEVELED UP!"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="RerollButton" type="Button" parent="." unique_id=2006133771]
 anchors_preset = -1
@@ -55,6 +57,7 @@ theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = SubResource("StyleBoxFlat_hnakl")
 theme_override_styles/hover = SubResource("StyleBoxFlat_v8l8o")
 text = "Reroll (-10 Coins)"
+metadata/_edit_use_anchors_ = true
 
 [node name="Option1" type="Button" parent="." unique_id=1391653709]
 offset_left = 278.0
@@ -62,6 +65,7 @@ offset_top = 324.0
 offset_right = 578.0
 offset_bottom = 412.0
 text = "Quick Fire: "
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option1" unique_id=329263379]
 layout_mode = 0
@@ -69,6 +73,7 @@ offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option1" unique_id=1307059037]
 layout_mode = 0
@@ -79,6 +84,7 @@ offset_bottom = 73.0
 text = "Faster fire rate for 6 secs"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Option2" type="Button" parent="." unique_id=852584720]
 offset_left = 278.0
@@ -88,6 +94,7 @@ offset_bottom = 549.0
 text = "Coffee: 
 "
 icon_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option2" unique_id=1948047077]
 layout_mode = 0
@@ -95,6 +102,7 @@ offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option2" unique_id=2068119358]
 layout_mode = 0
@@ -105,6 +113,7 @@ offset_bottom = 72.0
 text = "1.2X Speed for 6 seconds"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Option3" type="Button" parent="." unique_id=626933054]
 offset_left = 278.0
@@ -112,6 +121,7 @@ offset_top = 584.0
 offset_right = 578.0
 offset_bottom = 672.0
 text = "One-up:"
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option3" unique_id=815024022]
 layout_mode = 0
@@ -119,6 +129,7 @@ offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option3" unique_id=1275699910]
 layout_mode = 0
@@ -129,3 +140,4 @@ offset_bottom = 78.0
 text = "+1 HP"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

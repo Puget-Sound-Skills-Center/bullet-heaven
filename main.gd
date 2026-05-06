@@ -10,7 +10,7 @@ var max_enemies : int
 var lives : int;
 var enemies_spawned : int;
 var xp : int = 0
-var xp_to_level : int = 20   # adjust as you like
+var xp_to_level : int = 10   # adjust as you like
 var level : int = 1
 var coins: int = 0;
 var reroll_cost := 10;
@@ -153,7 +153,7 @@ func add_xp(amount: int):
 	while xp >= xp_to_level:
 		xp -= xp_to_level;
 		level += 1;
-		xp_to_level = int(xp_to_level * 1.25);
+		xp_to_level = int(xp_to_level * 2.15);
 		update_xp_bar();
 		update_level_text();
 		show_level_up_choices();
