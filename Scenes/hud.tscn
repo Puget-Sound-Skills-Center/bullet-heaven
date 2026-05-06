@@ -17,23 +17,24 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -640.0
-offset_top = -66.0
-offset_right = 640.0
+offset_left = -960.0
+offset_top = -118.0
+offset_right = 960.0
+offset_bottom = -52.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3gfia")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
-position = Vector2(40, 685)
+position = Vector2(371, 996)
 scale = Vector2(4, 4)
 texture = ExtResource("1_fccik")
 
 [node name="LivesLabel" type="Label" parent="." unique_id=1401133550]
-offset_left = 81.0
-offset_top = 599.0
-offset_right = 139.0
-offset_bottom = 770.0
+offset_left = 408.0
+offset_top = 908.0
+offset_right = 466.0
+offset_bottom = 1079.0
 theme_override_font_sizes/font_size = 40
 text = "
 X 3
@@ -76,15 +77,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="coins" type="Sprite2D" parent="." unique_id=379946201]
-position = Vector2(258.4175, 685)
+position = Vector2(589.4175, 992.9175)
 scale = Vector2(0.012679386, 0.012919366)
 texture = ExtResource("3_bjfho")
 
 [node name="CoinsLabel" type="Label" parent="." unique_id=1485098509]
-offset_left = 258.4175
-offset_top = 620.0
-offset_right = 423.4175
-offset_bottom = 751.0
+offset_left = 597.0
+offset_top = 930.0
+offset_right = 762.0
+offset_bottom = 1061.0
 theme_override_font_sizes/font_size = 30
 text = "Coins: 0"
 horizontal_alignment = 1
@@ -96,10 +97,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -43.0
-offset_top = -57.0
-offset_right = 42.0
-offset_bottom = -11.0
+offset_left = -50.00006
+offset_top = -111.0
+offset_right = 34.99994
+offset_bottom = -65.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 33

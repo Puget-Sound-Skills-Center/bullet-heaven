@@ -13,7 +13,7 @@ signal hit_player;
 var health: int;
 var alive : bool;
 var entered : bool;
-var speed : int = 50;
+var speed : int = 40;
 var direction : Vector2;
 const DROP_CHANCE : float = 0.1;
 
@@ -90,7 +90,7 @@ func drop_coin():
 
 func apply_separation(enemies):
 	var separation_force = Vector2.ZERO;
-	var separation_radius = 40;
+	var separation_radius = 110;
 	for e in enemies:
 		if e == self:
 			continue;

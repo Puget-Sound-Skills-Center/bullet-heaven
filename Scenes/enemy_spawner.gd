@@ -2,11 +2,6 @@ extends Node2D
 
 signal hit_p;
 
-# Enemy Types
-var goblin_small := preload("res://Scenes/goblin_Small.tscn");
-var goblin_normal := preload("res://Scenes/goblin.tscn");
-var goblin_big := preload("res://Scenes/goblin_Big.tscn");
-
 
 @onready var main = get_node("/root/Main");
 @onready var Player = main.get_node("Player");
@@ -42,22 +37,6 @@ func _process(delta: float) -> void:
 
 func can_spawn() -> bool:
 	return get_tree().get_nodes_in_group("enemies").size() < max_alive_enemies;
-
-func pick_enemy(minutes: float) -> PackedScene:
-	if minutes < 3.0:
-		return goblin_small;
-	if minutes < 7.0:
-		var roll = randf();
-		if roll < 0.6:
-			return goblin_small;
-		else:
-			return goblin_normal;
-		# Late game
-	var roll = randf()
-	if roll < 0.5:
-		return goblin_normal;
-	else:
-		return goblin_big;
 
 func _on_timer_timeout():
 	# Full grace period
@@ -156,21 +135,12 @@ func get_back_spawn():
 func spawn_enemy(spawn_pos: Vector2) -> void:
 	if not can_spawn():
 		return;
+	var _minutes = time_elapsed / 60.0;
 	var goblin = goblin_scene.instantiate();
 	goblin.global_position = spawn_pos;
-	var minutes = time_elapsed / 60.0;
-	var level = main.level;
+	var _level = main.level;
 	var _player_damage = main.player.stats.damage;
 	var _player_speed = main.player.stats.move_speed;
-	# --- HP SCALING ---
-	# Base 1 HP, +1 HP every 3 levels, +soft time scaling
-	var base_hp := 1
-	var level_hp := int(max(level - 1, 0) / 3) # +1 HP per 3 levels
-	var time_hp := int(minutes * 0.4) # +1 HP every ~2.5 min
-	var scaled_hp := base_hp + level_hp + time_hp
-	goblin.max_health = clamp(scaled_hp, 1, 200);
-	goblin.health = goblin.max_health;
-	# --- ELITES CHANCE ---
 	goblin.hit_player.connect(hit);
 	main.add_child(goblin);
 	goblin.add_to_group("enemies");

@@ -10,7 +10,7 @@ var max_enemies : int
 var lives : int;
 var enemies_spawned : int;
 var xp : int = 0
-var xp_to_level : int = 10   # adjust as you like
+var xp_to_level : int = 20   # adjust as you like
 var level : int = 1
 var coins: int = 0;
 var reroll_cost := 10;
@@ -250,7 +250,7 @@ func _upgrade_orbit_speed_blade():
 			blade.upgrade_speed();
 
 func _upgrade_damage_up():
-	$Player.stats.damage += 2;
+	$Player.stats.damage += 3;
 
 func _upgrade_orbit_blade():
 	has_orbit_blade = true;
@@ -311,7 +311,7 @@ func _upgrade_aoe_aura_damage():
 func _upgrade_aoe_aura_radius():
 	for child in $Player.get_children():
 		if child.name == "AOE_AURA":
-			child.radius += 55;
+			child.radius += 35;
 			var col = child.get_node("CollisionShape2D");
 			col.shape.radius = child.radius;
 			child.base_scale = Vector2.ONE * (child.radius / 80.0);

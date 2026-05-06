@@ -26,6 +26,7 @@ corner_radius_bottom_left = 7
 bg_color = Color(0.6752363, 0.54340214, 0.9836902, 1)
 
 [node name="LevelUpPanel" type="Node2D" unique_id=228750137]
+position = Vector2(403, 122)
 
 [node name="BackgroundPanel" type="Panel" parent="." unique_id=1953261075]
 offset_left = 176.0
