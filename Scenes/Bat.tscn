@@ -74,7 +74,7 @@ animations = [{
 size = Vector2(10.666667, 15.333334)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvi8"]
-size = Vector2(35.333336, 7.5)
+size = Vector2(34, 10.666667)
 
 [node name="Bat" type="CharacterBody2D" unique_id=2083084092]
 scale = Vector2(1.5, 1.5)
@@ -86,7 +86,7 @@ script = ExtResource("1_p4yo7")
 sprite_frames = SubResource("SpriteFrames_ep384")
 animation = &"Run"
 autoplay = "Run"
-frame_progress = 0.24349448
+frame_progress = 0.2909391
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
 position = Vector2(5.3333335, 2.9999998)
@@ -101,7 +101,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
-position = Vector2(5.000001, -0.91666687)
+position = Vector2(3.666667, -3.3333335)
 shape = SubResource("RectangleShape2D_xcvi8")
 debug_color = Color(0.65457684, 0.5179122, 0, 0.41960785)
 

@@ -7,6 +7,7 @@ signal hit_p;
 @onready var Player = main.get_node("Player");
 var goblin_scene := preload("res://Scenes/goblin.tscn");
 var bat_scene := preload("res://Scenes/Bat.tscn");
+var skeleton_scene := preload("res://Scenes/skeleton.tscn");
 
 var time_elapsed := 0.0;
 var spawn_rate := 1.0;
@@ -148,21 +149,21 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 
 func pick_enemy_type(minutes: float) -> PackedScene:
 	# 0-2 minutes: only bats
-	if minutes < 1.0:
+	if minutes < 2.0:
 		return bat_scene;
 	# 2-5 minutes: 80% bats, 20% goblins
-	if minutes < 3.0:
+	if minutes < 5.0:
 		var roll_early := randf();
 		if roll_early < 0.8:
 			return bat_scene;
 		else:
 			return goblin_scene;
 	# 5–10 minutes: 60% bats, 40% goblins
-	if minutes < 6.0:
+	if minutes < 10.0:
 		var roll_mid := randf();
 		if roll_mid < 0.6:
 			return bat_scene;
-		else:
+		else: 
 			return goblin_scene;
 	# 10+ minutes: 40% bats, 60% goblins
 	var roll_late := randf()
