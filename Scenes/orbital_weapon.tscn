@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dmqx4l213rk7r" path="res://Scenes/orbital_weapon.gd" id="1_5pi53"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5pi53"]
-radius = 8.0
+radius = 12.026528
 height = 42.471992
 
 [node name="OrbitalWeapon" type="Node2D" unique_id=927171404]

@@ -6,6 +6,7 @@ signal hit_p;
 @onready var main = get_node("/root/Main");
 @onready var Player = main.get_node("Player");
 var goblin_scene := preload("res://Scenes/goblin.tscn");
+var bat_scene := preload("res://Scenes/Bat.tscn");
 
 var time_elapsed := 0.0;
 var spawn_rate := 1.0;
@@ -14,7 +15,7 @@ var spawn_acceleration := 0.001;
 var max_enemies_per_tick := 20;
 var max_alive_enemies := 120;  # tune this based on performance
 # How far from the player enemies should spawn
-var spawn_distance := 12000;
+var spawn_distance := 120;
 
 # How many enemies per tick
 var enemies_per_tick := 10;
@@ -135,16 +136,40 @@ func get_back_spawn():
 func spawn_enemy(spawn_pos: Vector2) -> void:
 	if not can_spawn():
 		return;
-	var _minutes = time_elapsed / 60.0;
-	var goblin = goblin_scene.instantiate();
-	goblin.global_position = spawn_pos;
-	var _level = main.level;
-	var _player_damage = main.player.stats.damage;
-	var _player_speed = main.player.stats.move_speed;
-	goblin.hit_player.connect(hit);
-	main.add_child(goblin);
-	goblin.add_to_group("enemies");
+	var minutes = time_elapsed / 60.0;
+	# Pick which enemy to spawn
+	var scene := pick_enemy_type(minutes)
+	var enemy = scene.instantiate();
+	enemy.global_position = spawn_pos;
+	enemy.hit_player.connect(hit);
+	main.add_child(enemy);
+	enemy.add_to_group("enemies");
 	main.enemies_spawned += 1;
+
+func pick_enemy_type(minutes: float) -> PackedScene:
+	# 0-2 minutes: only bats
+	if minutes < 1.0:
+		return bat_scene;
+	# 2-5 minutes: 80% bats, 20% goblins
+	if minutes < 3.0:
+		var roll_early := randf();
+		if roll_early < 0.8:
+			return bat_scene;
+		else:
+			return goblin_scene;
+	# 5–10 minutes: 60% bats, 40% goblins
+	if minutes < 6.0:
+		var roll_mid := randf();
+		if roll_mid < 0.6:
+			return bat_scene;
+		else:
+			return goblin_scene;
+	# 10+ minutes: 40% bats, 60% goblins
+	var roll_late := randf()
+	if roll_late < 0.4:
+		return bat_scene;
+	else:
+		return goblin_scene;
 
 func is_too_close_to_other_enemies(pos: Vector2, min_dist := 200.0) -> bool:
 	for e in get_tree().get_nodes_in_group("enemies"):

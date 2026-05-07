@@ -153,7 +153,7 @@ func add_xp(amount: int):
 	while xp >= xp_to_level:
 		xp -= xp_to_level;
 		level += 1;
-		xp_to_level = int(xp_to_level * 2.15);
+		xp_to_level = int(xp_to_level * 1.25);
 		update_xp_bar();
 		update_level_text();
 		show_level_up_choices();
