@@ -42,7 +42,6 @@ position = Vector2(252, 1374)
 position = Vector2(439, 2139)
 
 [node name="Timer" type="Timer" parent="." unique_id=1569393839]
-wait_time = 3.0
 autostart = true
 
 [node name="AmbushTimer" type="Timer" parent="." unique_id=191640607]

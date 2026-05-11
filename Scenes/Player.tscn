@@ -244,7 +244,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn08x"]
-size = Vector2(22.75, 48)
+size = Vector2(21.375, 42)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
 radius = 34.234486
@@ -260,6 +260,7 @@ stats = SubResource("Resource_dewec")
 scale = Vector2(3.75, 3.75)
 sprite_frames = SubResource("SpriteFrames_5ixxa")
 animation = &"Walk0"
+frame_progress = 0.5568193
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
 position = Vector2(-2, 11)

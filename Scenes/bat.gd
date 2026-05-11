@@ -13,7 +13,7 @@ signal hit_player;
 var health: int;
 var alive : bool;
 var entered : bool;
-var speed : int = 40;
+var speed : int = 45;
 var direction : Vector2;
 const DROP_CHANCE : float = 0.1;
 

@@ -71,13 +71,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajbjq"]
-size = Vector2(10.666667, 15.333334)
+size = Vector2(14.800001, 17.46667)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvi8"]
-size = Vector2(34, 10.666667)
+size = Vector2(41.200005, 20)
 
 [node name="Bat" type="CharacterBody2D" unique_id=2083084092]
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2.5, 2.5)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_p4yo7")
@@ -86,10 +86,11 @@ script = ExtResource("1_p4yo7")
 sprite_frames = SubResource("SpriteFrames_ep384")
 animation = &"Run"
 autoplay = "Run"
-frame_progress = 0.2909391
+frame = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
-position = Vector2(5.3333335, 2.9999998)
+position = Vector2(5.399999, 4.066667)
+scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_ajbjq")
 
 [node name="EntranceTimer" type="Timer" parent="." unique_id=376870444]
@@ -101,7 +102,8 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
-position = Vector2(3.666667, -3.3333335)
+position = Vector2(2.5999992, -3.9999983)
+scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_xcvi8")
 debug_color = Color(0.65457684, 0.5179122, 0, 0.41960785)
 

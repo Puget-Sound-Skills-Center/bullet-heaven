@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://dmqx4l213rk7r" path="res://Scenes/orbital_weapon.gd" id="1_5pi53"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5pi53"]
-radius = 12.026528
-height = 42.471992
+radius = 16.28135
+height = 57.99289
 
 [node name="OrbitalWeapon" type="Node2D" unique_id=927171404]
 script = ExtResource("1_5pi53")
@@ -18,7 +18,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1571733011]
-position = Vector2(1, -1)
+position = Vector2(2, -2)
 rotation = 0.7766715
 shape = SubResource("CapsuleShape2D_5pi53")
 

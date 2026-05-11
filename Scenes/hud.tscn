@@ -30,7 +30,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_bjfho")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
-position = Vector2(436, 637)
+position = Vector2(420, 637)
 scale = Vector2(4, 4)
 texture = ExtResource("1_fccik")
 
@@ -40,9 +40,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -150.0
+offset_left = -165.0
 offset_top = -171.0
-offset_right = -92.0
+offset_right = -107.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
@@ -95,7 +95,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="coins" type="Sprite2D" parent="." unique_id=379946201]
-position = Vector2(788.99994, 634.99994)
+position = Vector2(757.4175, 634.99994)
 scale = Vector2(0.012679386, 0.012919366)
 texture = ExtResource("3_bjfho")
 
@@ -105,9 +105,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 155.0
+offset_left = 123.41754
 offset_top = -151.0
-offset_right = 320.0
+offset_right = 288.41754
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0

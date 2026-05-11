@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://bdnudrfpmrrl2"]
+
+[ext_resource type="Script" uid="uid://dryerdotdm32i" path="res://Scenes/green.gd" id="1_7j6jv"]
+[ext_resource type="Texture2D" uid="uid://mp7nsbya6bfv" path="res://Scenes/SpritesOther/Monsters_Creatures_Fantasy/Monsters_Creatures_Fantasy/Goblin/Run.png" id="1_ildiu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j6jv"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51ekc"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebfyf"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvmw8"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk1s0"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5e3w"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j28xl"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynm77"]
+atlas = ExtResource("1_ildiu")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ep384"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j6jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51ekc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebfyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvmw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk1s0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5e3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j28xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynm77")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c18ij"]
+radius = 13.599997
+height = 40.79999
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pl1ow"]
+radius = 13.199997
+height = 40.79999
+
+[node name="GreenGoblins" type="CharacterBody2D" unique_id=2083084092]
+scale = Vector2(2.5, 2.5)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_7j6jv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834223425]
+position = Vector2(0.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_ep384")
+animation = &"Run"
+autoplay = "Run"
+frame_progress = 0.51556504
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
+position = Vector2(1.6000003, 9.200001)
+scale = Vector2(1.0000002, 1.0000002)
+shape = SubResource("CapsuleShape2D_c18ij")
+
+[node name="EntranceTimer" type="Timer" parent="." unique_id=376870444]
+wait_time = 1.25
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1420128378]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
+position = Vector2(1.6000003, 9.200001)
+scale = Vector2(1.0000002, 1.0000002)
+shape = SubResource("CapsuleShape2D_pl1ow")
+
+[connection signal="hit_player" from="." to="." method="_on_hit_player"]
+[connection signal="timeout" from="EntranceTimer" to="." method="_on_entrance_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

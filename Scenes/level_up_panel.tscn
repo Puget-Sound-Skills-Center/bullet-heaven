@@ -60,23 +60,36 @@ text = "Reroll (-10 Coins)"
 metadata/_edit_use_anchors_ = true
 
 [node name="Option1" type="Button" parent="." unique_id=1391653709]
-offset_left = 278.0
-offset_top = 324.0
-offset_right = 578.0
-offset_bottom = 412.0
+offset_left = 204.0
+offset_top = 306.0
+offset_right = 504.0
+offset_bottom = 394.0
+scale = Vector2(1.5, 1.5)
 text = "Quick Fire: "
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option1" unique_id=329263379]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.026666718
+anchor_top = -0.125
+anchor_right = -0.008888906
+anchor_bottom = -0.125
 offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+scale = Vector2(1.6, 1.6)
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option1" unique_id=1307059037]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.10888891
+anchor_top = 0.0075757722
+anchor_right = 0.15777782
+anchor_bottom = 0.0075758155
 offset_left = 54.0
 offset_top = 44.0
 offset_right = 246.0
@@ -87,52 +100,77 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Option2" type="Button" parent="." unique_id=852584720]
-offset_left = 278.0
-offset_top = 461.0
-offset_right = 578.0
-offset_bottom = 549.0
+offset_left = 201.0
+offset_top = 445.0
+offset_right = 501.0
+offset_bottom = 533.0
+scale = Vector2(1.5, 1.5)
 text = "Coffee: 
 "
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option2" unique_id=1948047077]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.1287879
+anchor_right = 0.021111093
+anchor_bottom = -0.08459603
 offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+scale = Vector2(1.5, 1.5)
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option2" unique_id=2068119358]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05555557
+anchor_top = 0.015151501
+anchor_right = 0.10444458
+anchor_bottom = 0.015151457
 offset_left = 54.0
 offset_top = 46.0
 offset_right = 246.0
 offset_bottom = 72.0
-text = "1.2X Speed for 6 seconds"
+text = "   1.2X Speed for 6 seconds"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Option3" type="Button" parent="." unique_id=626933054]
-offset_left = 278.0
+offset_left = 202.0
 offset_top = 584.0
-offset_right = 578.0
+offset_right = 502.0
 offset_bottom = 672.0
+scale = Vector2(1.5, 1.5)
 text = "One-up:"
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Option3" unique_id=815024022]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0011111108
+anchor_top = -0.11363637
+anchor_right = 0.0011111068
+anchor_bottom = -0.11363637
 offset_left = 3.0
 offset_top = 20.0
 offset_right = 48.0
 offset_bottom = 65.0
+scale = Vector2(1.6, 1.6)
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DescLabel" type="Label" parent="Option3" unique_id=1275699910]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06777778
+anchor_top = -0.018939408
+anchor_right = 0.15444447
+anchor_bottom = -0.018939452
 offset_left = 53.0
 offset_top = 55.0
 offset_right = 245.0

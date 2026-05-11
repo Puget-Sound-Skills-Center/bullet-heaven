@@ -19,11 +19,11 @@ var icon_quick_fire = preload("res://Player/gun_box.png");
 var icon_coffee = preload("res://Player/coffee_box.png");
 var icon_oneup = preload("res://Player/health_box.png");
 var icon_damage = preload("res://Player/Iron Sword.png");
-var icon_orbit = preload("res://Scenes/Pixel Art Icon Pack - RPG/Weapon & Tool/Silver Sword.png");
+var icon_orbit = preload("res://Scenes/SpritesOther/WeaponUnlock.png");
 var icon_orbit_gun = preload("res://Weapons/GunPack/Pack 1/1px/24.png");
 var icon_orbit_speed = preload("res://Scenes/Pixel Art Icon Pack - RPG/Weapon & Tool/Silver Sword.png")
-var icon_pickup = preload("res://Scenes/Pixel Art Icon Pack - RPG/Ore & Gem/Cut Sapphire.png");
-var icon_aura = preload("res://Scenes/SpritesOther/魔法陣.png");
+var icon_pickup = preload("res://Scenes/SpritesOther/Gem2.png");
+var icon_aura = preload("res://Scenes/SpritesOther/SigilSpeedUp.png");
 var icon_lightning = preload("res://Scenes/Pixel Art Icon Pack - RPG/Potion/Blue Potion 3.png");
 
 # Called when the node enters the scene tree for the first time.

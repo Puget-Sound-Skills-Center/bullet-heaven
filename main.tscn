@@ -90,22 +90,22 @@ offset_right = 1136.2222
 offset_bottom = 223.77779
 
 [node name="Option1" parent="CanvasLayer/LevelUpPanel" index="3" unique_id=1391653709]
-offset_left = 513.11115
-offset_top = 269.33334
-offset_right = 813.11115
-offset_bottom = 357.33334
+offset_left = 431.25
+offset_top = 235.0
+offset_right = 731.25
+offset_bottom = 323.0
 
 [node name="Option2" parent="CanvasLayer/LevelUpPanel" index="4" unique_id=852584720]
-offset_left = 513.11115
-offset_top = 406.33334
-offset_right = 813.11115
-offset_bottom = 494.33334
+offset_left = 431.25
+offset_top = 375.0
+offset_right = 731.25
+offset_bottom = 463.0
 
 [node name="Option3" parent="CanvasLayer/LevelUpPanel" index="5" unique_id=626933054]
-offset_left = 513.11115
-offset_top = 529.3333
-offset_right = 813.11115
-offset_bottom = 617.3333
+offset_left = 431.25003
+offset_top = 516.25
+offset_right = 731.25
+offset_bottom = 604.25
 
 [node name="GameOver" parent="CanvasLayer" unique_id=657096932 instance=ExtResource("8_5vw27")]
 process_mode = 2

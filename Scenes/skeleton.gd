@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var player = get_node("/root/Main/Player");
 @onready var main = get_node("/root/Main");
-@export var max_health: int = 1;
+@export var max_health: int = 2;
 
 var coin_scene := preload("res://Scenes/Coin.tscn");
 var explosion_scene := preload("res://Scenes/explosion.tscn");

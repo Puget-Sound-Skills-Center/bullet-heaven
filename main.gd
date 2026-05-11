@@ -233,7 +233,7 @@ func is_wave_completed():
 	return false;
 
 func _upgrade_quick_fire():
-	$Player.stats.fire_rate *= 0.85;
+	$Player.stats.fire_rate *= 0.65;
 	$Player.apply_stats();
 
 func _upgrade_boost():
