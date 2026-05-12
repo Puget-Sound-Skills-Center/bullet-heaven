@@ -25,6 +25,7 @@ var icon_orbit_speed = preload("res://Scenes/Pixel Art Icon Pack - RPG/Weapon & 
 var icon_pickup = preload("res://Scenes/SpritesOther/Gem2.png");
 var icon_aura = preload("res://Scenes/SpritesOther/SigilSpeedUp.png");
 var icon_lightning = preload("res://Scenes/Pixel Art Icon Pack - RPG/Potion/Blue Potion 3.png");
+var icon_acid = preload("res://Scenes/Pixel Art Icon Pack - RPG/Potion/Green Potion.png");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,7 +46,8 @@ func _ready() -> void:
 		Upgrade.new("Lightning Strike", "Chance to strike lightning when firing.", "_upgrade_lightning", icon_lightning),
 		Upgrade.new("Lightning Damage", "Lightning deals +10 damage.", "_upgrade_lightning_damage", icon_lightning),
 		Upgrade.new("Lightning Chance", "Lightning chance +5%.", "_upgrade_lightning_chance", icon_lightning),
-		Upgrade.new("Lightning Chain", "Lightning chains to +1 extra enemy.", "_upgrade_lightning_chain", icon_lightning)
+		Upgrade.new("Lightning Chain", "Lightning chains to +1 extra enemy.", "_upgrade_lightning_chain", icon_lightning),
+		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid)
 ]
 
 func get_random_upgrades(main: Node) -> Array:
@@ -70,6 +72,13 @@ func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 		"_upgrade_orbit_blade":
 			# Only allow gun unlock if player doesn't already have one
 			return !main.has_orbit_gun;
+		"_upgrade_acid_pool":
+			var dropper = main.player.get_node_or_null("AcidDropper");
+			if dropper == null:
+				return true;
+			if not dropper.has_method("drop_pool"):
+				return true;
+			return dropper.level < 5;
 	return true;
 
 func apply_upgrade(index: int, main: Node):

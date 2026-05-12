@@ -343,6 +343,25 @@ func _upgrade_pickup_range():
 	$Player.stats.pickup_radius += 20;
 	$Player.apply_stats();
 
+func _upgrade_acid_pool():
+	var dropper = $Player.get_node_or_null("AcidDropper");
+	# First time unlocking
+	if dropper.level != null and !dropper.is_processing():
+		dropper.level = 1;
+		dropper.set_process(true);
+		return;
+	# Leveling up
+	dropper.level += 1;
+	match  dropper.level:
+		2:
+			dropper.cooldown = 4.0;
+		3:
+			dropper.cooldown = 3.0;
+		4:
+			dropper.cooldown = 2.5;
+		5: 
+			dropper.cooldown = 2.0;
+
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
 	close_level_up_panel();

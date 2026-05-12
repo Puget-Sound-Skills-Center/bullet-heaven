@@ -190,9 +190,9 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	# Base HP comes from the scene (bat=1, goblin=1, skeleton=2, green=1)
 	var base_hp = enemy.max_health;
 	# Time scaling: +1 HP every ~2 minutes
-	var time_hp := int(minutes * 0.5);
+	var time_hp := int(minutes * 0.3);
 	# Level scaling (optional, gentle)
-	var level_hp := int(max(main.level - 1, 0) * 0.2);
+	var level_hp := int(max(main.level - 1, 0) * 0.1);
 	# Final HP
 	var scaled_hp = base_hp + time_hp + level_hp;
 	enemy.max_health = scaled_hp

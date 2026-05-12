@@ -202,8 +202,7 @@ script = ExtResource("1_tqvll")
 position = Vector2(340.5, -131)
 sprite_frames = SubResource("SpriteFrames_2ofid")
 animation = &"strike"
-frame = 25
-frame_progress = 1.0
+frame_progress = 0.84438384
 offset = Vector2(-340.5, 131)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1559567899]

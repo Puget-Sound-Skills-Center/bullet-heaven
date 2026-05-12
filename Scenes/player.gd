@@ -66,16 +66,11 @@ func get_input():
 		$ShotTimer.start();
 
 func update_rotation():
-	var aim = Vector2(Input.get_action_strength("Aim_Right") - Input.get_action_strength("Aim_Left"), Input.get_action_strength("Aim_Down") - Input.get_action_strength("Aim_Up"))
-	var using_stick = aim.length() > 0.2;
-	var angle_dir = Vector2.ZERO;
-	if using_stick:
-		angle_dir = aim;
-	else:
-		angle_dir = get_local_mouse_position();
-	var angle = snappedf(angle_dir.angle(), PI / 4) / (PI / 4)
-	angle = wrapi(int(angle), 0, 8);
-	$AnimatedSprite2D.animation = "Walk" + str(angle);
+	# If the player is moving horizontally, flip the sprite
+	if velocity.x < 0:
+		$AnimatedSprite2D.flip_h = true;
+	elif velocity.x > 0:
+		$AnimatedSprite2D.flip_h = false;
 
 func _physics_process(_delta):
 	#Player Movement
