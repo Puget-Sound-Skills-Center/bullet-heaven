@@ -73,12 +73,9 @@ func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 			# Only allow gun unlock if player doesn't already have one
 			return !main.has_orbit_gun;
 		"_upgrade_acid_pool":
-			var dropper = main.player.get_node_or_null("AcidDropper");
-			if dropper == null:
+			if main.acid_dropper == null:
 				return true;
-			if not dropper.has_method("drop_pool"):
-				return true;
-			return dropper.level < 5;
+			return main.acid_dropper.level < 5;
 	return true;
 
 func apply_upgrade(index: int, main: Node):

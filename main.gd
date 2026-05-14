@@ -19,6 +19,8 @@ var lightning_damage := 20;
 var lightning_chance := 0.15;   # 15% chance per shot
 var lightning_chain := 0;       # 0 = no chain
 
+var acid_dropper = null;
+
 var has_orbit_blade := false;
 var has_orbit_gun := false;
 var has_aoe_aura := false;
@@ -190,6 +192,9 @@ func _process(_delta: float) -> void:
 	if !get_tree().paused:
 		run_time += _delta;
 		update_timer_display();
+	if acid_dropper != null:
+		acid_dropper.tick(_delta, $Player.global_position, self);
+
 
 func update_timer_display():
 	var minutes = int(run_time) / 60.0;
@@ -344,23 +349,21 @@ func _upgrade_pickup_range():
 	$Player.apply_stats();
 
 func _upgrade_acid_pool():
-	var dropper = $Player.get_node_or_null("AcidDropper");
 	# First time unlocking
-	if dropper.level != null and !dropper.is_processing():
-		dropper.level = 1;
-		dropper.set_process(true);
+	if acid_dropper == null:
+		acid_dropper = load("res://Data/acid_dropper.gd").new()
 		return;
 	# Leveling up
-	dropper.level += 1;
-	match  dropper.level:
+	acid_dropper.level += 1;
+	match  acid_dropper.level:
 		2:
-			dropper.cooldown = 4.0;
+			acid_dropper.cooldown = 4.0;
 		3:
-			dropper.cooldown = 3.0;
+			acid_dropper.cooldown = 3.0;
 		4:
-			dropper.cooldown = 2.5;
+			acid_dropper.cooldown = 2.5;
 		5: 
-			dropper.cooldown = 2.0;
+			acid_dropper.cooldown = 2.0;
 
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
