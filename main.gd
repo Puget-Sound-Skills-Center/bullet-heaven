@@ -365,6 +365,16 @@ func _upgrade_acid_pool():
 		5: 
 			acid_dropper.cooldown = 2.0;
 
+func _upgrade_acid_radius():
+	if acid_dropper == null:
+		return;
+	acid_dropper.radius_multiplier += 0.25;
+
+func _upgrade_acid_double():
+	if acid_dropper == null:
+		return;
+	acid_dropper.multi_drop += 1;
+
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
 	close_level_up_panel();

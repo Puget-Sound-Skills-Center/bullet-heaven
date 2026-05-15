@@ -58,7 +58,5 @@ frame_progress = 0.9384619
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_yb153")
 
-[node name="Timer" type="Timer" parent="." unique_id=1956369612]
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1841335796]
 stream = ExtResource("3_4d8n0")

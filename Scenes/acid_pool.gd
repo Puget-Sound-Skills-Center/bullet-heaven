@@ -13,6 +13,9 @@ var has_splashed := false;
 var tick_timer := 0.0;
 var life_timer := 0.0;
 
+# Upgrade shi
+var radius_multiplier := 1.0;
+
 func _ready() -> void:
 	# Start slightly above the ground
 	velocity = Vector2(randf_range(-120, 120), randf_range(-350, -250));
@@ -40,10 +43,17 @@ func get_ground_y():
 func play_splash_effect():
 	if has_node("AudioStreamPlayer"):
 		$AudioStreamPlayer.play();
+	if has_node("AnimatedSprite2D"):
+		$AnimatedSprite2D.scale *= radius_multiplier;
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.shape.radius *= radius_multiplier;
 
 func puddle_behavior(_delta):
+	tick_timer += _delta;
+	life_timer += _delta;
 # Deal damage every tick_rate
 	if tick_timer >= tick_rate:
+		tick_timer = 0.0;
 		for body in get_overlapping_bodies():
 			if body.has_method("take_damage"):
 				body.take_damage(damage);

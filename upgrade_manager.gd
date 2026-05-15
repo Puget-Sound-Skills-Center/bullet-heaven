@@ -47,7 +47,9 @@ func _ready() -> void:
 		Upgrade.new("Lightning Damage", "Lightning deals +10 damage.", "_upgrade_lightning_damage", icon_lightning),
 		Upgrade.new("Lightning Chance", "Lightning chance +5%.", "_upgrade_lightning_chance", icon_lightning),
 		Upgrade.new("Lightning Chain", "Lightning chains to +1 extra enemy.", "_upgrade_lightning_chain", icon_lightning),
-		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid)
+		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid),
+		Upgrade.new("Acid Radius", "Increase acid puddle radius by 25%", "_upgrade_acid_radius", icon_acid),
+		Upgrade.new("Acid Double Drop", "Throw two acid bottles at once", "_upgrade_acid_double", icon_acid),
 ]
 
 func get_random_upgrades(main: Node) -> Array:
@@ -76,6 +78,8 @@ func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 			if main.acid_dropper == null:
 				return true;
 			return main.acid_dropper.level < 5;
+		"_upgrade_acid_radius", "_upgrade_acid_double":
+			return main.acid_dropper != null;
 	return true;
 
 func apply_upgrade(index: int, main: Node):
