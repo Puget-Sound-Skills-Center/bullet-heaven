@@ -66,42 +66,68 @@ theme_override_font_sizes/font_size = 25
 
 [node name="LevelUpPanel" parent="CanvasLayer" unique_id=228750137 instance=ExtResource("8_kek77")]
 process_mode = 3
-visible = false
 z_index = 2
-position = Vector2(110.99999, 12.999996)
+offset_left = 110.99999
+offset_top = 12.999996
+offset_right = 130.0
+offset_bottom = 49.999996
 scale = Vector2(0.8, 0.8)
 
 [node name="BackgroundPanel" parent="CanvasLayer/LevelUpPanel" index="0" unique_id=1953261075]
+anchor_left = -6.1768985
+anchor_top = 0.14639653
+anchor_right = 6.980999
+anchor_bottom = 0.14639695
 offset_left = 411.1111
 offset_top = 103.333336
 offset_right = 907.1111
 offset_bottom = 674.3333
 
 [node name="LevelLabel" parent="CanvasLayer/LevelUpPanel" index="1" unique_id=972049969]
+anchor_left = -0.54531676
+anchor_top = 0.11936951
+anchor_right = -0.54531676
+anchor_bottom = 0.11936951
 offset_left = 513.11115
 offset_top = 169.33333
 offset_right = 806.11115
 offset_bottom = 218.33333
 
 [node name="RerollButton" parent="CanvasLayer/LevelUpPanel" index="2" unique_id=2006133771]
+anchor_left = 6.975143
+anchor_top = 0.038288426
+anchor_right = 6.402052
+anchor_bottom = 0.038288426
 offset_left = 901.2222
 offset_top = 178.77777
 offset_right = 1136.2222
 offset_bottom = 223.77779
 
 [node name="Option1" parent="CanvasLayer/LevelUpPanel" index="3" unique_id=1391653709]
+anchor_left = -6.334793
+anchor_top = 0.14639653
+anchor_right = 2.577488
+anchor_bottom = 0.14639695
 offset_left = 431.25
 offset_top = 235.0
 offset_right = 731.25
 offset_bottom = 323.0
 
 [node name="Option2" parent="CanvasLayer/LevelUpPanel" index="4" unique_id=852584720]
+anchor_left = -6.1768985
+anchor_top = 0.14639695
+anchor_right = 2.7353826
+anchor_bottom = 0.14639695
 offset_left = 431.25
 offset_top = 375.0
 offset_right = 731.25
 offset_bottom = 463.0
 
 [node name="Option3" parent="CanvasLayer/LevelUpPanel" index="5" unique_id=626933054]
+anchor_left = -6.1768985
+anchor_top = 0.14639695
+anchor_right = 2.700297
+anchor_bottom = 0.14639695
 offset_left = 431.25003
 offset_top = 516.25
 offset_right = 731.25
