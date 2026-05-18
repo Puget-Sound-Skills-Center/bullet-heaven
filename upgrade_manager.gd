@@ -50,6 +50,10 @@ func _ready() -> void:
 		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid),
 		Upgrade.new("Acid Radius", "Increase acid puddle radius by 25%", "_upgrade_acid_radius", icon_acid),
 		Upgrade.new("Acid Double Drop", "Throw two acid bottles at once", "_upgrade_acid_double", icon_acid),
+		Upgrade.new("Bullet Bounce", "70% chance for bullets to ricochet to another enemy", "_upgrade_bullet_bounce", icon_damage),
+		Upgrade.new("Explosive bullets", "Bullets explode on hit, dealing +20 damage.", "_upgrade_explosive_ricochet", icon_damage),
+		Upgrade.new("Homing Missile", "55% chance to fire a missile behind you toward an enemy.", "_upgrade_homing_missile", icon_damage),
+		Upgrade.new("Bullet piercing", "Orbital guns pierces through +1 enemy", "_upgrade_orbit_gun_pierce", icon_orbit_gun)
 ]
 
 func get_random_upgrades(main: Node) -> Array:
@@ -65,7 +69,7 @@ func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 	match upgrade.apply_func:
 		"_upgrade_aoe_aura_damage", "_upgrade_aoe_aura_radius":
 			return main.has_aoe_aura;
-		"_upgrade_orbit_gun_damage", "_upgrade_orbit_gun_fire_rate":
+		"_upgrade_orbit_gun_damage", "_upgrade_orbit_gun_fire_rate", "_upgrade_orbit_gun_pierce":
 			return main.has_orbit_gun;
 		"_upgrade_orbit_speed_blade":
 			return main.has_orbit_blade;
@@ -80,6 +84,12 @@ func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 			return main.acid_dropper.level < 5;
 		"_upgrade_acid_radius", "_upgrade_acid_double":
 			return main.acid_dropper != null;
+		"_upgrade_bullet_bounce":
+			return !main.has_bullet_bounce;
+		"_upgrade_explosive_ricochet":
+			return !main.has_explosive_ricochet;
+		"_upgrade_homing_missile":
+			return !main.has_homing_missile;
 	return true;
 
 func apply_upgrade(index: int, main: Node):

@@ -48,7 +48,13 @@ func _on_timer_timeout() -> void:
 	if target == null:
 		return;
 	var dir = (target.global_position - global_position).normalized();
-	player.shoot.emit($Muzzle.global_position, dir, stats.damage) #Using the existing bullet logic
+	var bullet_scene = preload("res://Scenes/orbitalgunbullet.tscn");
+	var b = bullet_scene.instantiate();
+	b.global_position = $Muzzle.global_position;
+	b.direction = dir;
+	b.damage = stats.damage; # uses orbit gun stats, not player stats
+	b.pierce = stats.pierce;
+	get_tree().current_scene.add_child(b);
 
 func get_nearest_enemy():
 	var enemies = get_tree().get_nodes_in_group("enemies");

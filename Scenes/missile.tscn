@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://4ut1kfqpf0bq"]
+
+[ext_resource type="Texture2D" uid="uid://b68rwfkql2nur" path="res://Scenes/SpritesOther/rocket-missile.png" id="1_1g1yv"]
+[ext_resource type="Script" uid="uid://bc27wsfm4r7n8" path="res://Scenes/missile.gd" id="1_u28tq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u28tq"]
+radius = 94.0
+height = 614.0
+
+[node name="Area2D" type="Area2D" unique_id=1838914631]
+scale = Vector2(0.2, 0.2)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_u28tq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=366925257]
+rotation = -0.7853982
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_1g1yv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1790648683]
+shape = SubResource("CapsuleShape2D_u28tq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -7,7 +7,7 @@ extends Node2D
 @export var fork_spread := 60.0;
 @export var fork_scale := 0.6;
 @export var fork_damage_factor := 0.5;
-
+@onready var main = get_node("/root/Main");
 
 var target = null;
 

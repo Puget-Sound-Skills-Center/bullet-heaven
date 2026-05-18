@@ -62,6 +62,8 @@ func get_input():
 		if main.has_lightning:
 			if randf() < main.lightning_chance:
 				main.trigger_lightning();
+		if main.has_homing_missile and randf() < main.homing_missile_chance:
+			main.spawn_homing_missile();
 		can_shoot = false;
 		$ShotTimer.start();
 

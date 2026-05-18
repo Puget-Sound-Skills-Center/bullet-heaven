@@ -25,6 +25,16 @@ var has_orbit_blade := false;
 var has_orbit_gun := false;
 var has_aoe_aura := false;
 var has_lightning := false;
+var has_bullet_bounce := false;
+var bullet_bounce_chance := 0.7;
+var has_explosive_ricochet := false;
+var has_homing_missile := false;
+var homing_missile_chance := 0.95;
+
+var shake_time := 0.0
+var shake_duration := 0.0
+var shake_strength := 0.0
+var cam = null;
 
 var orbit_gun_sprites = [
 	preload("res://Weapons/GunPack/Pack 1/1px/25.png"),
@@ -46,6 +56,7 @@ var weapon_count := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	new_game();
+	cam = get_node("Player/Camera2D");
 	$CanvasLayer/GameOver/Button.pressed.connect(reset_run);
 
 func new_game():
@@ -143,6 +154,11 @@ func reset_wave():
 	get_tree().call_group("xp_item", "queue_tree");
 	get_tree().paused = false;
 
+func screen_shake(duration: float, strength: float):
+	shake_duration = duration;
+	shake_time = duration;
+	shake_strength = strength;
+
 func update_xp_bar():
 	var ratio = float(xp) / float(xp_to_level);
 	ratio = clamp(ratio, 0.0, 1.0);
@@ -194,7 +210,16 @@ func _process(_delta: float) -> void:
 		update_timer_display();
 	if acid_dropper != null:
 		acid_dropper.tick(_delta, $Player.global_position, self);
-
+	if shake_time > 0:
+		shake_time -= _delta;
+		var t = shake_time / shake_duration;
+		var intensity = shake_strength * t * t; # Smooth falloff
+		cam.offset = Vector2(
+			randf_range(-intensity, intensity),
+			randf_range(-intensity, intensity)
+		)
+	else:
+		cam.offset = Vector2.ZERO;
 
 func update_timer_display():
 	var minutes = int(run_time) / 60.0;
@@ -236,6 +261,77 @@ func is_wave_completed():
 	if enemies_spawned >= max_enemies and enemies.size() == 0:
 		return true;
 	return false;
+
+func spawn_bounce_bullet(from_enemy):
+	var enemies = get_tree().get_nodes_in_group("enemies");
+	if enemies.size() <= 1:
+		return;
+	# Find nearest enemy to the one we hit
+	var nearest = null;
+	var nearest_dist = INF;
+	for e in enemies:
+		if e == from_enemy:
+			continue;
+		var dist = e.global_position.distance_to(from_enemy.global_position);
+		if dist < nearest_dist:
+			nearest_dist = dist;
+			nearest = e;
+	if nearest == null:
+		return;
+	# Spawn a new bullet
+	var bullet_scene = preload("res://Scenes/bullet.tscn");
+	var b = bullet_scene.instantiate();
+	b.global_position = from_enemy.global_position;
+	b.direction = (nearest.global_position - from_enemy.global_position).normalized();
+	b.damage = $Player.stats.damage # or scale it down if necessary
+	call_deferred("add_child", b);
+
+func spawn_explosion1(pos: Vector2):
+	var explosion_scene = preload("res://Scenes/explosion1.tscn");
+	var explosion = explosion_scene.instantiate();
+	explosion.global_position = pos;
+	# Must be deferred because bullets spawn explosions inside physics callbacks
+	call_deferred("add_child", explosion);
+	# Screen shake
+	screen_shake(0.20, 10);
+
+func spawn_explosion2(pos: Vector2):
+	var explosion_scene = preload("res://explosion2.tscn");
+	var explosion = explosion_scene.instantiate();
+	explosion.global_position = pos;
+	# Must be deferred because bullets spawn explosions inside physics callbacks
+	call_deferred("add_child", explosion);
+	# Screen shake
+	screen_shake(0.20, 10);
+
+func spawn_homing_missile():
+	print("MISSILE ATTEMPT");
+	var missile_scene = preload("res://Scenes/missile.tscn");
+	var missile = missile_scene.instantiate();
+	# Spawn behind the player
+	missile.global_position = $Player.global_position;
+	# Assign target
+	missile.target = get_nearest_enemy();
+	if missile.target == null:
+		print("NO TARGET");
+		return;
+	call_deferred("add_child", missile);
+	screen_shake(0.25, 12);
+	print('MISSILE SPAWNED');
+
+func get_nearest_enemy():
+	var enemies = get_tree().get_nodes_in_group("enemies");
+	if enemies.is_empty():
+		return null;
+	var player_pos = $Player.global_position;
+	var nearest = null;
+	var nearest_dist = INF;
+	for e in enemies:
+		var dist = e.global_position.distance_to(player_pos);
+		if dist < nearest_dist: # Behind the player
+			nearest_dist = dist;
+			nearest = e;
+	return nearest;
 
 func _upgrade_quick_fire():
 	$Player.stats.fire_rate *= 0.65;
@@ -325,12 +421,22 @@ func trigger_lightning():
 	var enemies = get_tree().get_nodes_in_group("enemies");
 	if enemies.size() == 0:
 		return;
-	var target = enemies.pick_random();
+	var player_pos = $Player.global_position
+	var nearest = null;
+	var nearest_dist = INF;
+	for e in enemies:
+		var dist = e.global_position.distance_to(player_pos);
+		if dist < nearest_dist:
+			nearest_dist = dist;
+			nearest = e;
+	if nearest == null:
+		return;
 	var bolt = preload("res://Scenes/lightning_strike.tscn").instantiate();
 	bolt.damage = lightning_damage;
 	bolt.chain_count = lightning_chain;
 	add_child(bolt);
-	bolt.strike(target);
+	screen_shake(0.15, 8);
+	bolt.strike(nearest);
 
 func _upgrade_lightning():
 	has_lightning = true;
@@ -374,6 +480,20 @@ func _upgrade_acid_double():
 	if acid_dropper == null:
 		return;
 	acid_dropper.multi_drop += 1;
+
+func _upgrade_bullet_bounce():
+	has_bullet_bounce = true;
+
+func _upgrade_explosive_ricochet():
+	has_explosive_ricochet = true;
+
+func _upgrade_homing_missile():
+	has_homing_missile = true;
+
+func _upgrade_orbit_gun_pierce():
+	for gun in $Player.get_children():
+		if gun is OrbitGun:
+			gun.stats.pierce += 1;
 
 func _on_option_1_pressed() -> void:
 	$UpgradeManager.apply_upgrade(0, self);
