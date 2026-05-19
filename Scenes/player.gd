@@ -13,8 +13,6 @@ var pickup_radius := 60.0;
 #var damage = 1;
 var weapon_count := 0;
 
-signal shoot(pos, dir, damage);
-
 func _ready():
 	add_to_group("player");
 	screen_size = get_viewport_rect().size
@@ -48,31 +46,17 @@ func get_input():
 	
 	#Aiming with right stick
 	var aim = Vector2(Input.get_action_strength("Aim_Right") - Input.get_action_strength("Aim_Left"), Input.get_action_strength("Aim_Down") - Input.get_action_strength("Aim_Up"));
-	var using_stick = aim.length() > 0.2
+	var _using_stick = aim.length() > 0.2
 
 	#Mouse clicks/Contoller
 	var shoot_pressed = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_action_just_pressed("Shoot");
-	if shoot_pressed and can_shoot:
-		var dir 
-		if using_stick:
-			dir = aim.normalized();
-		else:
-			dir = (get_global_mouse_position() - position).normalized();
-		shoot.emit(position, dir, stats.damage);
+	if shoot_pressed:
+		$Gun.shoot();
 		if main.has_lightning:
 			if randf() < main.lightning_chance:
 				main.trigger_lightning();
 		if main.has_homing_missile and randf() < main.homing_missile_chance:
 			main.spawn_homing_missile();
-		can_shoot = false;
-		$ShotTimer.start();
-
-func update_rotation():
-	# If the player is moving horizontally, flip the sprite
-	if velocity.x < 0:
-		$AnimatedSprite2D.flip_h = true;
-	elif velocity.x > 0:
-		$AnimatedSprite2D.flip_h = false;
 
 func _physics_process(_delta):
 	#Player Movement
@@ -81,7 +65,6 @@ func _physics_process(_delta):
 	
 	#limit movement to window size
 	#position = position.clamp(Vector2.ZERO, screen_size);
-	update_rotation();
 	
 	#Player Animation
 	if velocity.length() != 0:
@@ -102,9 +85,6 @@ func boost():
 
 func update_fire_rate():
 	$ShotTimer.wait_time = stats.fire_rate;
-
-func _on_shot_timer_timeout():
-	can_shoot = true;
 
 func _on_boost_timer_timeout():
 	speed = START_SPEED;

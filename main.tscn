@@ -4,8 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://8px25w1t0nsr" path="res://Scenes/world.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dijwtr4qb0c32" path="res://Scenes/Player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dg6bqnk3ghyxj" path="res://Scenes/enemy_spawner.tscn" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://dwsk4v7uxdh3a" path="res://bullet_manager.gd" id="4_lquwl"]
-[ext_resource type="PackedScene" uid="uid://dkrcdu5nwfd1f" path="res://Scenes/bullet.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://mjdph3s86747" path="res://Scenes/hud.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://d2ly4652880e0" path="res://Scenes/game_over.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cpln6psnyuyr7" path="res://Scenes/level_up_panel.tscn" id="8_kek77"]
@@ -23,8 +21,6 @@ layer_0/name = "Grass2"
 [node name="Player" parent="." unique_id=1601385257 instance=ExtResource("2_0xm2m")]
 
 [node name="BulletManager" type="Node2D" parent="." unique_id=78546546]
-script = ExtResource("4_lquwl")
-bullet_scene = ExtResource("5_7mycd")
 
 [node name="EnemySpawner" parent="." unique_id=2111184176 instance=ExtResource("3_h2yge")]
 
@@ -66,6 +62,7 @@ theme_override_font_sizes/font_size = 25
 
 [node name="LevelUpPanel" parent="CanvasLayer" unique_id=228750137 instance=ExtResource("8_kek77")]
 process_mode = 3
+visible = false
 z_index = 2
 offset_left = 110.99999
 offset_top = 12.999996
@@ -94,7 +91,7 @@ offset_right = 806.11115
 offset_bottom = 218.33333
 
 [node name="RerollButton" parent="CanvasLayer/LevelUpPanel" index="2" unique_id=2006133771]
-anchor_left = 6.975143
+anchor_left = 6.402052
 anchor_top = 0.038288426
 anchor_right = 6.402052
 anchor_bottom = 0.038288426
@@ -136,7 +133,6 @@ offset_bottom = 604.25
 [node name="GameOver" parent="CanvasLayer" unique_id=657096932 instance=ExtResource("8_5vw27")]
 process_mode = 2
 
-[connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
 [connection signal="timeout" from="WaveOverTimer" to="." method="_on_wave_over_timer_timeout"]
 [connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
