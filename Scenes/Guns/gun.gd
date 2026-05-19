@@ -4,16 +4,18 @@ extends Node2D
 var can_shoot := true;
 
 func _process(_delta: float) -> void:
-	var mouse_pos = get_global_mouse_position();
+	var mouse_pos = get_global_mouse_position()
+	var player = get_parent()
+	# 1. Rotate gun toward mouse
 	var to_mouse = mouse_pos - global_position;
-	var angle = to_mouse.angle();
-	rotation = angle;
-	var player = get_parent();
-	# Flip player based on mouse X relative to player
+	rotation = to_mouse.angle();
+	# 2. Flip player based on mouse X relative to player
 	if mouse_pos.x < player.global_position.x:
 		player.scale.x = -1; # Flips player horizontally
+		$Sprite2D.flip_v = (player.scale.x == -1)
 	else:
 		player.scale.x = 1; # Normal facing
+		$Sprite2D.flip_v = (player.scale.x == -1)
 
 func shoot():
 	if !can_shoot:
