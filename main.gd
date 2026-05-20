@@ -29,7 +29,7 @@ var has_bullet_bounce := false;
 var bullet_bounce_chance := 0.7;
 var has_explosive_ricochet := false;
 var has_homing_missile := false;
-var homing_missile_chance := 0.95;
+var homing_missile_chance := 0.55;
 
 var shake_time := 0.0
 var shake_duration := 0.0
@@ -93,6 +93,11 @@ func reset():
 	lightning_damage = 20;
 	lightning_chance = 0.15;
 	lightning_chain = 0;
+	has_bullet_bounce = false;
+	bullet_bounce_chance = 0.7;
+	has_explosive_ricochet = false;
+	has_homing_missile = false;
+	homing_missile_chance = 0.55;
 	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
@@ -132,6 +137,11 @@ func reset_run():
 	lightning_damage = 20;
 	lightning_chance = 0.15;
 	lightning_chain = 0;
+	has_bullet_bounce = false;
+	bullet_bounce_chance = 0.7;
+	has_explosive_ricochet = false;
+	has_homing_missile = false;
+	homing_missile_chance = 0.55;
 	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");

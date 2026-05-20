@@ -74,6 +74,7 @@ radius = 34.234486
 
 [node name="Player" type="CharacterBody2D" unique_id=1601385257 groups=["Player"]]
 z_index = 1
+scale = Vector2(0.75, 0.75)
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_kyqiw")
@@ -88,8 +89,8 @@ shape = SubResource("RectangleShape2D_nn08x")
 
 [node name="GunPivot" type="Node2D" parent="." unique_id=1546121220]
 position = Vector2(30, 15)
-rotation = -6.2831855
 script = ExtResource("5_nn08x")
+fire_rate = 0.75
 
 [node name="GunSprite" type="Sprite2D" parent="GunPivot" unique_id=2002120219]
 texture = ExtResource("6_52ee3")

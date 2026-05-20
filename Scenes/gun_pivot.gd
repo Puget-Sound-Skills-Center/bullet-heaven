@@ -11,6 +11,13 @@ func _process(_delta: float) -> void:
 	var player = get_parent();
 	var body = player.get_node("AnimatedSprite2D");
 	$GunSprite.flip_v = (body.scale.x == -1);
+	gun_flip();
+
+func gun_flip():
+	if $GunSprite.flip_v == true:
+		position.x = -30
+	else:
+		position.x = 30
 
 func shoot():
 	if !can_shoot:
