@@ -64,7 +64,7 @@ metadata/_edit_use_anchors_ = true
 [node name="RerollButton" type="Button" parent="." unique_id=2006133771]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 13.157895
+anchor_left = 12.578947
 anchor_top = -0.10810811
 anchor_right = 12.578947
 anchor_bottom = -0.10810811
