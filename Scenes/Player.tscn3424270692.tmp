@@ -87,15 +87,14 @@ animation = &"Walk0"
 shape = SubResource("RectangleShape2D_nn08x")
 
 [node name="GunPivot" type="Node2D" parent="." unique_id=1546121220]
-position = Vector2(30, 15)
-rotation = -6.2831855
 script = ExtResource("5_nn08x")
 
 [node name="GunSprite" type="Sprite2D" parent="GunPivot" unique_id=2002120219]
+position = Vector2(30, 15)
 texture = ExtResource("6_52ee3")
 
 [node name="Muzzle" type="Marker2D" parent="GunPivot" unique_id=1680382846]
-position = Vector2(69, -13)
+position = Vector2(99, 3)
 
 [node name="ShotTimer" type="Timer" parent="GunPivot" unique_id=158594492]
 

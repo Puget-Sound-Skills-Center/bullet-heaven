@@ -51,7 +51,7 @@ func get_input():
 	#Mouse clicks/Contoller
 	var shoot_pressed = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_action_just_pressed("Shoot");
 	if shoot_pressed:
-		$Gun.shoot();
+		$GunPivot.shoot();
 		if main.has_lightning:
 			if randf() < main.lightning_chance:
 				main.trigger_lightning();
@@ -62,7 +62,7 @@ func _physics_process(_delta):
 	#Player Movement
 	get_input();
 	move_and_slide();
-	
+	update_facing();
 	#limit movement to window size
 	#position = position.clamp(Vector2.ZERO, screen_size);
 	
@@ -72,6 +72,13 @@ func _physics_process(_delta):
 	else:
 		$AnimatedSprite2D.stop()
 		$AnimatedSprite2D.frame = 1;
+
+func update_facing():
+	var mouse_pos = get_global_mouse_position();
+	if mouse_pos.x < global_position.x:
+		$AnimatedSprite2D.scale.x = -1; # Flips player horizontally
+	else:
+		$AnimatedSprite2D.scale.x = 1; # Normal facing
 
 func apply_stats():
 	speed = stats.move_speed;

@@ -7,12 +7,11 @@
 script = ExtResource("1_y6gcb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2077405010]
-position = Vector2(1, 2)
 texture = ExtResource("2_y6gcb")
 
 [node name="ShotTimer" type="Timer" parent="." unique_id=864177653]
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=191779727]
-position = Vector2(70, -10)
+position = Vector2(69, -12)
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
