@@ -78,7 +78,7 @@ func reset():
 	update_xp_bar();
 	max_enemies = int(difficulty);
 	enemies_spawned = 0;
-	lives = 300;
+	lives = 50;
 	run_time = 0.0;
 	enemies_killed = 0;
 	coins = 0;
@@ -86,6 +86,7 @@ func reset():
 	$Player.reset_stats();
 	$Player.clear_weapon();
 	weapon_count = 0;
+	acid_dropper = null;
 	has_orbit_blade = false;
 	has_orbit_gun = false;
 	has_aoe_aura = false;
@@ -121,7 +122,7 @@ func reset_run():
 	xp_to_level = 10;
 	update_xp_bar();
 	update_level_text();
-	lives = 300
+	lives = 50;
 	run_time = 0.0;
 	enemies_killed = 0;
 	coins = 0;
@@ -130,6 +131,7 @@ func reset_run():
 	$Player.reset_stats();
 	$Player.clear_weapon();
 	weapon_count = 0;
+	acid_dropper = null;
 	has_orbit_blade = false;
 	has_orbit_gun = false;
 	has_aoe_aura = false;
@@ -344,8 +346,8 @@ func get_nearest_enemy():
 	return nearest;
 
 func _upgrade_quick_fire():
-	$Player.stats.fire_rate *= 0.65;
-	$Player.apply_stats();
+	$GunPivot.fire_rate *= 0.65;
+	$GunPivot.apply_stats();
 
 func _upgrade_boost():
 	$Player.stats.move_speed += 20;

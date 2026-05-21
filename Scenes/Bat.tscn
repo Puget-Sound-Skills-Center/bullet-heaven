@@ -1,39 +1,15 @@
 [gd_scene format=3 uid="uid://djbw1nmhqrdmt"]
 
 [ext_resource type="Script" uid="uid://bq6jl8oecafdi" path="res://Scenes/bat.gd" id="1_p4yo7"]
-[ext_resource type="Texture2D" uid="uid://obhwxtw21ge3" path="res://Scenes/SpritesOther/Monsters_Creatures_Fantasy/Monsters_Creatures_Fantasy/Flying eye/Flight.png" id="2_p4yo7"]
+[ext_resource type="Texture2D" uid="uid://0cv3uv140hqe" path="res://Enemies/Fat-bat-enemy.png" id="2_p4yo7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4rja6"]
 atlas = ExtResource("2_p4yo7")
-region = Rect2(0, 0, 150, 150)
+region = Rect2(0, 0, 130, 107)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v8k3x"]
 atlas = ExtResource("2_p4yo7")
-region = Rect2(150, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5yugw"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(300, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lylxy"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(450, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lyu5a"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(600, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_puxrq"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(750, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_laydv"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(900, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xwp6w"]
-atlas = ExtResource("2_p4yo7")
-region = Rect2(1050, 0, 150, 150)
+region = Rect2(0, 107, 130, 107)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ep384"]
 animations = [{
@@ -43,53 +19,32 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v8k3x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5yugw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lylxy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lyu5a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_puxrq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_laydv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xwp6w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4rja6")
 }],
 "loop": true,
 "name": &"Run",
-"speed": 12.0
+"speed": 7.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajbjq"]
-size = Vector2(14.800001, 17.46667)
+size = Vector2(93.000015, 21.66667)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvi8"]
-size = Vector2(41.200005, 20)
+size = Vector2(105.00002, 58.00001)
 
 [node name="Bat" type="CharacterBody2D" unique_id=2083084092]
-scale = Vector2(2.5, 2.5)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_p4yo7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1834223425]
+scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_ep384")
 animation = &"Run"
 autoplay = "Run"
-frame = 8
+frame_progress = 0.2353988
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
-position = Vector2(5.399999, 4.066667)
+position = Vector2(8.499998, 6.166667)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_ajbjq")
 
@@ -102,7 +57,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
-position = Vector2(2.5999992, -3.9999983)
+position = Vector2(3.500002, -19)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_xcvi8")
 debug_color = Color(0.65457684, 0.5179122, 0, 0.41960785)

@@ -52,11 +52,7 @@ func get_input():
 	var shoot_pressed = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_action_just_pressed("Shoot");
 	if shoot_pressed:
 		$GunPivot.shoot();
-		if main.has_lightning:
-			if randf() < main.lightning_chance:
-				main.trigger_lightning();
-		if main.has_homing_missile and randf() < main.homing_missile_chance:
-			main.spawn_homing_missile();
+
 
 func _physics_process(_delta):
 	#Player Movement

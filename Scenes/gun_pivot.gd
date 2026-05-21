@@ -24,13 +24,21 @@ func shoot():
 		return;
 	can_shoot = false;
 	$ShotTimer.start();
+	# Spawn bullets
 	var bullet_scene = preload("res://Scenes/bullet.tscn");
 	var bullet = bullet_scene.instantiate();
 	bullet.global_position = $Muzzle.global_position;
 	bullet.direction = (get_global_mouse_position() - global_position).normalized();
 	bullet.damage = get_parent().stats.damage;
 	get_tree().current_scene.add_child(bullet);
-
+	# Spawn missiles
+	var main = get_tree().root.get_node("Main");
+	if main.has_homing_missile and randf() < main.homing_missile_chance:
+		main.spawn_homing_missile();
+	# Spawn lightning
+	if main.has_lightning:
+		if randf() < main.lightning_chance:
+			main.trigger_lightning();
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true;

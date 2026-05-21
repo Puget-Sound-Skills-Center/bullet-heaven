@@ -67,7 +67,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nn08x"]
-size = Vector2(16.6875, 31)
+size = Vector2(48.000004, 68)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
 radius = 34.234486
@@ -85,6 +85,7 @@ sprite_frames = SubResource("SpriteFrames_5ixxa")
 animation = &"Walk0"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
+position = Vector2(1.3333328, -2)
 shape = SubResource("RectangleShape2D_nn08x")
 
 [node name="GunPivot" type="Node2D" parent="." unique_id=1546121220]
@@ -93,12 +94,15 @@ script = ExtResource("5_nn08x")
 fire_rate = 0.75
 
 [node name="GunSprite" type="Sprite2D" parent="GunPivot" unique_id=2002120219]
+position = Vector2(-17.83334, 3)
+scale = Vector2(0.7622222, 0.8965517)
 texture = ExtResource("6_52ee3")
 
 [node name="Muzzle" type="Marker2D" parent="GunPivot" unique_id=1680382846]
-position = Vector2(69, -13)
+position = Vector2(35.333332, -8.333333)
 
 [node name="ShotTimer" type="Timer" parent="GunPivot" unique_id=158594492]
+wait_time = 0.5
 
 [node name="ShotTimer" type="Timer" parent="." unique_id=2080585374]
 
