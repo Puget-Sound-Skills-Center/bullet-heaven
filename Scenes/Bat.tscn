@@ -26,10 +26,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajbjq"]
-size = Vector2(93.000015, 21.66667)
+size = Vector2(110.00002, 65.000015)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcvi8"]
-size = Vector2(105.00002, 58.00001)
+size = Vector2(110.00003, 65.000015)
 
 [node name="Bat" type="CharacterBody2D" unique_id=2083084092]
 collision_layer = 4
@@ -44,7 +44,7 @@ autoplay = "Run"
 frame_progress = 0.2353988
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=591545564]
-position = Vector2(8.499998, 6.166667)
+position = Vector2(1.0000018, -15.499999)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_ajbjq")
 
@@ -57,10 +57,9 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2017173635]
-position = Vector2(3.500002, -19)
+position = Vector2(1.0000007, -15.5)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_xcvi8")
-debug_color = Color(0.65457684, 0.5179122, 0, 0.41960785)
 
 [connection signal="hit_player" from="." to="." method="_on_hit_player"]
 [connection signal="timeout" from="EntranceTimer" to="." method="_on_entrance_timer_timeout"]

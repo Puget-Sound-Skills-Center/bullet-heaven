@@ -10,6 +10,7 @@ extends Node2D
 @onready var main = get_node("/root/Main");
 
 var target = null;
+var has_aoe := false;
 
 func strike(t):
 	target = t;
@@ -26,11 +27,20 @@ func strike(t):
 	if has_node("AudioStreamPlayer2D"):
 		$AudioStreamPlayer2D.play();
 	# Chain lightning AFTER animation finishes
+	if has_aoe:
+		_do_aoe_damage(global_position, 60);
 	await $AnimatedSprite2D.animation_finished;
 	await get_tree().create_timer(0.01).timeout;
 	if chain_count > 0:
 		chain_to_next();
 	queue_free();
+
+func _do_aoe_damage(pos: Vector2, radius: float):
+	var enemies = get_tree().get_nodes_in_group("enemies");
+	for e in enemies:
+		if e.global_position.distance_to(pos) <= radius:
+			if e.has_method("take_damage"):
+				e.take_damage(damage);
 
 func chain_to_next():
 	# If the original target died, stop chaining

@@ -178,6 +178,18 @@ func get_back_spawn():
 	var _back = -vel.normalized();
 	return _pos + _back.rotated(randf_range(-0.4, 0.4)) * spawn_distance;
 
+func get_hp_multiplier(minutes: float) -> float:
+	if minutes < 3.0:
+		return 1.0; 
+	elif minutes < 6.0:
+		return 1.5;
+	elif minutes < 10.0:
+		return 2.5;
+	elif minutes < 15.0:
+		return 4.0;
+	else:
+		return 6.0 + (minutes - 15.0) * 0.4;
+
 func spawn_enemy(spawn_pos: Vector2) -> void:
 	if not can_spawn():
 		return;
@@ -187,16 +199,11 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	var enemy = scene.instantiate();
 	enemy.global_position = spawn_pos;
 	# --- HP SCALING ---
-	# Base HP comes from the scene (bat=1, goblin=1, skeleton=2, green=1)
 	var base_hp = enemy.max_health;
-	# Time scaling: +1 HP every ~2 minutes
-	var time_hp := int(minutes * 0.3);
-	# Level scaling (optional, gentle)
-	var level_hp := int(max(main.level - 1, 0) * 0.1);
-	# Final HP
-	var scaled_hp = base_hp + time_hp + level_hp;
-	enemy.max_health = scaled_hp
-	enemy.health = scaled_hp
+	var mult = get_hp_multiplier(minutes);
+	var scaled_hp = int(round(base_hp * mult));
+	enemy.max_health = scaled_hp;
+	enemy.health = scaled_hp;
 	enemy.hit_player.connect(hit);
 	main.add_child(enemy);
 	enemy.add_to_group("enemies");

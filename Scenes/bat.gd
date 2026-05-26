@@ -57,6 +57,8 @@ func take_damage(amount: int):
 	if not alive:
 		return;
 	health -= amount;
+	var main = get_tree().root.get_node("Main")
+	main.spawn_damage_number(amount, global_position)
 	flash_hit();
 	if health <= 0:
 		die();

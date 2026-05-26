@@ -20,6 +20,11 @@ func _process(delta: float) -> void:
 		tick_timer = tick_rate;
 		damage_enemies();
 
+func set_radius(new_radius):
+	radius = new_radius;
+	$CollisionShape2D.shape.radius = radius;
+	base_scale = Vector2.ONE * (radius / 80.0);
+
 func flash_aura():
 	if $Sprite2D:
 		$Sprite2D.modulate = Color(1, 1, 1, 0.4);

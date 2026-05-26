@@ -15,10 +15,9 @@ var level : int = 1
 var coins: int = 0;
 var reroll_cost := 10;
 const OrbitGun = preload("res://OrbitGun.gd");
-var lightning_damage := 20;
-var lightning_chance := 0.15;   # 15% chance per shot
+var lightning_damage := 5;
 var lightning_chain := 0;       # 0 = no chain
-
+var auto_strike_timer := 2.0;
 var acid_dropper = null;
 
 var has_orbit_blade := false;
@@ -26,15 +25,48 @@ var has_orbit_gun := false;
 var has_aoe_aura := false;
 var has_lightning := false;
 var has_bullet_bounce := false;
-var bullet_bounce_chance := 0.7;
 var has_explosive_ricochet := false;
 var has_homing_missile := false;
-var homing_missile_chance := 0.55;
+var homing_missile_chance := 0.20;
 
-var shake_time := 0.0
-var shake_duration := 0.0
-var shake_strength := 0.0
+var shake_time := 0.0;
+var shake_duration := 0.0;
+var shake_strength := 0.0;
 var cam = null;
+
+# Lightning evolution
+var lightning_level := 0;
+var lightning_aoe := false;
+var lightning_auto_strike := false;
+var lightning_cooldown := 2.0;
+var lightning_timer := 0.0;
+
+# Missile evolution
+var missile_level := 0;
+var missile_split := false;
+var missile_cluster := false;
+var missile_armageddon := false;
+var missile_cooldown := 4.0;
+var missile_timer := 0.0;
+
+# Bullet evolution
+var bullet_level := 0;
+var bullet_pierce := 0;
+var bullet_explosive := false;
+var bullet_ricochet := 0;
+var bullet_shrapnel := false;
+var explosive_cooldown := 0.0;
+var explosive_timer := 0.0;
+var bounce_cooldown := 1.0;
+var bounce_timer := 0.0;
+var shrapnel_cooldown := 1.5;
+var shrapnel_timer := 0.0;
+
+# Aura evolution
+var aura_level := 0
+var aura_radius := 50
+var aura_dot := false
+var aura_pulse := false
 
 var orbit_gun_sprites = [
 	preload("res://Weapons/GunPack/Pack 1/1px/25.png"),
@@ -90,15 +122,26 @@ func reset():
 	has_orbit_blade = false;
 	has_orbit_gun = false;
 	has_aoe_aura = false;
+	aura_level = 0;
+	aura_radius = 50;
+	aura_dot = false;
+	aura_pulse = false;
 	has_lightning = false;
-	lightning_damage = 20;
-	lightning_chance = 0.15;
+	lightning_level = 0;
+	lightning_damage = 15;
 	lightning_chain = 0;
+	lightning_aoe = false;
+	lightning_auto_strike = false;
 	has_bullet_bounce = false;
-	bullet_bounce_chance = 0.7;
-	has_explosive_ricochet = false;
+	bullet_explosive = false;
+	bullet_shrapnel = false;
+	bullet_pierce = 0;
 	has_homing_missile = false;
-	homing_missile_chance = 0.55;
+	missile_level = 0;
+	homing_missile_chance = 0.20;
+	missile_split = false;
+	missile_cluster = false;
+	missile_armageddon = false;
 	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
@@ -135,15 +178,26 @@ func reset_run():
 	has_orbit_blade = false;
 	has_orbit_gun = false;
 	has_aoe_aura = false;
+	aura_level = 0;
+	aura_radius = 50;
+	aura_dot = false;
+	aura_pulse = false;
 	has_lightning = false;
-	lightning_damage = 20;
-	lightning_chance = 0.15;
+	lightning_level = 0;
+	lightning_damage = 15;
 	lightning_chain = 0;
+	lightning_aoe = false;
+	lightning_auto_strike = false;
 	has_bullet_bounce = false;
-	bullet_bounce_chance = 0.7;
-	has_explosive_ricochet = false;
+	bullet_explosive = false;
+	bullet_shrapnel = false;
+	bullet_pierce = 0;
 	has_homing_missile = false;
-	homing_missile_chance = 0.55;
+	missile_level = 0;
+	homing_missile_chance = 0.20;
+	missile_split = false;
+	missile_cluster = false;
+	missile_armageddon = false;
 	$UpgradeManager.reset();
 	get_tree().call_group("enemies", "queue_free");
 	get_tree().call_group("bullets", "queue_free");
@@ -232,11 +286,32 @@ func _process(_delta: float) -> void:
 		)
 	else:
 		cam.offset = Vector2.ZERO;
+	if has_lightning:
+		lightning_timer -= _delta;
+		if lightning_timer <= 0:
+			lightning_timer = lightning_cooldown;
+			trigger_lightning();
+	if has_homing_missile:
+		missile_timer -= _delta;
+		if missile_timer <= 0:
+			missile_timer = missile_cooldown;
+			spawn_homing_missile();
+	if has_bullet_bounce:
+		bounce_timer -= _delta;
+	if bullet_explosive:
+		explosive_timer -= _delta;
 
 func update_timer_display():
 	var minutes = int(run_time) / 60.0;
 	var seconds = int(run_time) % 60;
 	$CanvasLayer/HUD/TimerLabel.text = "%02d:%02d" % [minutes, seconds];
+
+var dmg_number_scene := preload("res://Scenes/damage_number.tscn");
+
+func spawn_damage_number(amount: int, pos: Vector2, color := Color.WHITE):
+	var d = dmg_number_scene.instantiate();
+	add_child(d);
+	d.setup(amount, color, pos);
 
 func get_spawn_cap():
 	# Start with 10 enemies
@@ -274,7 +349,7 @@ func is_wave_completed():
 		return true;
 	return false;
 
-func spawn_bounce_bullet(from_enemy):
+func spawn_bounce_bullet(from_enemy, ricochet_left: int):
 	var enemies = get_tree().get_nodes_in_group("enemies");
 	if enemies.size() <= 1:
 		return;
@@ -296,6 +371,8 @@ func spawn_bounce_bullet(from_enemy):
 	b.global_position = from_enemy.global_position;
 	b.direction = (nearest.global_position - from_enemy.global_position).normalized();
 	b.damage = $Player.stats.damage # or scale it down if necessary
+	b.ricochet_left = ricochet_left;
+	b.rotation = b.direction.angle();
 	call_deferred("add_child", b);
 
 func spawn_explosion1(pos: Vector2):
@@ -323,10 +400,10 @@ func spawn_homing_missile():
 	# Spawn behind the player
 	missile.global_position = $Player.global_position;
 	# Assign target
-	missile.target = get_nearest_enemy();
-	if missile.target == null:
-		print("NO TARGET");
-		return;
+	missile.target = null;
+	missile.split = missile_split;
+	missile.cluster = missile_cluster;
+	missile.armageddon = missile_armageddon;
 	call_deferred("add_child", missile);
 	screen_shake(0.25, 12);
 	print('MISSILE SPAWNED');
@@ -346,8 +423,10 @@ func get_nearest_enemy():
 	return nearest;
 
 func _upgrade_quick_fire():
-	$GunPivot.fire_rate *= 0.65;
-	$GunPivot.apply_stats();
+	$Player.stats.fire_rate_multiplier *= 0.65;
+	var gun = $Player.get_node_or_null("GunPivot");
+	if gun:
+		gun.apply_stats();
 
 func _upgrade_boost():
 	$Player.stats.move_speed += 20;
@@ -355,6 +434,7 @@ func _upgrade_boost():
 
 func _upgrade_extra_life():
 	$Player.stats.max_health += 1;
+	lives += 1;
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 
 func _upgrade_orbit_speed_blade():
@@ -410,24 +490,43 @@ func _upgrade_orbit_gun_fire_rate():
 			gun.apply_stats();
 
 func _upgrade_aoe_aura():
-	if has_aoe_aura:
+	# If aura already unlocked but missing, respawn it
+	var existing = $Player.get_node_or_null("AOE_AURA");
+	if has_aoe_aura and existing == null:
+		var aura = preload("res://Scenes/aoe_aura.tscn").instantiate();
+		aura.name = "AOE_AURA";
+		$Player.add_child(aura);
 		return;
-	var aura = preload("res://Scenes/aoe_aura.tscn").instantiate();
-	$Player.add_child(aura);
-	has_aoe_aura = true;
+	# First time unlock
+	if !has_aoe_aura:
+		var aura = preload("res://Scenes/aoe_aura.tscn").instantiate();
+		aura.name = "AOE_AURA";
+		$Player.add_child(aura);
+		has_aoe_aura = true;
+	# Evolution levels
+	aura_level += 1;
+	match aura_level:
+		1:
+			aura_radius = 70;
+		2:
+			aura_radius = 100;
+		3:
+			aura_dot = true;
+		4:
+			aura_pulse = true;
+	var aura = $Player.get_node_or_null("AOE_AURA");
+	if aura:
+		aura.set_radius(aura_radius);
 
 func _upgrade_aoe_aura_damage():
-	for child in $Player.get_children():
-		if child.name == "AOE_AURA":
-			child.damage += 1;
+	var aura = $Player.get_node_or_null("AOE_AURA");
+	if aura:
+		aura.damage += 1;
 
 func _upgrade_aoe_aura_radius():
-	for child in $Player.get_children():
-		if child.name == "AOE_AURA":
-			child.radius += 35;
-			var col = child.get_node("CollisionShape2D");
-			col.shape.radius = child.radius;
-			child.base_scale = Vector2.ONE * (child.radius / 80.0);
+	var aura = $Player.get_node_or_null("AOE_AURA");
+	if aura:
+		aura.set_radius(aura.radius + 20);
 
 func trigger_lightning():
 	var enemies = get_tree().get_nodes_in_group("enemies");
@@ -444,6 +543,7 @@ func trigger_lightning():
 	if nearest == null:
 		return;
 	var bolt = preload("res://Scenes/lightning_strike.tscn").instantiate();
+	bolt.has_aoe = lightning_aoe;
 	bolt.damage = lightning_damage;
 	bolt.chain_count = lightning_chain;
 	add_child(bolt);
@@ -451,13 +551,21 @@ func trigger_lightning():
 	bolt.strike(nearest);
 
 func _upgrade_lightning():
+	lightning_level += 1;
 	has_lightning = true;
+	match lightning_level:
+		1:
+			lightning_cooldown = 2.0;
+			lightning_timer = 0.0;
+		2:
+			lightning_chain += 1;
+		3:
+			lightning_aoe = true;
+		4:
+			lightning_cooldown = 1.5;
 
 func _upgrade_lightning_damage():
 	lightning_damage += 10;
-
-func _upgrade_lightning_chance():
-	lightning_chance += 0.05;
 
 func _upgrade_lightning_chain():
 	lightning_chain += 1;
@@ -486,7 +594,7 @@ func _upgrade_acid_pool():
 func _upgrade_acid_radius():
 	if acid_dropper == null:
 		return;
-	acid_dropper.radius_multiplier += 0.25;
+	acid_dropper.radius_multiplier += 0.55;
 
 func _upgrade_acid_double():
 	if acid_dropper == null:
@@ -494,13 +602,45 @@ func _upgrade_acid_double():
 	acid_dropper.multi_drop += 1;
 
 func _upgrade_bullet_bounce():
+	bullet_level += 1;
 	has_bullet_bounce = true;
+	bullet_ricochet = 1;
+
+func _upgrade_bullet_ricochet_rounds():
+	bullet_ricochet += 1;
 
 func _upgrade_explosive_ricochet():
-	has_explosive_ricochet = true;
+	bullet_level += 1;
+	bullet_explosive = true;
+
+func _upgrade_bullet_shrapnel():
+	bullet_level += 1;
+	bullet_shrapnel = true;
 
 func _upgrade_homing_missile():
+	missile_level += 1;
 	has_homing_missile = true;
+	match missile_level:
+		1:
+			missile_cooldown = 4.0;
+		2:
+			missile_split = true;
+		3:
+			missile_cluster = true;
+		4:
+			missile_armageddon = true;
+
+func _upgrade_missile_armageddon():
+	missile_level += 1;
+	missile_armageddon = true;
+
+func _upgrade_missile_split():
+	missile_level += 1;
+	missile_split = true;
+
+func _upgrade_missile_cluster():
+	missile_level += 1;
+	missile_cluster = true;
 
 func _upgrade_orbit_gun_pierce():
 	for gun in $Player.get_children():

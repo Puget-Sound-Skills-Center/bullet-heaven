@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cvfiaj00nj03a"]
+
+[ext_resource type="Script" uid="uid://cyyuywobg0oh2" path="res://Scenes/damage_number.gd" id="1_n4jia"]
+[ext_resource type="FontFile" uid="uid://b0rkgfluwk6x8" path="res://Scenes/Fonts/BoldPixels.ttf" id="2_m808r"]
+
+[node name="DamageNumber" type="Node2D" unique_id=1963840147]
+script = ExtResource("1_n4jia")
+
+[node name="Label" type="Label" parent="." unique_id=1966753591]
+offset_right = 19.0
+offset_bottom = 14.0
+scale = Vector2(3, 3)
+theme_override_fonts/font = ExtResource("2_m808r")
+text = "+1"
+horizontal_alignment = 1

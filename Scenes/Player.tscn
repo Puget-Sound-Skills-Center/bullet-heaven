@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://qvyje85rmdqy" path="res://Player/barrelARMLESS3.png" id="4_5ixxa"]
 [ext_resource type="Script" uid="uid://co37bc8k6ggck" path="res://Scenes/gun_pivot.gd" id="5_nn08x"]
 [ext_resource type="Texture2D" uid="uid://bq5uyw1c13kad" path="res://Player/Barrel's AK(2).png" id="6_52ee3"]
+[ext_resource type="Texture2D" uid="uid://c4y0itooyrcl2" path="res://Scenes/Guns/FlashEffect.png" id="7_52ee3"]
 
 [sub_resource type="Resource" id="Resource_dewec"]
 script = ExtResource("2_gntrk")
@@ -91,7 +92,6 @@ shape = SubResource("RectangleShape2D_nn08x")
 [node name="GunPivot" type="Node2D" parent="." unique_id=1546121220]
 position = Vector2(30, 15)
 script = ExtResource("5_nn08x")
-fire_rate = 0.75
 
 [node name="GunSprite" type="Sprite2D" parent="GunPivot" unique_id=2002120219]
 position = Vector2(-17.83334, 3)
@@ -100,6 +100,12 @@ texture = ExtResource("6_52ee3")
 
 [node name="Muzzle" type="Marker2D" parent="GunPivot" unique_id=1680382846]
 position = Vector2(35.333332, -8.333333)
+
+[node name="MuzzleFlash" type="Sprite2D" parent="GunPivot/Muzzle" unique_id=538494180]
+visible = false
+z_index = -1
+position = Vector2(21.333336, -1.1920929e-07)
+texture = ExtResource("7_52ee3")
 
 [node name="ShotTimer" type="Timer" parent="GunPivot" unique_id=158594492]
 wait_time = 0.5

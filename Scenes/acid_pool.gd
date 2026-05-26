@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var damage := 3;
+@export var acid_damage := 3;
 @export var tick_rate := 0.5;
 @export var duration := 4.0;
 
@@ -56,7 +56,7 @@ func puddle_behavior(_delta):
 		tick_timer = 0.0;
 		for body in get_overlapping_bodies():
 			if body.has_method("take_damage"):
-				body.take_damage(damage);
+				body.take_damage(acid_damage);
 	# Remove after duration
 	if life_timer >= duration:
 		queue_free();

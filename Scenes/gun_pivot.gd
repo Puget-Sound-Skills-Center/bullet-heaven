@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var muzzle_flash = $Muzzle/MuzzleFlash;
 @export var fire_rate := 0.25;
 var can_shoot := true;
 
@@ -10,14 +11,14 @@ func _process(_delta: float) -> void:
 	 # Flip gun sprite vertically if player is flipped
 	var player = get_parent();
 	var body = player.get_node("AnimatedSprite2D");
-	$GunSprite.flip_v = (body.scale.x == -1);
-	gun_flip();
+	var flipped = (body.scale.x == -1);
+	scale.y = -1 if flipped else 1;
+	position.x = -30 if flipped else 30;
 
-func gun_flip():
-	if $GunSprite.flip_v == true:
-		position.x = -30
-	else:
-		position.x = 30
+#func gun_flip():
+#	if $GunSprite.flip_v == true:
+#		position.x = -30
+#	position.x = 30
 
 func shoot():
 	if !can_shoot:
@@ -31,14 +32,19 @@ func shoot():
 	bullet.direction = (get_global_mouse_position() - global_position).normalized();
 	bullet.damage = get_parent().stats.damage;
 	get_tree().current_scene.add_child(bullet);
-	# Spawn missiles
-	var main = get_tree().root.get_node("Main");
-	if main.has_homing_missile and randf() < main.homing_missile_chance:
-		main.spawn_homing_missile();
-	# Spawn lightning
-	if main.has_lightning:
-		if randf() < main.lightning_chance:
-			main.trigger_lightning();
+	show_muzzle_flash();
+
+func show_muzzle_flash():
+	muzzle_flash.visible = true;
+	muzzle_flash.modulate.a = 1.0;
+	var rate = fire_rate;
+	var scale_factor = clamp(0.5 + (rate * 2.0), 0.4, 1.2);
+	muzzle_flash.scale = Vector2(scale_factor, scale_factor);
+	muzzle_flash.get_tree().create_timer(0.05).timeout.connect(func():
+		muzzle_flash.visible = false);
+
+func apply_stats():
+	fire_rate = get_parent().stats.fire_rate * get_parent().stats.fire_rate_multiplier;
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true;

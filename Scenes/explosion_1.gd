@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var damage := 20;
+@export var damage := 12;
 @export var radius := 60;
 
 # Called when the node enters the scene tree for the first time.

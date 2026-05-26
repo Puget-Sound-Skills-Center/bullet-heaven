@@ -43,17 +43,24 @@ func _ready() -> void:
 		Upgrade.new("Magic Sigil", "Damage zone surrounding player", "_upgrade_aoe_aura", icon_aura),
 		Upgrade.new("Magic Sigil Damage", "Increase damage zone by +1", "_upgrade_aoe_aura_damage", icon_aura),
 		Upgrade.new("Magic Sigil Radius", "Increase zone radius by 20%", "_upgrade_aoe_aura_radius", icon_aura),
-		Upgrade.new("Lightning Strike", "Chance to strike lightning when firing.", "_upgrade_lightning", icon_lightning),
+		Upgrade.new("Lightning Strike", "Strkes enemy every 2 seconds.", "_upgrade_lightning", icon_lightning),
 		Upgrade.new("Lightning Damage", "Lightning deals +10 damage.", "_upgrade_lightning_damage", icon_lightning),
-		Upgrade.new("Lightning Chance", "Lightning chance +5%.", "_upgrade_lightning_chance", icon_lightning),
 		Upgrade.new("Lightning Chain", "Lightning chains to +1 extra enemy.", "_upgrade_lightning_chain", icon_lightning),
 		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid),
 		Upgrade.new("Acid Radius", "Increase acid puddle radius by 25%", "_upgrade_acid_radius", icon_acid),
 		Upgrade.new("Acid Double Drop", "Throw two acid bottles at once", "_upgrade_acid_double", icon_acid),
 		Upgrade.new("Bullet Bounce", "70% chance for bullets to ricochet to another enemy", "_upgrade_bullet_bounce", icon_damage),
 		Upgrade.new("Explosive bullets", "Bullets explode on hit, dealing +20 damage.", "_upgrade_explosive_ricochet", icon_damage),
-		Upgrade.new("Homing Missile", "55% chance to fire a missile behind you toward an enemy.", "_upgrade_homing_missile", icon_damage),
-		Upgrade.new("Bullet piercing", "Orbital guns pierces through +1 enemy", "_upgrade_orbit_gun_pierce", icon_orbit_gun)
+		Upgrade.new("Homing Missile", "Home in a missile at an enemy every 4 seconds", "_upgrade_homing_missile", icon_damage),
+		Upgrade.new("Bullet piercing", "Orbital guns pierces through +1 enemy", "_upgrade_orbit_gun_pierce", icon_orbit_gun),
+		Upgrade.new("Split Missile", "Missiles split into 2 mini-rockets.", "_upgrade_missile_split", icon_damage),
+		Upgrade.new("Cluster Missile", "Missiles spawn micro-rockets on hit.", "_upgrade_missile_cluster", icon_damage),
+		Upgrade.new("Armageddon Missile", "Missiles explode into cluster bombs.", "_upgrade_missile_armageddon", icon_damage),
+		Upgrade.new("Forked Lightning", "Lightning jumps to 5 enemies and creates AoE.", "_upgrade_lightning_chain", icon_lightning),
+		Upgrade.new("Ricochet Rounds", "Bullets bounce 2 times.", "_upgrade_bullet_ricochet_rounds", icon_damage),
+		Upgrade.new("Shrapnel Storm", "Bullets explode into shrapnel.", "_upgrade_bullet_shrapnel", icon_damage),
+		Upgrade.new("Burning Sigil", "Aura deals damage over time.", "_upgrade_aoe_aura_damage", icon_aura),
+		Upgrade.new("Shockwave Sigil", "Aura pulses every 1.5 seconds.", "_upgrade_aoe_aura_radius", icon_aura),
 ]
 
 func get_random_upgrades(main: Node) -> Array:
@@ -67,30 +74,88 @@ func get_random_upgrades(main: Node) -> Array:
 
 func is_upgrade_allowed(upgrade: Upgrade, main: Node) -> bool:
 	match upgrade.apply_func:
-		"_upgrade_aoe_aura_damage", "_upgrade_aoe_aura_radius":
-			return main.has_aoe_aura;
-		"_upgrade_orbit_gun_damage", "_upgrade_orbit_gun_fire_rate", "_upgrade_orbit_gun_pierce":
-			return main.has_orbit_gun;
-		"_upgrade_orbit_speed_blade":
-			return main.has_orbit_blade;
-		"_upgrade_lightning_damage", "_upgrade_lightning_chance", "_upgrade_lightning_chain":
-			return main.has_lightning;
+# -------------------------
+# AURA
+# -------------------------
+		"_upgrade_aoe_aura":
+			return !main.has_aoe_aura and main.level >= 2
+		"_upgrade_aoe_aura_damage":
+			return main.has_aoe_aura and main.aura_level >= 1 and main.level >= 6 and !main.aura_dot
+		"_upgrade_aoe_aura_radius":
+			return main.has_aoe_aura and main.aura_level >= 1 and main.level >= 7 and main.aura_radius < 200
+# -------------------------
+# ORBIT GUN
+# -------------------------
+		"_upgrade_orbit_gun":
+			return !main.has_orbit_gun and main.level >= 2
+		"_upgrade_orbit_gun_damage":
+			return main.has_orbit_gun and main.level >= 4
+		"_upgrade_orbit_gun_fire_rate":
+			return main.has_orbit_gun and main.level >= 4
+		"_upgrade_orbit_gun_pierce":
+			return main.has_orbit_gun and main.level >= 6
+# -------------------------
+# ORBIT BLADE
+# -------------------------
 		"_upgrade_orbit_blade":
-			# Only allow gun unlock if player doesn't already have one
-			return !main.has_orbit_gun;
+			return !main.has_orbit_blade and main.level >= 2
+		"_upgrade_orbit_speed_blade":
+			return main.has_orbit_blade and main.level >= 4
+# -------------------------
+# LIGHTNING
+# -------------------------
+		"_upgrade_lightning":
+			return !main.has_lightning and main.level >= 3
+		"_upgrade_lightning_damage":
+			return main.has_lightning and main.level >= 5
+		"_upgrade_lightning_chain":
+			return main.has_lightning and main.level >= 7
+# -------------------------
+# ACID
+# -------------------------
 		"_upgrade_acid_pool":
-			if main.acid_dropper == null:
-				return true;
-			return main.acid_dropper.level < 5;
-		"_upgrade_acid_radius", "_upgrade_acid_double":
-			return main.acid_dropper != null;
+			return main.level >= 2 and (main.acid_dropper == null or main.acid_dropper.level < 5)
+		"_upgrade_acid_radius":
+			return main.acid_dropper != null and main.level >= 4
+		"_upgrade_acid_double":
+			return main.acid_dropper != null and main.level >= 6
+# -------------------------
+# BULLET EVOLUTIONS
+# -------------------------
 		"_upgrade_bullet_bounce":
-			return !main.has_bullet_bounce;
+			return !main.has_bullet_bounce and main.level >= 2
+		"_upgrade_bullet_ricochet_rounds":
+			return main.has_bullet_bounce and main.level >= 4 and main.bullet_ricochet < 5
 		"_upgrade_explosive_ricochet":
-			return !main.has_explosive_ricochet;
+			return !main.bullet_explosive and main.level >= 5
+		"_upgrade_bullet_shrapnel":
+			return main.bullet_explosive and !main.bullet_shrapnel and main.level >= 12
+# -------------------------
+# MISSILES
+# -------------------------
 		"_upgrade_homing_missile":
-			return !main.has_homing_missile;
-	return true;
+			return !main.has_homing_missile and main.level >= 5
+		"_upgrade_missile_split":
+			return main.has_homing_missile and !main.missile_split and main.level >= 8
+		"_upgrade_missile_cluster":
+			return main.has_homing_missile and !main.missile_cluster and main.level >= 12
+		"_upgrade_missile_armageddon":
+			return main.has_homing_missile and !main.missile_armageddon and main.level >= 16
+# -------------------------
+# DEFAULT (ALWAYS ALLOWED)
+# -------------------------
+		"_upgrade_quick_fire":
+			return main.level >= 2
+		"_upgrade_boost":
+			return main.level >= 2
+		"_upgrade_extra_life":
+			return main.level >= 2
+		"_upgrade_damage_up":
+			return main.level >= 2
+		"_upgrade_pickup_range":
+			return main.level >= 2
+	return true
+
 
 func apply_upgrade(index: int, main: Node):
 	var upgrade = current_choices[index];
