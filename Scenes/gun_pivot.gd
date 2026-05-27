@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var main = get_node("/root/Main");
 @onready var muzzle_flash = $Muzzle/MuzzleFlash;
 @export var fire_rate := 0.25;
 var can_shoot := true;
@@ -32,6 +33,7 @@ func shoot():
 	bullet.direction = (get_global_mouse_position() - global_position).normalized();
 	bullet.damage = get_parent().stats.damage;
 	get_tree().current_scene.add_child(bullet);
+	main.play_sfx("bullet");
 	show_muzzle_flash();
 
 func show_muzzle_flash():

@@ -75,6 +75,20 @@ var orbit_gun_sprites = [
 	preload("res://Weapons/GunPack/Pack 1/1px/31.png")
 ]
 
+var sfx := {
+	"bullet": preload("res://Scenes/Sounds/Shoot88.wav"),
+	"missile": preload("res://Scenes/Sounds/Missiles.wav"),
+	"acid": preload("res://Scenes/Sounds/Splash.wav"),
+	"damage": preload("res://Scenes/Sounds/Hit29.wav"),
+	"death": preload("res://Scenes/Sounds/Death.wav"),
+	"levelup": preload("res://Scenes/Sounds/PowerUp65.wav"),
+	"xp": preload("res://Scenes/Sounds/XP_Pickup.wav"),
+	"select": preload("res://Scenes/Sounds/Select.wav"),
+	"gameover": preload("res://Scenes/Sounds/GameOver.wav"),
+	"Explosive Bullets": preload("res://Scenes/Sounds/Explosive bullets.wav"),
+	"Coin": preload("res://Scenes/Sounds/Coin.wav"),
+}
+
 var weapon_offsets = [
 	Vector2(40, -55),  # right shoulder
 	Vector2(-40, -45), # left shoulder
@@ -247,6 +261,7 @@ func update_level_text():
 
 func show_level_up_choices():
 	get_tree().paused = true;
+	play_sfx("levelup");
 	$CanvasLayer/LevelUpPanel.show();
 	$CanvasLayer/LevelUpPanel/RerollButton.disabled = coins < 10;
 	$CanvasLayer/LevelUpPanel/RerollButton.text = "Reroll (-" + str(reroll_cost) + " Coins)";
@@ -331,6 +346,18 @@ func _on_enemy_spawner_hit_p():
 		$CanvasLayer/GameOver/EnemiesKilled.text = "Enemies killed: " + str(enemies_killed);
 		$CanvasLayer/GameOver/CoinsCollected.text = "Coins: " + str(coins);
 		$CanvasLayer/GameOver.show();
+
+# Called when the node enters the scene tree for the first time.
+func play_sfx(name: String, volume := 0.0):
+	if not sfx.has(name):
+		print("SFX not found: ", name);
+		return;
+	var p := AudioStreamPlayer.new();
+	p.stream = sfx[name];
+	p.volume_db = volume;
+	add_child(p);
+	p.play();
+	p.finished.connect(p.queue_free);
 
 func update_coins():
 	$CanvasLayer/HUD/CoinsLabel.text = "Coins: " + str(coins);

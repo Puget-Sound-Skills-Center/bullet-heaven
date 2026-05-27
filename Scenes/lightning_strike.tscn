@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b2id2vpr30ccn" path="res://Scenes/SpritesOther/lightning-strike-Sheet.png" id="1_l11up"]
 [ext_resource type="Script" uid="uid://1q6oxa4jcn2k" path="res://Scenes/lightning_strike.gd" id="1_tqvll"]
-[ext_resource type="AudioStream" uid="uid://cnmdb8p2cymiw" path="res://Scenes/Sounds/Random18.wav" id="3_ffpch"]
+[ext_resource type="AudioStream" uid="uid://cnmdb8p2cymiw" path="res://Scenes/Sounds/LightningStrike.wav" id="3_ffpch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_alkpr"]
 atlas = ExtResource("1_l11up")

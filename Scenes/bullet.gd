@@ -42,6 +42,7 @@ func _on_body_entered(body: Node2D):
 			main.explosive_timer = main.explosive_cooldown;
 			main.spawn_explosion1(global_position);
 			main.screen_shake(0.18, 6);
+			main.play_sfx("Explosive Bullets");
 	# shrapnel evolution
 	if main.bullet_shrapnel:
 		if main.shrapnel_timer <= 0:

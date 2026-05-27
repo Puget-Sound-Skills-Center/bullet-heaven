@@ -26,5 +26,6 @@ func _on_body_entered(body):
 	if body.name == "Player":
 		main.coins += 1;
 		main.update_coins();
+		main.play_sfx("Coin");
 	#delete item
 	queue_free();

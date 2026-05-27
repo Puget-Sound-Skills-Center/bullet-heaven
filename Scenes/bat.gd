@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var player = get_node("/root/Main/Player");
 @onready var main = get_node("/root/Main");
-@export var max_health: int = 1;
+@export var max_health: int = 2;
 
 var coin_scene := preload("res://Scenes/Coin.tscn");
 var explosion_scene := preload("res://Scenes/explosion.tscn");
@@ -57,8 +57,9 @@ func take_damage(amount: int):
 	if not alive:
 		return;
 	health -= amount;
-	var main = get_tree().root.get_node("Main")
-	main.spawn_damage_number(amount, global_position)
+	var main = get_tree().root.get_node("Main");
+	main.spawn_damage_number(amount, global_position);
+	main.play_sfx("damage");
 	flash_hit();
 	if health <= 0:
 		die();

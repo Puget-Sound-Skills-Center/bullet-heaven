@@ -20,4 +20,5 @@ func _physics_process(delta):
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		main.add_xp(xp_amount);
+		main.play_sfx("xp");
 		queue_free();

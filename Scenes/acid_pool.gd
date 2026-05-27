@@ -35,6 +35,7 @@ func physics_fall(delta):
 		position.y = get_ground_y();
 		velocity = Vector2.ZERO;
 		has_splashed = true;
+		get_tree().root.get_node("Main").play_sfx("acid");
 
 func get_ground_y():
 	# Adjust based on the map

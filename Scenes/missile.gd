@@ -42,6 +42,7 @@ func _on_body_entered(body) -> void:
 		# Base explosion
 		main.spawn_explosion2(global_position);
 		main.screen_shake(0.3, 8);
+		main.play_sfx("missile");
 		# Split evolution
 		if main.missile_split:
 			_spawn_split_missile();
