@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://mjdph3s86747" path="res://Scenes/hud.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://d2ly4652880e0" path="res://Scenes/game_over.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cpln6psnyuyr7" path="res://Scenes/level_up_panel.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://dsngpbcttaltc" path="res://Scenes/pause_menu.tscn" id="9_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dv7ytom70n838" path="res://Scenes/xp_bar.tscn" id="10_4c57u"]
 [ext_resource type="PackedScene" uid="uid://vdbtjfswwb2q" path="res://Scenes/upgrade_manager.tscn" id="11_efxa6"]
 
@@ -34,6 +35,9 @@ one_shot = true
 [node name="UpgradeManager" parent="." unique_id=1357751294 instance=ExtResource("11_efxa6")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1324642005]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1507577056 instance=ExtResource("9_4c57u")]
+visible = false
 
 [node name="HUD" parent="CanvasLayer" unique_id=2021681451 instance=ExtResource("7_272bh")]
 
@@ -74,7 +78,7 @@ position = Vector2(664.5, 433.75)
 scale = Vector2(0.81029683, 0.93708163)
 
 [node name="LevelLabel" parent="CanvasLayer/LevelUpPanel" index="1" unique_id=972049969]
-anchor_left = -0.5584795
+anchor_left = -0.5584811
 anchor_top = 0.45720735
 anchor_right = -0.5584811
 anchor_bottom = 0.45720735

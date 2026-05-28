@@ -329,6 +329,15 @@ func spawn_damage_number(amount: int, pos: Vector2, color := Color.WHITE):
 	add_child(d);
 	d.setup(amount, color, pos);
 
+@onready var pause_menu := $"CanvasLayer/PauseMenu";
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		if pause_menu.visible:
+			pause_menu.close();
+		else:
+			pause_menu.open();
+
 func get_spawn_cap():
 	# Start with 10 enemies
 	var base = 10;
