@@ -84,6 +84,7 @@ stats = SubResource("Resource_dewec")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1178612505]
 sprite_frames = SubResource("SpriteFrames_5ixxa")
 animation = &"Walk0"
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748475774]
 position = Vector2(1.3333328, -2)

@@ -76,6 +76,13 @@ func update_facing():
 	else:
 		$AnimatedSprite2D.scale.x = 1; # Normal facing
 
+func flash_hit():
+	var sprite = $AnimatedSprite2D  # or whatever your sprite node is called
+	sprite.self_modulate = Color(2.606, 2.606, 2.606, 1.0);  # bright flash
+	await get_tree().create_timer(0.1).timeout;
+	sprite.self_modulate = Color(1, 1, 1, 1);  # reset
+	main.play_sfx("playerhit");
+
 func apply_stats():
 	speed = stats.move_speed;
 	$ShotTimer.wait_time = stats.fire_rate;

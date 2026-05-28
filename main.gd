@@ -80,6 +80,7 @@ var sfx := {
 	"missile": preload("res://Scenes/Sounds/Missiles.wav"),
 	"acid": preload("res://Scenes/Sounds/Splash.wav"),
 	"damage": preload("res://Scenes/Sounds/Hit29.wav"),
+	"playerhit": preload("res://Scenes/Sounds/PlayerHit.wav"),
 	"death": preload("res://Scenes/Sounds/Death.wav"),
 	"levelup": preload("res://Scenes/Sounds/PowerUp65.wav"),
 	"xp": preload("res://Scenes/Sounds/XP_Pickup.wav"),
@@ -336,6 +337,7 @@ func get_spawn_cap():
 
 func _on_enemy_spawner_hit_p():
 	lives -= 1;
+	$Player.flash_hit();
 	$CanvasLayer/HUD/LivesLabel.text = "X " + str(lives);
 	if lives <= 0:
 		get_tree().paused = true;
