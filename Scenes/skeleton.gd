@@ -57,6 +57,7 @@ func take_damage(amount: int):
 	if not alive:
 		return;
 	health -= amount;
+	main.play_sfx("damage");
 	flash_hit();
 	if health <= 0:
 		die();

@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://dp8rsitf855yn"]
+
+[ext_resource type="Texture2D" uid="uid://c44s12vje0p8d" path="res://Scenes/SpritesOther/lightning_smoke.png" id="1_3lsu5"]
+[ext_resource type="Script" uid="uid://bh0bihhixrs87" path="res://Scenes/lightning_aoe.gd" id="1_67dhg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67dhg"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(0, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6kof"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(64, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boguy"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(128, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv6c1"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(192, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmyuv"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(256, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6coei"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(320, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkmpn"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(384, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxy3s"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(448, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycx8u"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(512, 0, 64, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h18qh"]
+atlas = ExtResource("1_3lsu5")
+region = Rect2(576, 0, 64, 61)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hd8c5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67dhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6kof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boguy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv6c1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmyuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6coei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkmpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxy3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycx8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h18qh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h18qh")
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[node name="LightningAOE" type="Node2D" unique_id=1357921245]
+scale = Vector2(2, 2)
+script = ExtResource("1_67dhg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=840167980]
+sprite_frames = SubResource("SpriteFrames_hd8c5")
+autoplay = "default"
+frame = 10
+frame_progress = 1.0

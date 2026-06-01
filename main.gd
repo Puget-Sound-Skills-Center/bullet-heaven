@@ -85,9 +85,12 @@ var sfx := {
 	"levelup": preload("res://Scenes/Sounds/PowerUp65.wav"),
 	"xp": preload("res://Scenes/Sounds/XP_Pickup.wav"),
 	"select": preload("res://Scenes/Sounds/Select.wav"),
+	"selecpowerup": preload("res://Scenes/Sounds/PowerUpSelect.wav"),
 	"gameover": preload("res://Scenes/Sounds/GameOver.wav"),
 	"Explosive Bullets": preload("res://Scenes/Sounds/Explosive bullets.wav"),
 	"Coin": preload("res://Scenes/Sounds/Coin.wav"),
+	"pause": preload("res://Scenes/Sounds/BlipPause.wav"),
+	"smoke": preload("res://Scenes/Sounds/Boom69.wav"),
 }
 
 var weapon_offsets = [
@@ -284,6 +287,7 @@ func show_level_up_choices():
 func close_level_up_panel():
 	$CanvasLayer/LevelUpPanel.hide();
 	get_tree().paused = false;
+	play_sfx("selecpowerup");
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -333,9 +337,10 @@ func spawn_damage_number(amount: int, pos: Vector2, color := Color.WHITE):
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if pause_menu.visible:
+		if get_tree().paused:
 			pause_menu.close();
 		else:
+			play_sfx("pause");
 			pause_menu.open();
 
 func get_spawn_cap():
@@ -461,10 +466,9 @@ func get_nearest_enemy():
 	return nearest;
 
 func _upgrade_quick_fire():
-	$Player.stats.fire_rate_multiplier *= 0.65;
-	var gun = $Player.get_node_or_null("GunPivot");
+	var gun = $Player/GunPivot;
 	if gun:
-		gun.apply_stats();
+		gun.apply_fire_rate_upgrade(0.95);
 
 func _upgrade_boost():
 	$Player.stats.move_speed += 20;

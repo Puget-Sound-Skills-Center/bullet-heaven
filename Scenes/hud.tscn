@@ -1,50 +1,36 @@
 [gd_scene format=3 uid="uid://mjdph3s86747"]
 
+[ext_resource type="Texture2D" uid="uid://dtjc0ub1tp8gs" path="res://Scenes/UI/HUD.png" id="1_6fbih"]
 [ext_resource type="Texture2D" uid="uid://bod688edf2435" path="res://Enemies/heart.png" id="1_fccik"]
 [ext_resource type="Texture2D" uid="uid://cduc0000peo61" path="res://Enemies/docHUD.png" id="2_bjfho"]
 [ext_resource type="Texture2D" uid="uid://ktxqb21ckqgr" path="res://Player/—Pngtree—pixel art golden coin icon_22570587.png" id="3_bjfho"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjfho"]
-bg_color = Color(0.076165624, 0.65184146, 0.8748692, 1)
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-corner_detail = 10
+[ext_resource type="FontFile" uid="uid://b0rkgfluwk6x8" path="res://Scenes/Fonts/BoldPixels.ttf" id="3_t1xeu"]
 
 [node name="HUD" type="CanvasLayer" unique_id=2021681451]
 
-[node name="Panel" type="Panel" parent="." unique_id=60942308]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -459.0
-offset_top = -118.0
-offset_right = 470.0
-offset_bottom = -52.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_bjfho")
+[node name="BackgroundHUD" type="Sprite2D" parent="." unique_id=2057347961]
+position = Vector2(640, 630)
+scale = Vector2(0.516, 0.6)
+texture = ExtResource("1_6fbih")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=979141054]
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=979141054]
 position = Vector2(420, 637)
 scale = Vector2(4, 4)
 texture = ExtResource("1_fccik")
 
 [node name="LivesLabel" type="Label" parent="." unique_id=1401133550]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -165.0
-offset_top = -171.0
-offset_right = -107.0
+anchors_preset = -1
+anchor_left = 0.36800003
+anchor_top = 0.76100004
+anchor_right = 0.416
+anchor_bottom = 0.9990001
+offset_left = -0.040039063
+offset_top = 0.079956055
+offset_right = -0.47998047
+offset_bottom = -0.2800293
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_t1xeu")
 theme_override_font_sizes/font_size = 40
 text = "
 X 3
@@ -69,7 +55,7 @@ text = "WAVE: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1507078372]
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1507078372]
 visible = false
 position = Vector2(984.25, 686)
 scale = Vector2(2.5, 2.5)
@@ -100,34 +86,37 @@ scale = Vector2(0.012679386, 0.012919366)
 texture = ExtResource("3_bjfho")
 
 [node name="CoinsLabel" type="Label" parent="." unique_id=1485098509]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 123.41754
-offset_top = -151.0
-offset_right = 288.41754
-offset_bottom = -20.0
+anchors_preset = -1
+anchor_left = 0.596
+anchor_top = 0.79
+anchor_right = 0.725
+anchor_bottom = 0.97200006
+offset_left = 0.5375366
+offset_top = 0.2000122
+offset_right = 0.41748047
+offset_bottom = 0.15997314
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_t1xeu")
 theme_override_font_sizes/font_size = 30
 text = "Coins: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TimerLabel" type="Label" parent="." unique_id=163090398]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -42.0
-offset_top = -108.0
-offset_right = 43.0
-offset_bottom = -62.0
+anchors_preset = -1
+anchor_left = 0.469
+anchor_top = 0.86100006
+anchor_right = 0.531
+anchor_bottom = 0.90300006
+offset_left = -0.32000732
+offset_top = 0.079956055
+offset_right = 0.3199463
+offset_bottom = -0.16003418
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_t1xeu")
 theme_override_font_sizes/font_size = 33
 text = "00:00"
 horizontal_alignment = 1

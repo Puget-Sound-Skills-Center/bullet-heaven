@@ -28,13 +28,13 @@ func _process(delta: float) -> void:
 	var minutes = time_elapsed / 60.0;
 	# Spawn rate: starts slow, only gets fast after many minutes
 	# 0 min → ~1.4s, 5 min → ~0.9s, 10 min → ~0.6s
-	var target_rate = 1.4 - clamp(minutes * 0.06, 0.0, 0.8);
+	var target_rate = 1.1 - clamp(minutes * 0.05, 0.0, 0.6);
 	spawn_rate = lerp(spawn_rate, target_rate, 0.01);
 	$Timer.wait_time = spawn_rate;
 	# Enemies per tick: grows VERY slowly
 	# 0 min → 1, 2 min → 2, 5 min → 3–4, 10 min → 5–6
-	var base = 1;
-	var growth = pow(max(minutes - 3.0, 0.0), 1.05) * 0.35;
+	var base = 1.5 if minutes < 1.5 else 1;
+	var growth = pow(max(minutes - 2.0, 0.0), 1.05) * 0.35;
 	enemies_per_tick = int(base + growth);
 	enemies_per_tick = clamp(enemies_per_tick, 1, max_enemies_per_tick);
 	max_alive_enemies = get_alive_cap(minutes);
@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 
 func get_alive_cap(minutes: float) -> int:
 	if minutes < 3.0:
-		return 20;
+		return 25;
 	if minutes < 6.0:
 		return 35;
 	if minutes < 10.0:
@@ -92,7 +92,11 @@ func _on_timer_timeout():
 	var minutes = time_elapsed / 60.0;
 	# Minimum density: almost nothing early, ramps over many minutes
 	# 0 min → 0, 2 min → 3, 5 min → 8, 10 min → ~15
-	var _min_density = int(pow(max(minutes - 5.0, 0.0), 1.2) * 5.0); # always keep at least 10 enemies alive
+	var _min_density = int(pow(max(minutes - 4.0, 0.0), 1.2) * 5.0);  # always keep at least 10 enemies alive
+	if minutes < 1.0:
+		_min_density = 3;
+	elif minutes < 2.0:
+		_min_density = 6;
 	_min_density = clamp(_min_density, 0, 60);
 	if _alive < _min_density:
 			var needed = min(_min_density - _alive, max_alive_enemies - _alive);
@@ -179,16 +183,20 @@ func get_back_spawn():
 	return _pos + _back.rotated(randf_range(-0.4, 0.4)) * spawn_distance;
 
 func get_hp_multiplier(minutes: float) -> float:
-	if minutes < 3.0:
-		return 1.0; 
-	elif minutes < 6.0:
-		return 1.5;
-	elif minutes < 10.0:
-		return 2.5;
-	elif minutes < 15.0:
-		return 4.0;
-	else:
-		return 6.0 + (minutes - 15.0) * 0.4;
+	# 0–2 min: very gentle scaling (player feels strong)
+	if minutes < 2.0:
+		return 1.0 + minutes * 0.15   # 1.0 → 1.3
+	# 2–5 min: noticeable but fair scaling
+	if minutes < 5.0:
+		return 1.3 + (minutes - 2.0) * 0.25   # 1.3 → 2.05
+	# 5–10 min: mid‑game pressure ramps up
+	if minutes < 10.0:
+		return 2.05 + (minutes - 5.0) * 0.35  # 2.05 → 3.8
+	# 10–15 min: late‑game starts
+	if minutes < 15.0:
+		return 3.8 + (minutes - 10.0) * 0.45  # 3.8 → 6.05
+# 15+ min: slow, controlled scaling (no bullet sponges)
+	return 6.05 + (minutes - 15.0) * 0.25
 
 func spawn_enemy(spawn_pos: Vector2) -> void:
 	if not can_spawn():
@@ -200,8 +208,19 @@ func spawn_enemy(spawn_pos: Vector2) -> void:
 	enemy.global_position = spawn_pos;
 	# --- HP SCALING ---
 	var base_hp = enemy.max_health;
-	var mult = get_hp_multiplier(minutes);
-	var scaled_hp = int(round(base_hp * mult));
+	# --- TYPE MULTIPLER ---
+	var type_mult := 1.0;
+	match  enemy:
+		"bat":
+			type_mult = 0.8;
+		"goblin":
+			type_mult = 1.0;
+		"green":
+			type_mult = 1.2;
+		"skeleton":
+			type_mult = 1.5;
+	var time_mult = get_hp_multiplier(minutes);
+	var scaled_hp = int(round(base_hp * type_mult * time_mult));
 	enemy.max_health = scaled_hp;
 	enemy.health = scaled_hp;
 	enemy.hit_player.connect(hit);

@@ -1,61 +1,69 @@
 [gd_scene format=3 uid="uid://crgqjkbph4xif"]
 
 [ext_resource type="Script" uid="uid://bvpe2qq7mtg0t" path="res://Scenes/acid_pool.gd" id="1_26ale"]
-[ext_resource type="Texture2D" uid="uid://d08hgvm21qk84" path="res://Scenes/SpritesOther/Acid-Sheet.png" id="1_gdn3o"]
+[ext_resource type="Texture2D" uid="uid://c25bovmr21dbp" path="res://Scenes/SpritesOther/acidtripPUDDLE.png" id="2_4d8n0"]
+[ext_resource type="Texture2D" uid="uid://7pxkxgtqg8uq" path="res://Scenes/SpritesOther/acidtripBALL.png" id="2_o1y1o"]
 [ext_resource type="AudioStream" uid="uid://lcm7oyoee2n2" path="res://Scenes/Sounds/Splash.wav" id="3_4d8n0"]
+[ext_resource type="Texture2D" uid="uid://w5c43xwsglc3" path="res://Scenes/SpritesOther/acidtripBREAK.png" id="3_32g58"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_26ale"]
-atlas = ExtResource("1_gdn3o")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1y1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_32g58")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4d8n0"]
-atlas = ExtResource("1_gdn3o")
-region = Rect2(32, 0, 32, 32)
+atlas = ExtResource("2_4d8n0")
+region = Rect2(0, 0, 97, 118)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0k7g"]
-atlas = ExtResource("1_gdn3o")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o1y1o"]
-atlas = ExtResource("1_gdn3o")
-region = Rect2(96, 0, 32, 32)
+atlas = ExtResource("2_4d8n0")
+region = Rect2(97, 0, 97, 118)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_32g58"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_26ale")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_4d8n0")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j0k7g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o1y1o")
 }],
 "loop": true,
 "name": &"default",
-"speed": 8.0
+"speed": 2.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yb153"]
-size = Vector2(34, 29)
+size = Vector2(123, 54.5)
 
 [node name="Area2D" type="Area2D" unique_id=824393792]
-scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_26ale")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1945719296]
+[node name="GlassBall" type="Sprite2D" parent="." unique_id=792856481]
+texture = ExtResource("2_o1y1o")
+
+[node name="ShatterBall" type="AnimatedSprite2D" parent="." unique_id=1367604910]
+visible = false
+sprite_frames = SubResource("SpriteFrames_o1y1o")
+autoplay = "default"
+
+[node name="Puddle" type="AnimatedSprite2D" parent="." unique_id=1945719296]
+visible = false
+scale = Vector2(1.5051546, 1)
 sprite_frames = SubResource("SpriteFrames_32g58")
 autoplay = "default"
-frame_progress = 0.9384619
+frame_progress = 0.6775497
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1406493904]
-position = Vector2(0, 2.5)
+position = Vector2(2, 8.25)
 shape = SubResource("RectangleShape2D_yb153")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1841335796]

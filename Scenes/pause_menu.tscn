@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cmh8gl38syo4m" path="res://Scenes/pause_menu.gd" id="1_emv3i"]
 
 [node name="PauseMenu" type="Control" unique_id=1507577056]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,14 +44,14 @@ metadata/_edit_use_anchors_ = true
 [node name="ResumeButton" type="Button" parent="BackgroundPanel" unique_id=914729899]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.32200003
-anchor_top = 0.284
-anchor_right = 0.68200004
-anchor_bottom = 0.42039493
+anchor_left = 0.22600003
+anchor_top = 0.27276403
+anchor_right = 0.77000004
+anchor_bottom = 0.397
 offset_left = -1.5258789e-05
 offset_top = 0.06800842
-offset_right = -108.00003
-offset_bottom = -53.90602
+offset_right = -163.20004
+offset_bottom = -46.33101
 scale = Vector2(2.5, 2.5)
 text = "RESUME"
 metadata/_edit_use_anchors_ = true
@@ -58,14 +59,14 @@ metadata/_edit_use_anchors_ = true
 [node name="RestartButton" type="Button" parent="BackgroundPanel" unique_id=1151664213]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38750002
-anchor_top = 0.5
-anchor_right = 0.628
-anchor_bottom = 0.611
-offset_left = -88.749985
-offset_top = 2.5
-offset_right = -133.99997
-offset_bottom = -35.653015
+anchor_left = 0.22599997
+anchor_top = 0.504
+anchor_right = 0.77000004
+anchor_bottom = 0.628
+offset_left = 2.2888184e-05
+offset_top = 0.0079956055
+offset_right = -163.20001
+offset_bottom = -46.24402
 scale = Vector2(2.5, 2.5)
 text = "RESTART"
 metadata/_edit_use_anchors_ = true
@@ -84,7 +85,3 @@ offset_bottom = -17.399994
 scale = Vector2(2.5, 2.5)
 text = "QUIT TO DESKTOP"
 metadata/_edit_use_anchors_ = true
-
-[connection signal="pressed" from="BackgroundPanel/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="BackgroundPanel/RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="BackgroundPanel/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -19,8 +19,10 @@ var radius_multiplier := 1.0;
 func _ready() -> void:
 	# Start slightly above the ground
 	velocity = Vector2(randf_range(-120, 120), randf_range(-350, -250));
+	$GlassBall.visible = true;
+	$ShatterBall.visible = false;
+	$Puddle.visible = false;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not has_splashed:
 		physics_fall(delta);
@@ -35,6 +37,7 @@ func physics_fall(delta):
 		position.y = get_ground_y();
 		velocity = Vector2.ZERO;
 		has_splashed = true;
+		play_splash_effect();
 		get_tree().root.get_node("Main").play_sfx("acid");
 
 func get_ground_y():
@@ -42,12 +45,20 @@ func get_ground_y():
 	return get_parent().get_node("Player").global_position.y;
 
 func play_splash_effect():
+	# 1. Hide glass ball
+	$GlassBall.visible = false;
+	# 2. Play shatter sprite
+	$ShatterBall.visible = true;
+	$ShatterBall.play("default")
+	# 3. Switch to puddle
+	$ShatterBall.animation_finished.connect(_on_shatter_finished);
 	if has_node("AudioStreamPlayer"):
 		$AudioStreamPlayer.play();
-	if has_node("AnimatedSprite2D"):
-		$AnimatedSprite2D.scale *= radius_multiplier;
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.shape.radius *= radius_multiplier;
+
+func _on_shatter_finished():
+	$ShatterBall.visible = false;
+	$Puddle.visible = true;
+	$Puddle.play("idle");  # looping puddle animation
 
 func puddle_behavior(_delta):
 	tick_timer += _delta;

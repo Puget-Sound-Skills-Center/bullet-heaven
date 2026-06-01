@@ -15,10 +15,10 @@ class Upgrade:
 var upgrades: Array = [];
 var current_choices: Array = [];
 
-var icon_quick_fire = preload("res://Player/gun_box.png");
-var icon_coffee = preload("res://Player/coffee_box.png");
-var icon_oneup = preload("res://Player/health_box.png");
-var icon_damage = preload("res://Player/Iron Sword.png");
+var icon_quick_fire = preload("res://Scenes/UI/gun-upgd_15.png");
+var icon_coffee = preload("res://Scenes/UI/move_speed+20.png");
+var icon_oneup = preload("res://Scenes/UI/extra_life+1HP.png");
+var icon_damage = preload("res://Scenes/UI/gun-upgd_15.png");
 var icon_orbit = preload("res://Scenes/SpritesOther/WeaponUnlock.png");
 var icon_orbit_gun = preload("res://Weapons/GunPack/Pack 1/1px/24.png");
 var icon_orbit_speed = preload("res://Scenes/Pixel Art Icon Pack - RPG/Weapon & Tool/Silver Sword.png")
@@ -49,7 +49,7 @@ func _ready() -> void:
 		Upgrade.new("Acid Trip", "Spawns puddles of acid under your feet", "_upgrade_acid_pool", icon_acid),
 		Upgrade.new("Acid Radius", "Increase acid puddle radius by 25%", "_upgrade_acid_radius", icon_acid),
 		Upgrade.new("Acid Double Drop", "Throw two acid bottles at once", "_upgrade_acid_double", icon_acid),
-		Upgrade.new("Bullet Bounce", "70% chance for bullets to ricochet to another enemy", "_upgrade_bullet_bounce", icon_damage),
+		Upgrade.new("Bullet Bounce", "70% chance for bullets to ricochet", "_upgrade_bullet_bounce", icon_damage),
 		Upgrade.new("Explosive bullets", "Bullets explode on hit, dealing +20 damage.", "_upgrade_explosive_ricochet", icon_damage),
 		Upgrade.new("Homing Missile", "Home in a missile at an enemy every 4 seconds", "_upgrade_homing_missile", icon_damage),
 		Upgrade.new("Bullet piercing", "Orbital guns pierces through +1 enemy", "_upgrade_orbit_gun_pierce", icon_orbit_gun),

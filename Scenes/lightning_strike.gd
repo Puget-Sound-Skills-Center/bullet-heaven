@@ -9,6 +9,7 @@ extends Node2D
 @export var fork_damage_factor := 0.5;
 @onready var main = get_node("/root/Main");
 
+var aoe_flash := preload("res://Scenes/lightning_aoe.tscn");
 var target = null;
 var has_aoe := false;
 
@@ -29,6 +30,10 @@ func strike(t):
 	# Chain lightning AFTER animation finishes
 	if has_aoe:
 		_do_aoe_damage(global_position, 60);
+		var flash = aoe_flash.instantiate();
+		flash.global_position = global_position;
+		get_tree().root.add_child(flash);
+		main.play_sfx("smoke");
 	await $AnimatedSprite2D.animation_finished;
 	await get_tree().create_timer(0.01).timeout;
 	if chain_count > 0:

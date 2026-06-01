@@ -37,7 +37,6 @@ one_shot = true
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1324642005]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1507577056 instance=ExtResource("9_4c57u")]
-visible = false
 
 [node name="HUD" parent="CanvasLayer" unique_id=2021681451 instance=ExtResource("7_272bh")]
 

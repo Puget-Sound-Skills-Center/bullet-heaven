@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var shot_timer := $ShotTimer;
 @onready var main = get_node("/root/Main");
 @onready var muzzle_flash = $Muzzle/MuzzleFlash;
 @export var fire_rate := 0.25;
@@ -47,6 +48,10 @@ func show_muzzle_flash():
 
 func apply_stats():
 	fire_rate = get_parent().stats.fire_rate * get_parent().stats.fire_rate_multiplier;
+
+func apply_fire_rate_upgrade(multiplier: float):
+	fire_rate *= multiplier;
+	shot_timer.wait_time = fire_rate;
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true;
