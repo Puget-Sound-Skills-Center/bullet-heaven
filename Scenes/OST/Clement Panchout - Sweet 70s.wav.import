@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://co6g7hplyvupv"
+path="res://.godot/imported/Clement Panchout - Sweet 70s.wav-1bcca60d9ef0b5e2d707e8fdd35ee21d.sample"
+
+[deps]
+
+source_file="res://Scenes/OST/Clement Panchout - Sweet 70s.wav"
+dest_files=["res://.godot/imported/Clement Panchout - Sweet 70s.wav-1bcca60d9ef0b5e2d707e8fdd35ee21d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

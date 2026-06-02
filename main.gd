@@ -107,6 +107,7 @@ var weapon_count := 0
 func _ready() -> void:
 	new_game();
 	cam = get_node("Player/Camera2D");
+	$AudioStreamPlayer.play();
 	$CanvasLayer/GameOver/Button.pressed.connect(reset_run);
 
 func new_game():

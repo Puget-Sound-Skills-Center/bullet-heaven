@@ -19,13 +19,14 @@ var icon_quick_fire = preload("res://Scenes/UI/gun-upgd_15.png");
 var icon_coffee = preload("res://Scenes/UI/move_speed+20.png");
 var icon_oneup = preload("res://Scenes/UI/extra_life+1HP.png");
 var icon_damage = preload("res://Scenes/UI/gun-upgd_15.png");
+var icon_damage2 = preload("res://Scenes/UI/Bullet_dmgincrease+2.png");
 var icon_orbit = preload("res://Scenes/SpritesOther/WeaponUnlock.png");
 var icon_orbit_gun = preload("res://Weapons/GunPack/Pack 1/1px/24.png");
 var icon_orbit_speed = preload("res://Scenes/Pixel Art Icon Pack - RPG/Weapon & Tool/Silver Sword.png")
 var icon_pickup = preload("res://Scenes/SpritesOther/Gem2.png");
 var icon_aura = preload("res://Scenes/SpritesOther/SigilSpeedUp.png");
 var icon_lightning = preload("res://Scenes/Pixel Art Icon Pack - RPG/Potion/Blue Potion 3.png");
-var icon_acid = preload("res://Scenes/Pixel Art Icon Pack - RPG/Potion/Green Potion.png");
+var icon_acid = preload("res://Scenes/SpritesOther/acidtripBALL.png");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,7 +34,7 @@ func _ready() -> void:
 		Upgrade.new("Quick Fire", "Increase fire rate by 15%", "_upgrade_quick_fire", icon_quick_fire),
 		Upgrade.new("Move Speed", "Increase move speed by +20", "_upgrade_boost", icon_coffee),
 		Upgrade.new("Extra Life", "Increase max HP by +1", "_upgrade_extra_life", icon_oneup),
-		Upgrade.new("Damage Up", "Increase bullet damage by +2", "_upgrade_damage_up", icon_damage),
+		Upgrade.new("Damage Up", "Increase bullet damage by +2", "_upgrade_damage_up", icon_damage2),
 		Upgrade.new("Orbiting Blade", "A blade rotates around you.", "_upgrade_orbit_blade", icon_orbit),
 		Upgrade.new("Orbit Gun", "A gun auto-aims and fires.", "_upgrade_orbit_gun", icon_orbit_gun),
 		Upgrade.new("Orbit Gun Damage", "Increase orbit gun damage by +1", "_upgrade_orbit_gun_damage", icon_orbit_gun),

@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://c4knkc5epffrs"]
+
+[ext_resource type="Texture2D" uid="uid://dvua4xw8tyh5m" path="res://Scenes/UI/Screenshot 2026-05-27 141211.png" id="1_8baxe"]
+[ext_resource type="Script" uid="uid://bonj3bfgjbklu" path="res://Scenes/tutorial_page.gd" id="1_h171a"]
+[ext_resource type="FontFile" uid="uid://b0rkgfluwk6x8" path="res://Scenes/Fonts/BoldPixels.ttf" id="2_hfqqn"]
+[ext_resource type="Texture2D" uid="uid://dnjlif1s8tn31" path="res://Player/120px-Sprite-Experience_Gem-DarkBlue.png" id="3_h171a"]
+[ext_resource type="Texture2D" uid="uid://c1d1li5e6jktq" path="res://Scenes/UI/Screenshot 2026-06-01 190110.png" id="4_hfqqn"]
+[ext_resource type="AudioStream" uid="uid://dtww2ilkhur8p" path="res://Scenes/OST/Clement Panchout _ LJ_Tel_DnB.wav" id="6_6of3j"]
+
+[node name="TutorialPage" type="Control" unique_id=757393273]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h171a")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=380907055]
+position = Vector2(640.00006, 360)
+scale = Vector2(1.1873841, 0.9638555)
+texture = ExtResource("1_8baxe")
+
+[node name="Label" type="Label" parent="Background" unique_id=1348944039]
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.156
+anchor_right = 0.81500006
+anchor_bottom = 0.273
+offset_left = -538.461
+offset_top = -373.832
+offset_right = -539.44507
+offset_bottom = -373.231
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_hfqqn")
+theme_override_font_sizes/font_size = 100
+text = "HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Background" unique_id=885454819]
+anchors_preset = -1
+anchor_left = 0.0981447
+anchor_top = 0.31100002
+anchor_right = 0.595
+anchor_bottom = 0.37800005
+offset_left = -530.2626
+offset_top = -224.01701
+offset_right = -584.87256
+offset_bottom = -232.56602
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_hfqqn")
+theme_override_font_sizes/font_size = 40
+text = "Kill enemies and pick up XP"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Background" unique_id=1377850385]
+anchors_preset = -1
+anchor_left = 0.0981447
+anchor_top = 0.31100002
+anchor_right = 0.595
+anchor_bottom = 0.37800005
+offset_left = -99.06254
+offset_top = -323.617
+offset_right = -233.67258
+offset_bottom = -316.66602
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_hfqqn")
+theme_override_font_sizes/font_size = 30
+text = "Collect enough and level up by 
+picking 1/3 upgrades"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Background" unique_id=1237202320]
+anchors_preset = -1
+anchor_left = 0.0981447
+anchor_top = 0.31100002
+anchor_right = 0.595
+anchor_bottom = 0.37800005
+offset_left = -516.7875
+offset_top = -390.017
+offset_right = -736.3976
+offset_bottom = -344.066
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_hfqqn")
+theme_override_font_sizes/font_size = 33
+text = "Move with WASD
+Aim with cursor/Mouse
+Right click to shoot"
+horizontal_alignment = 1
+
+[node name="Example1" type="Sprite2D" parent="Background" unique_id=331643716]
+position = Vector2(-215.6, 132.79997)
+scale = Vector2(0.8421874, 1.0374999)
+texture = ExtResource("3_h171a")
+
+[node name="Example2" type="Sprite2D" parent="Background" unique_id=2097697416]
+position = Vector2(222.3374, 107.900024)
+scale = Vector2(0.38654855, 0.46540174)
+texture = ExtResource("4_hfqqn")
+
+[node name="BackButton" type="Button" parent="Background" unique_id=600601535]
+offset_left = -437.9375
+offset_top = 174.29996
+offset_right = -262.7625
+offset_bottom = 230.19998
+text = "BACK TO MENU"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Background" unique_id=723162695]
+stream = ExtResource("6_6of3j")
+autoplay = true

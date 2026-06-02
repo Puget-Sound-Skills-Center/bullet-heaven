@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://bo12s4qrlg4t1"]
 
 [ext_resource type="Script" uid="uid://cgfenw4648d4s" path="res://Scenes/main_menu.gd" id="1_28flt"]
+[ext_resource type="Texture2D" uid="uid://dvua4xw8tyh5m" path="res://Scenes/UI/Screenshot 2026-05-27 141211.png" id="2_48xlc"]
+[ext_resource type="FontFile" uid="uid://b0rkgfluwk6x8" path="res://Scenes/Fonts/BoldPixels.ttf" id="3_1ehe0"]
+[ext_resource type="AudioStream" uid="uid://cyblfjjgm76aw" path="res://Scenes/Sounds/Select.wav" id="3_ce3w2"]
+[ext_resource type="AudioStream" uid="uid://co6g7hplyvupv" path="res://Scenes/OST/Clement Panchout - Sweet 70s.wav" id="4_n45e2"]
 
 [node name="MainMenu" type="Control" unique_id=1692281642]
 layout_mode = 3
@@ -10,6 +14,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_28flt")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=29643292]
+position = Vector2(640, 360)
+scale = Vector2(1.1873841, 0.9638554)
+texture = ExtResource("2_48xlc")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=838532746]
+stream = ExtResource("3_ce3w2")
+
+[node name="Musicbackground" type="AudioStreamPlayer2D" parent="." unique_id=1770689682]
+stream = ExtResource("4_n45e2")
+autoplay = true
+
+[node name="Label" type="Label" parent="." unique_id=2127320061]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22100002
+anchor_top = 0.27800003
+anchor_right = 0.77800006
+anchor_bottom = 0.40300003
+offset_left = 5.119995
+offset_top = 23.839981
+offset_right = 5.159912
+offset_bottom = 23.839966
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_1ehe0")
+theme_override_font_sizes/font_size = 100
+text = "BULLET HEAVEN"
 
 [node name="BoxContainer" type="BoxContainer" parent="." unique_id=1516503192]
 layout_mode = 1

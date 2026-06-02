@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://dsngpbcttaltc"]
 
 [ext_resource type="Script" uid="uid://cmh8gl38syo4m" path="res://Scenes/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="Texture2D" uid="uid://c7m6g6lv0qmc8" path="res://Scenes/UI/PauseMenuBG.png" id="2_vmyb1"]
+[ext_resource type="Texture2D" uid="uid://daufq04jwsv78" path="res://Scenes/UI/Screenshot 2026-06-01 225531.png" id="3_myy0f"]
+[ext_resource type="Texture2D" uid="uid://cpx2u2swuvrd0" path="res://Scenes/UI/Screenshot 2026-06-01 225428.png" id="4_sjs17"]
+[ext_resource type="Texture2D" uid="uid://cdacgx4e4iwlq" path="res://Scenes/UI/Screenshot 2026-06-01 225508.png" id="5_u8tnp"]
 
 [node name="PauseMenu" type="Control" unique_id=1507577056]
 process_mode = 3
@@ -25,6 +29,11 @@ offset_right = 0.11993408
 offset_bottom = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundPanel" unique_id=1940075943]
+position = Vector2(249.00002, 306.00003)
+scale = Vector2(1.1155376, 1.0718955)
+texture = ExtResource("2_vmyb1")
 
 [node name="PausedLabel" type="Label" parent="BackgroundPanel" unique_id=1646368507]
 layout_mode = 1
@@ -56,6 +65,11 @@ scale = Vector2(2.5, 2.5)
 text = "RESUME"
 metadata/_edit_use_anchors_ = true
 
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundPanel/ResumeButton" unique_id=746695487]
+position = Vector2(54.399994, 15.999998)
+scale = Vector2(0.08011783, 0.08625336)
+texture = ExtResource("3_myy0f")
+
 [node name="RestartButton" type="Button" parent="BackgroundPanel" unique_id=1151664213]
 layout_mode = 1
 anchors_preset = -1
@@ -71,6 +85,11 @@ scale = Vector2(2.5, 2.5)
 text = "RESTART"
 metadata/_edit_use_anchors_ = true
 
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundPanel/RestartButton" unique_id=1455468818]
+position = Vector2(54.825005, 15.999996)
+scale = Vector2(0.080565766, 0.085790865)
+texture = ExtResource("4_sjs17")
+
 [node name="QuitButton" type="Button" parent="BackgroundPanel" unique_id=1872792423]
 layout_mode = 1
 anchors_preset = -1
@@ -85,3 +104,8 @@ offset_bottom = -17.399994
 scale = Vector2(2.5, 2.5)
 text = "QUIT TO DESKTOP"
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundPanel/QuitButton" unique_id=1658277928]
+position = Vector2(74, 14.075)
+scale = Vector2(0.10882353, 0.093126684)
+texture = ExtResource("5_u8tnp")
